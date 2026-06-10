@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 
 export function Footer({ settings }: { settings?: Record<string, string | null> }) {
@@ -12,9 +13,9 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
       flexWrap: 'wrap',
       gap: 20,
     }}>
-      <span style={{ fontFamily: 'var(--font-heading)', fontSize: 14, color: 'var(--fg-muted)' }}>
+      <Link href="/" style={{ fontFamily: 'var(--font-heading)', fontSize: 14, color: 'var(--fg-muted)', textDecoration: 'none' }}>
         © {year} Nicopixel
-      </span>
+      </Link>
       <div style={{ display: 'flex', gap: 24 }}>
         {[
           { label: 'Behance', href: settings?.behance || '#' },
@@ -22,19 +23,17 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
           { label: 'LinkedIn', href: settings?.linkedin || '#' },
         ].map(s => (
           <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-            style={{
-              fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: 'var(--fg-muted)', textDecoration: 'none',
-              transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'var(--fg-muted)')}
+            className="footer-link"
+            style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-muted)', textDecoration: 'none' }}
           >
             {s.label}
           </a>
         ))}
       </div>
-      <style>{`@media(max-width:767px){footer{padding:32px 24px !important;}}`}</style>
+      <style>{`
+        .footer-link:hover { color: var(--accent) !important; }
+        @media(max-width:767px){ footer { padding: 32px 24px !important; } }
+      `}</style>
     </footer>
   )
 }
