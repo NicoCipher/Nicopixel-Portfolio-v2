@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #FAFAF9;
+  --bg-secondary: #F2F1EF;
+  --fg: #0A0A0A;
+  --fg-muted: #6B6B6B;
+  --fg-subtle: #A8A8A8;
+  --border: #E2E2DF;
+  --accent: #C41E3A;
+  --accent-hover: #A01830;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+.dark {
+  --bg: #0A0A0A;
+  --bg-secondary: #111111;
+  --fg: #FAFAF9;
+  --fg-muted: #999999;
+  --fg-subtle: #555555;
+  --border: #1F1F1F;
+  --accent: #C41E3A;
+  --accent-hover: #E02444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+h1, h2, h3, h4 { font-family: var(--font-heading); }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+* { cursor: none !important; }
+
+#cursor {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s, height 0.25s;
+}
+#cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 32px; height: 32px;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s cubic-bezier(0.23,1,0.32,1), height 0.4s cubic-bezier(0.23,1,0.32,1), opacity 0.3s;
+  opacity: 0.3;
+}
+body.cursor-hover #cursor { width: 14px; height: 14px; }
+body.cursor-hover #cursor-ring { width: 48px; height: 48px; opacity: 0.15; }
+
+::selection { background: var(--accent); color: white; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
