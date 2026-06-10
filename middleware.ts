@@ -28,7 +28,6 @@ export async function middleware(request: NextRequest) {
   if (isAdminRoute && !isLoginPage && !user) {
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
-
   if (isLoginPage && user) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
