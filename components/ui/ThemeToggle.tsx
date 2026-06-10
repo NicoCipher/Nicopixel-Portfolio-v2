@@ -3,10 +3,12 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <div className="w-5 h-5" />
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setMounted(true) }, [])
+  if (!mounted) return <div style={{ width: 20, height: 20 }} />
 
   const isDark = resolvedTheme === 'dark'
 
