@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import { Cursor } from '@/components/ui/Cursor'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Nicopixel — Graphic Designer',
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Cursor />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
