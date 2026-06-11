@@ -1,0 +1,20 @@
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
+import { createClient } from '@/lib/supabase/server'
+
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient()
+  const { data: settingsRows } = await supabase.from('site_settings').select('key, value')
+  const settings: Record<string, string | null> = {}
+  settingsRows?.forEach((r: { key: string; value: string | null }) => { settings[r.key] = r.value })
+
+  return (
+    <>
+      <Navbar settings={settings} />
+      <main style={{ paddingTop: 64 }}>
+        {children}
+      </main>
+      <Footer settings={settings} />
+    </>
+  )
+}
