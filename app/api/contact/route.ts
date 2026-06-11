@@ -4,13 +4,11 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Simple in-memory rate limiter per IP
 const rateMap = new Map<string, { count: number; reset: number }>()
 const RATE_LIMIT = 3
-const WINDOW_MS = 60 * 60 * 1000 // 1 hour
+const WINDOW_MS = 60 * 60 * 1000
 
 export async function POST(req: NextRequest) {
-  // Rate limiting
   const ip = req.headers.get('x-forwarded-for') || 'unknown'
   const now = Date.now()
   const entry = rateMap.get(ip)
@@ -31,7 +29,6 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
   const { name, email, subject, message } = body
 
-  // Basic validation
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return NextResponse.json({ error: 'Name, email and message are required.' }, { status: 400 })
   }
@@ -42,26 +39,28 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Save to database
     const supabase = await createAdminClient()
     await supabase.from('messages').insert({ name, email, subject, message })
 
-    // Forward to Gmail
     await resend.emails.send({
-      from: 'Nicopixel Contact <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL!,
+      from: 'Nicopixel <onboarding@resend.dev>',
+      to: [process.env.CONTACT_EMAIL!],
       replyTo: email,
       subject: subject ? `[Nicopixel] ${subject}` : `[Nicopixel] New message from ${name}`,
       html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #0A0A0A; border-bottom: 1px solid #eee; padding-bottom: 16px;">New Message</h2>
-          <p><strong>From:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
-          <div style="margin-top: 24px; padding: 20px; background: #f9f9f9; border-left: 3px solid #C41E3A;">
-            <p style="white-space: pre-wrap; line-height: 1.7;">${message}</p>
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:32px 0;">
+          <div style="border-bottom:2px solid #C41E3A;padding-bottom:20px;margin-bottom:28px;">
+            <h2 style="margin:0;font-size:22px;color:#0A0A0A;">New message via Nicopixel</h2>
           </div>
-          <p style="margin-top: 24px; font-size: 12px; color: #999;">Sent via Nicopixel contact form</p>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
+            <tr><td style="padding:8px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#999;width:100px;">From</td><td style="padding:8px 0;font-size:14px;color:#0A0A0A;">${name}</td></tr>
+            <tr><td style="padding:8px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#999;">Email</td><td style="padding:8px 0;font-size:14px;"><a href="mailto:${email}" style="color:#C41E3A;">${email}</a></td></tr>
+            ${subject ? `<tr><td style="padding:8px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#999;">Subject</td><td style="padding:8px 0;font-size:14px;color:#0A0A0A;">${subject}</td></tr>` : ''}
+          </table>
+          <div style="background:#f9f9f9;border-left:3px solid #C41E3A;padding:20px 24px;margin-bottom:28px;">
+            <p style="margin:0;font-size:15px;line-height:1.8;color:#333;white-space:pre-wrap;">${message}</p>
+          </div>
+          <p style="font-size:11px;color:#bbb;margin:0;">Sent via nicopixel.vercel.app contact form</p>
         </div>
       `,
     })
