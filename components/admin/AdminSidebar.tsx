@@ -10,6 +10,7 @@ const navItems = [
   { href: '/admin/messages', label: 'Messages' },
   { href: '/admin/about', label: 'About' },
   { href: '/admin/settings', label: 'Settings' },
+  { href: '/admin/security', label: 'Security' },
 ]
 
 const sidebarStyle: React.CSSProperties = {
