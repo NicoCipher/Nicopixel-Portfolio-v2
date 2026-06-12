@@ -11,15 +11,15 @@ export function SessionGuard({ children }: { children: React.ReactNode }) {
 export function LoginTimeoutBanner() {
   const params = useSearchParams()
   const [show, setShow] = useState(false)
-  const initialized = useRef(false)
+  const mounted = useRef(false)
 
   useEffect(() => {
-    if (initialized.current) return
-    initialized.current = true
-    const reason = params.get('reason')
-    if (reason === 'timeout') {
-      setTimeout(() => setShow(true), 0)
-    }
+    if (mounted.current) return
+    mounted.current = true
+    const t = setTimeout(() => {
+      if (params.get('reason') === 'timeout') setShow(true)
+    }, 0)
+    return () => clearTimeout(t)
   }, [params])
 
   if (!show) return null

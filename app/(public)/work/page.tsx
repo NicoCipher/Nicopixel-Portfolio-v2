@@ -12,10 +12,7 @@ export default async function WorkPage() {
 
   return (
     <>
-      <div style={{
-        padding: '60px 48px 0',
-        borderBottom: '1px solid var(--border)',
-      }}>
+      <div className="work-header">
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
           color: 'var(--accent)', marginBottom: 16,
@@ -26,14 +23,22 @@ export default async function WorkPage() {
         </p>
         <h1 style={{
           fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(36px, 5vw, 64px)',
-          fontWeight: 400, marginBottom: 40,
+          fontSize: 'clamp(32px, 5vw, 64px)',
+          fontWeight: 400, marginBottom: 0,
         }}>
           All Projects
         </h1>
       </div>
       <WorkGallery projects={projects || []} />
-      <style>{`@media(max-width:767px){ div[style*="padding: 60px 48px"] { padding: 48px 24px 0 !important; } }`}</style>
+      <style>{`
+        .work-header {
+          padding: 60px 48px 40px;
+          border-bottom: 1px solid var(--border);
+        }
+        @media(max-width: 767px) {
+          .work-header { padding: 40px 20px 28px; }
+        }
+      `}</style>
     </>
   )
 }
