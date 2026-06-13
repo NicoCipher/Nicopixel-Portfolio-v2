@@ -141,26 +141,27 @@ export default async function HomePage() {
       {/* ── WHY NICOPIXEL ── */}
       {whyItems && whyItems.length > 0 && (
         <section className="why-section">
-          <div className="why-inner">
-            <div className="why-left">
-              <p className="section-eyebrow">Why Nicopixel</p>
-              <h2 className="section-title">
-                {s.why_title || 'Design that works'}<br />
-                <em>{s.why_subtitle || 'as hard as you do.'}</em>
-              </h2>
-              <Link href="/contact" className="btn-primary" style={{ marginTop: 32, display: 'inline-block' }}>Let&apos;s Work Together</Link>
-            </div>
-            <div className="why-right">
-              {whyItems.map((w: { id: string; title: string; description: string | null }, i: number) => (
-                <div key={w.id} className="why-item">
-                  <span className="why-num">0{i + 1}</span>
-                  <div>
-                    <h4 className="why-title">{w.title}</h4>
-                    <p className="why-desc">{w.description}</p>
-                  </div>
+          <div className="why-header">
+            <p className="section-eyebrow">Why Nicopixel</p>
+            <h2 className="why-headline">
+              {s.why_title || 'Design that works'}<br />
+              <em>{s.why_subtitle || 'as hard as you do.'}</em>
+            </h2>
+          </div>
+          <div className="why-grid">
+            {whyItems.map((w: { id: string; title: string; description: string | null }, i: number) => (
+              <div key={w.id} className="why-card">
+                <div className="why-card-num">{String(i + 1).padStart(2, '0')}</div>
+                <div className="why-card-body">
+                  <h4 className="why-card-title">{w.title}</h4>
+                  <p className="why-card-desc">{w.description}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+          <div className="why-cta-row">
+            <Link href="/contact" className="btn-accent">Start a Project →</Link>
+            <span className="why-cta-note">No commitments. Just a conversation.</span>
           </div>
         </section>
       )}
@@ -168,18 +169,28 @@ export default async function HomePage() {
       {/* ── TESTIMONIALS ── */}
       {testimonials && testimonials.length > 0 && (
         <section className="testimonials-section">
-          <p className="section-eyebrow" style={{ justifyContent: 'center', marginBottom: 48 }}>What Clients Say</p>
-          <div className="testimonials-grid">
-            {testimonials.map((t: { id: string; quote: string; name: string; role: string | null }) => (
-              <div key={t.id} className="testimonial-card">
-                <span className="testimonial-quote-mark">&ldquo;</span>
-                <p className="testimonial-text">{t.quote}</p>
-                <div className="testimonial-author">
-                  <span className="testimonial-name">{t.name}</span>
-                  {t.role && <span className="testimonial-role">{t.role}</span>}
+          <div className="testimonials-inner">
+            <div className="testimonials-label">
+              <p className="section-eyebrow">Client Results</p>
+              <h2 className="testimonials-headline">Words from<br /><em>the work.</em></h2>
+            </div>
+            <div className="testimonials-list">
+              {testimonials.map((t: { id: string; quote: string; name: string; role: string | null }, i: number) => (
+                <div key={t.id} className={`testimonial-item ${i === 0 ? 'testimonial-featured' : ''}`}>
+                  <div className="testimonial-quote-wrap">
+                    <span className="tq-mark">&ldquo;</span>
+                    <p className="tq-text">{t.quote}</p>
+                  </div>
+                  <div className="tq-author">
+                    <div className="tq-avatar">{t.name.charAt(0)}</div>
+                    <div>
+                      <span className="tq-name">{t.name}</span>
+                      {t.role && <span className="tq-role">{t.role}</span>}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -246,24 +257,59 @@ export default async function HomePage() {
         .cta-strip-sub { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; }
         .cta-strip-btn { display: inline-block; padding: 14px 36px; background: white; color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
         .cta-strip-btn:hover { background: rgba(255,255,255,0.9); }
-        .why-section { padding: 80px 48px; border-bottom: 1px solid var(--border); }
-        .why-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
-        .why-right { display: flex; flex-direction: column; }
-        .why-item { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); }
-        .why-item:first-child { padding-top: 0; }
-        .why-item:last-child { border-bottom: none; }
-        .why-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent); letter-spacing: 0.12em; flex-shrink: 0; padding-top: 4px; }
-        .why-title-h4 { font-family: var(--font-heading); font-size: 17px; font-weight: 400; color: var(--fg); margin-bottom: 6px; }
-        .why-title { font-family: var(--font-heading); font-size: 17px; font-weight: 400; color: var(--fg); margin-bottom: 6px; }
-        .why-desc { font-size: 13px; line-height: 1.75; color: var(--fg-muted); }
-        .testimonials-section { padding: 80px 48px; border-bottom: 1px solid var(--border); }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-        .testimonial-card { background: var(--bg-secondary); padding: 36px 32px; display: flex; flex-direction: column; gap: 20px; }
-        .testimonial-quote-mark { font-family: var(--font-heading); font-size: 48px; color: var(--accent); line-height: 0.8; opacity: 0.5; }
-        .testimonial-text { font-size: 14px; line-height: 1.8; color: var(--fg-muted); flex: 1; font-style: italic; }
-        .testimonial-author { display: flex; flex-direction: column; gap: 2px; padding-top: 8px; border-top: 1px solid var(--border); }
-        .testimonial-name { font-size: 13px; font-weight: 600; color: var(--fg); }
-        .testimonial-role { font-size: 11px; color: var(--fg-subtle); letter-spacing: 0.06em; }
+        /* ── WHY ── */
+        .why-section { border-bottom: 1px solid var(--border); overflow: hidden; }
+        .why-header { padding: 80px 48px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 48px; }
+        .why-headline { font-family: var(--font-heading); font-size: clamp(36px, 5vw, 72px); font-weight: 400; line-height: 1.0; }
+        .why-headline em { font-style: italic; color: var(--accent); }
+        .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+        .why-card {
+          padding: 48px;
+          border-right: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+          display: flex; flex-direction: column; gap: 20px;
+          position: relative; overflow: hidden;
+          transition: background 0.3s;
+        }
+        .why-card:nth-child(even) { border-right: none; }
+        .why-card:nth-last-child(-n+2) { border-bottom: none; }
+        .why-card:hover { background: var(--bg-secondary); }
+        .why-card-num {
+          font-family: var(--font-heading);
+          font-size: 80px; font-weight: 400; font-style: italic;
+          color: var(--border); line-height: 1;
+          position: absolute; top: -10px; right: 24px;
+          transition: color 0.3s;
+          user-select: none;
+        }
+        .why-card:hover .why-card-num { color: var(--accent); opacity: 0.15; }
+        .why-card-body { position: relative; z-index: 1; }
+        .why-card-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin-bottom: 10px; line-height: 1.3; }
+        .why-card-desc { font-size: 14px; line-height: 1.8; color: var(--fg-muted); }
+        .why-cta-row { padding: 40px 48px; display: flex; align-items: center; gap: 24px; background: var(--bg-secondary); }
+        .why-cta-note { font-size: 12px; color: var(--fg-subtle); letter-spacing: 0.06em; font-style: italic; }
+
+        /* ── TESTIMONIALS ── */
+        .testimonials-section { background: var(--fg); border-bottom: 1px solid var(--border); }
+        .testimonials-inner { display: grid; grid-template-columns: 280px 1fr; gap: 0; }
+        .testimonials-label { padding: 64px 48px; border-right: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; }
+        .testimonials-label .section-eyebrow { color: var(--accent); }
+        .testimonials-label .section-eyebrow::before { background: var(--accent); }
+        .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--bg); line-height: 1.1; }
+        .testimonials-headline em { font-style: italic; color: rgba(255,255,255,0.4); }
+        .testimonials-list { display: flex; flex-direction: column; gap: 0; }
+        .testimonial-item { padding: 40px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; }
+        .testimonial-item:last-child { border-bottom: none; }
+        .testimonial-item:hover { background: rgba(255,255,255,0.03); }
+        .testimonial-featured { padding: 48px; }
+        .testimonial-quote-wrap { display: flex; flex-direction: column; gap: 8px; }
+        .tq-mark { font-family: var(--font-heading); font-size: 36px; color: var(--accent); line-height: 0.8; opacity: 0.6; }
+        .tq-text { font-family: var(--font-heading); font-size: clamp(14px, 1.5vw, 18px); font-style: italic; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,0.75); }
+        .testimonial-featured .tq-text { font-size: clamp(16px, 2vw, 22px); color: rgba(255,255,255,0.9); }
+        .tq-author { display: flex; align-items: center; gap: 14px; }
+        .tq-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 16px; color: white; flex-shrink: 0; }
+        .tq-name { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 2px; }
+        .tq-role { display: block; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
         @media(max-width: 900px) {
           .services-grid { grid-template-columns: 1fr; }
           .service-card { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
@@ -274,7 +320,17 @@ export default async function HomePage() {
         @media(max-width: 767px) {
           .hero-section { padding: 60px 20px 48px; }
           .hero-bg-letter { opacity: 0.3; }
-          .services-section, .featured-section, .cta-strip, .why-section, .testimonials-section { padding: 56px 20px; }
+          .services-section, .featured-section, .cta-strip { padding: 56px 20px; }
+          .why-header { padding: 48px 20px !important; }
+          .why-grid { grid-template-columns: 1fr !important; }
+          .why-card { padding: 32px 20px !important; border-right: none !important; }
+          .why-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border) !important; }
+          .why-card:last-child { border-bottom: none !important; }
+          .why-cta-row { padding: 32px 20px !important; flex-direction: column; align-items: flex-start; gap: 12px; }
+          .testimonials-inner { grid-template-columns: 1fr !important; }
+          .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.08); }
+          .testimonial-item { padding: 32px 20px !important; }
+          .testimonial-featured { padding: 36px 20px !important; }
           .hero-project { aspect-ratio: 4/3; }
           .projects-subgrid { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
           .sub-card { aspect-ratio: 1/1; border-radius: 4px; }
