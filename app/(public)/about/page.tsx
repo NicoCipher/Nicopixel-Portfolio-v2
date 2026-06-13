@@ -11,11 +11,12 @@ export default async function AboutPage() {
   const settings: Record<string, string> = {}
   settingsRows?.forEach((r: { key: string; value: string | null }) => { settings[r.key] = r.value ?? '' })
 
+  // Stats pulled from site_settings — same source as homepage so they always match
   const stats = [
-    { num: about?.stat_1_num || '4+', label: about?.stat_1_label || 'Years of practice' },
-    { num: about?.stat_2_num || '80+', label: about?.stat_2_label || 'Projects delivered' },
-    { num: about?.stat_3_num || '40+', label: about?.stat_3_label || 'Clients served' },
-    { num: about?.stat_4_num || '3', label: about?.stat_4_label || 'Core disciplines' },
+    { num: settings.hero_stat_1_num || '4+', label: settings.hero_stat_1_label || 'Years of practice' },
+    { num: settings.hero_stat_2_num || '80+', label: settings.hero_stat_2_label || 'Projects delivered' },
+    { num: settings.hero_stat_3_num || '40+', label: settings.hero_stat_3_label || 'Clients served' },
+    { num: '3', label: 'Core disciplines' },
   ]
 
   const disciplines = [
