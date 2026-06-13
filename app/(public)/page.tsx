@@ -290,17 +290,17 @@ export default async function HomePage() {
         .why-cta-note { font-size: 12px; color: var(--fg-subtle); letter-spacing: 0.06em; font-style: italic; }
 
         /* ── TESTIMONIALS ── */
-        .testimonials-section { background: var(--fg); border-bottom: 1px solid var(--border); }
+        .testimonials-section { background: #0A0A0A; border-bottom: 1px solid #1A1A1A; }
         .testimonials-inner { display: grid; grid-template-columns: 280px 1fr; gap: 0; }
-        .testimonials-label { padding: 64px 48px; border-right: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; }
-        .testimonials-label .section-eyebrow { color: var(--accent); }
-        .testimonials-label .section-eyebrow::before { background: var(--accent); }
-        .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--bg); line-height: 1.1; }
-        .testimonials-headline em { font-style: italic; color: rgba(255,255,255,0.4); }
+        .testimonials-label { padding: 64px 48px; border-right: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; background: #0A0A0A; }
+        .testimonials-label .section-eyebrow { color: #C41E3A; }
+        .testimonials-label .section-eyebrow::before { background: #C41E3A; }
+        .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: #FAFAF9; line-height: 1.1; }
+        .testimonials-headline em { font-style: italic; color: rgba(196,30,58,0.7); }
         .testimonials-list { display: flex; flex-direction: column; gap: 0; }
-        .testimonial-item { padding: 40px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; }
+        .testimonial-item { padding: 40px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; background: #0A0A0A; }
         .testimonial-item:last-child { border-bottom: none; }
-        .testimonial-item:hover { background: rgba(255,255,255,0.03); }
+        .testimonial-item:hover { background: #111111; }
         .testimonial-featured { padding: 48px; }
         .testimonial-quote-wrap { display: flex; flex-direction: column; gap: 8px; }
         .tq-mark { font-family: var(--font-heading); font-size: 36px; color: var(--accent); line-height: 0.8; opacity: 0.6; }
