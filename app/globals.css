@@ -12,6 +12,17 @@
   --accent-hover: #A01830;
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
+  /* Testimonials — inverted section, always has own dark theme in light mode */
+  --test-bg: #0A0A0A;
+  --test-bg-hover: #111111;
+  --test-border: rgba(255,255,255,0.06);
+  --test-label-border: rgba(255,255,255,0.08);
+  --test-text: rgba(255,255,255,0.75);
+  --test-text-featured: rgba(255,255,255,0.92);
+  --test-heading: #FAFAF9;
+  --test-heading-em: rgba(196,30,58,0.7);
+  --test-name: rgba(255,255,255,0.9);
+  --test-role: rgba(255,255,255,0.35);
 }
 
 .dark {
@@ -23,6 +34,17 @@
   --border: #1F1F1F;
   --accent: #C41E3A;
   --accent-hover: #E02444;
+  /* Testimonials in dark mode — lighter to create contrast against dark page bg */
+  --test-bg: #1A1A1A;
+  --test-bg-hover: #222222;
+  --test-border: rgba(255,255,255,0.06);
+  --test-label-border: rgba(255,255,255,0.06);
+  --test-text: rgba(255,255,255,0.6);
+  --test-text-featured: rgba(255,255,255,0.85);
+  --test-heading: #FAFAF9;
+  --test-heading-em: rgba(196,30,58,0.8);
+  --test-name: rgba(255,255,255,0.85);
+  --test-role: rgba(255,255,255,0.3);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

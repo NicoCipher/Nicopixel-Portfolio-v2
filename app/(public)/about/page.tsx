@@ -98,12 +98,7 @@ export default async function AboutPage() {
         </section>
       )}
 
-      <section className="about-cta">
-        <div className="about-cta-inner">
-          <h2 className="about-cta-title">Have a project?</h2>
-          <Link href="/contact" className="about-cta-btn">Let&apos;s Talk →</Link>
-        </div>
-      </section>
+
 
       <style>{`
         .about-hero { border-bottom: 1px solid var(--border); overflow: hidden; }
@@ -145,11 +140,6 @@ export default async function AboutPage() {
         .about-tools-list { display: flex; flex-wrap: wrap; gap: 10px; }
         .about-tool { padding: 8px 20px; border: 1px solid var(--border); font-size: 12px; letter-spacing: 0.08em; color: var(--fg-muted); transition: border-color 0.2s, color 0.2s; }
         .about-tool:hover { border-color: var(--fg); color: var(--fg); }
-        .about-cta { padding: 100px 48px; text-align: center; }
-        .about-cta-inner { display: flex; flex-direction: column; align-items: center; gap: 32px; }
-        .about-cta-title { font-family: var(--font-heading); font-size: clamp(36px, 5vw, 72px); font-weight: 400; font-style: italic; }
-        .about-cta-btn { display: inline-block; padding: 16px 48px; background: var(--fg); color: var(--bg); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
-        .about-cta-btn:hover { background: var(--accent); }
 
         @media (max-width: 900px) {
           .about-hero-inner { grid-template-columns: 1fr; min-height: auto; }
@@ -169,7 +159,6 @@ export default async function AboutPage() {
           .about-discipline { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
           .about-discipline:last-child { border-bottom: none; }
           .about-tools-inner { padding: 48px 24px; }
-          .about-cta { padding: 72px 24px; }
         }
       `}</style>
     </>
