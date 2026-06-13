@@ -290,26 +290,26 @@ export default async function HomePage() {
         .why-cta-note { font-size: 12px; color: var(--fg-subtle); letter-spacing: 0.06em; font-style: italic; }
 
         /* ── TESTIMONIALS ── */
-        .testimonials-section { background: #0A0A0A; border-bottom: 1px solid #1A1A1A; }
+        .testimonials-section { background: var(--test-bg); border-bottom: 1px solid var(--border); transition: background 0.3s; }
         .testimonials-inner { display: grid; grid-template-columns: 280px 1fr; gap: 0; }
-        .testimonials-label { padding: 64px 48px; border-right: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; background: #0A0A0A; }
-        .testimonials-label .section-eyebrow { color: #C41E3A; }
-        .testimonials-label .section-eyebrow::before { background: #C41E3A; }
-        .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: #FAFAF9; line-height: 1.1; }
-        .testimonials-headline em { font-style: italic; color: rgba(196,30,58,0.7); }
+        .testimonials-label { padding: 64px 48px; border-right: 1px solid var(--test-label-border); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; background: var(--test-bg); }
+        .testimonials-label .section-eyebrow { color: var(--accent); }
+        .testimonials-label .section-eyebrow::before { background: var(--accent); }
+        .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--test-heading); line-height: 1.1; }
+        .testimonials-headline em { font-style: italic; color: var(--test-heading-em); }
         .testimonials-list { display: flex; flex-direction: column; gap: 0; }
-        .testimonial-item { padding: 40px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; background: #0A0A0A; }
+        .testimonial-item { padding: 40px 48px; border-bottom: 1px solid var(--test-border); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; background: var(--test-bg); }
         .testimonial-item:last-child { border-bottom: none; }
-        .testimonial-item:hover { background: #111111; }
+        .testimonial-item:hover { background: var(--test-bg-hover); }
         .testimonial-featured { padding: 48px; }
         .testimonial-quote-wrap { display: flex; flex-direction: column; gap: 8px; }
         .tq-mark { font-family: var(--font-heading); font-size: 36px; color: var(--accent); line-height: 0.8; opacity: 0.6; }
-        .tq-text { font-family: var(--font-heading); font-size: clamp(14px, 1.5vw, 18px); font-style: italic; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,0.75); }
-        .testimonial-featured .tq-text { font-size: clamp(16px, 2vw, 22px); color: rgba(255,255,255,0.9); }
+        .tq-text { font-family: var(--font-heading); font-size: clamp(14px, 1.5vw, 18px); font-style: italic; font-weight: 400; line-height: 1.6; color: var(--test-text); }
+        .testimonial-featured .tq-text { font-size: clamp(16px, 2vw, 22px); color: var(--test-text-featured); }
         .tq-author { display: flex; align-items: center; gap: 14px; }
         .tq-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 16px; color: white; flex-shrink: 0; }
-        .tq-name { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 2px; }
-        .tq-role { display: block; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+        .tq-name { display: block; font-size: 13px; font-weight: 600; color: var(--test-name); margin-bottom: 2px; }
+        .tq-role { display: block; font-size: 11px; color: var(--test-role); letter-spacing: 0.06em; }
         @media(max-width: 900px) {
           .services-grid { grid-template-columns: 1fr; }
           .service-card { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
