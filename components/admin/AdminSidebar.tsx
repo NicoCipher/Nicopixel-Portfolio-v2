@@ -68,6 +68,10 @@ export function AdminSidebar() {
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
+    try {
+      localStorage.removeItem('np_admin_login_time')
+      localStorage.removeItem('np_admin_last_active')
+    } catch { /* ignore */ }
     router.push('/admin/login')
   }
 

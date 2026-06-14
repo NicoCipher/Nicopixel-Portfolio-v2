@@ -31,6 +31,11 @@ function LoginForm() {
         return
       }
 
+      // Record login time for session age tracking
+      try {
+        localStorage.setItem('np_admin_login_time', String(Date.now()))
+        localStorage.setItem('np_admin_last_active', String(Date.now()))
+      } catch { /* ignore */ }
       router.push('/admin/dashboard')
       router.refresh()
     } catch {

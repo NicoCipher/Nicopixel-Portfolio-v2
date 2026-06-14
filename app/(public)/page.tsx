@@ -13,7 +13,7 @@ export default async function HomePage() {
     { data: whyItems },
     { data: testimonials },
   ] = await Promise.all([
-    supabase.from('projects').select('*').eq('published', true).eq('featured', true).order('sort_order').limit(4),
+    supabase.from('projects').select('*').eq('published', true).eq('featured', true).order('sort_order').limit(10),
     supabase.from('site_settings').select('key, value'),
     supabase.from('services').select('*').eq('active', true).order('sort_order'),
     supabase.from('why_items').select('*').order('sort_order'),
@@ -249,7 +249,7 @@ export default async function HomePage() {
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
         .section-title em { font-style: italic; color: var(--accent); }
         .hero-project { aspect-ratio: 16/7; }
-        .projects-subgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; }
+        .projects-subgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; } .projects-subgrid .sub-card-wrap:nth-child(3n+1):last-child { grid-column: span 3; }
         .sub-card { aspect-ratio: 4/3; }
         .cta-strip { background: var(--accent); padding: 72px 48px; }
         .cta-strip-inner { max-width: 700px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }

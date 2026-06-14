@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
-import { Cursor } from '@/components/ui/Cursor'
 import { Analytics } from '@vercel/analytics/next'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
@@ -87,7 +86,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider>
-          <Cursor />
           {children}
         </ThemeProvider>
         <Analytics />
