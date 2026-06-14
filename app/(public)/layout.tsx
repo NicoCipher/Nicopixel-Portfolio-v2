@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/layout/Navbar'
+import { PageTracker } from '@/components/ui/PageTracker'
 import { Footer } from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/server'
 
@@ -11,6 +12,7 @@ export default async function PublicLayout({ children }: { children: React.React
   return (
     <>
       <Navbar settings={settings} />
+      <PageTracker />
       <main style={{ paddingTop: 64 }}>
         {children}
       </main>
