@@ -13,7 +13,7 @@ export default async function PublicLayout({ children }: { children: React.React
     <>
       <Navbar settings={settings} />
       <PageTracker />
-      <main style={{ paddingTop: 64 }}>
+      <main style={{ paddingTop: 64, overflowX: 'hidden', maxWidth: '100vw' }}>
         {children}
       </main>
       <Footer settings={settings} />
