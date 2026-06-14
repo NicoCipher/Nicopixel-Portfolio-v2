@@ -32,6 +32,8 @@ export function ProjectForm({ project }: { project?: Project }) {
     featured: project?.featured ?? false,
     published: project?.published ?? false,
     sort_order: project?.sort_order ?? 0,
+    seo_title: (project as unknown as Record<string,string>)?.seo_title ?? '',
+    seo_description: (project as unknown as Record<string,string>)?.seo_description ?? '',
   })
   const [coverImage, setCoverImage] = useState<string>(project?.cover_image ?? '')
   const [images, setImages] = useState<string[]>(project?.images ?? [])
@@ -199,6 +201,37 @@ export function ProjectForm({ project }: { project?: Project }) {
             onFocus={e => (e.target.style.borderColor = '#C41E3A')}
             onBlur={e => (e.target.style.borderColor = '#1F1F1F')}
           />
+        </div>
+
+        {/* SEO */}
+        <div style={{ paddingTop: 8 }}>
+          <p style={{ fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#C41E3A', marginBottom: 16 }}>SEO (Search Engine)</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div>
+              <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>
+                SEO Title <span style={{ color: '#444', textTransform: 'none', letterSpacing: 0 }}>(defaults to project title)</span>
+              </label>
+              <input style={inputStyle} value={form.seo_title}
+                onChange={e => setForm(f => ({ ...f, seo_title: e.target.value }))}
+                onFocus={e => (e.target.style.borderColor = '#C41E3A')}
+                onBlur={e => (e.target.style.borderColor = '#1F1F1F')}
+                placeholder={form.title || 'Project title for Google'}
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>
+                SEO Description <span style={{ color: '#444', textTransform: 'none', letterSpacing: 0 }}>(shown in Google results)</span>
+              </label>
+              <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={2} value={form.seo_description}
+                onChange={e => setForm(f => ({ ...f, seo_description: e.target.value }))}
+                onFocus={e => (e.target.style.borderColor = '#C41E3A')}
+                onBlur={e => (e.target.style.borderColor = '#1F1F1F')}
+                placeholder="Brief description for search results (150 characters ideal)..."
+                maxLength={160}
+              />
+              <p style={{ fontSize: 10, color: '#444', marginTop: 4 }}>{form.seo_description.length}/160</p>
+            </div>
+          </div>
         </div>
 
         {/* Toggles */}
