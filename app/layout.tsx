@@ -59,7 +59,14 @@ export const metadata: Metadata = {
   alternates: { canonical: BASE_URL },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Fetch favicon and logo from settings
+  const { createClient } = await import('@/lib/supabase/server')
+  const supabase = await createClient()
+  const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', ['favicon_url', 'logo_url'])
+  const siteAssets: Record<string, string> = {}
+  rows?.forEach((r: { key: string; value: string | null }) => { if (r.value) siteAssets[r.key] = r.value })
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -76,8 +83,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        {siteAssets.favicon_url
+          ? <><link rel="icon" href={siteAssets.favicon_url} /><link rel="apple-touch-icon" href={siteAssets.favicon_url} /></>
+          : <><link rel="icon" href="/favicon.ico" sizes="any" /><link rel="apple-touch-icon" href="/icon-192.png" /></>
+        }
         <meta name="theme-color" content="#0A0A0A" />
         <script
           type="application/ld+json"
