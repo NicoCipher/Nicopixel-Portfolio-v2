@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
@@ -7,6 +8,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
+  { href: '/services', label: 'Services' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]

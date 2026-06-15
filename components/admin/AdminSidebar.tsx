@@ -1,7 +1,8 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 const navItems = [
@@ -58,6 +59,29 @@ function SidebarLinks({ pathname, onClose, onLogout }: { pathname: string; onClo
       </div>
     </div>
   )
+}
+
+function SidebarLogo() {
+  const [logoUrl, setLogoUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      const { data } = await supabase.from('site_settings').select('value').eq('key', 'logo_url').single()
+      if (data?.value) setLogoUrl(data.value)
+    }
+    fetchLogo()
+  }, [])
+
+  if (logoUrl) {
+    return (
+      <div style={{ position: 'relative', height: 28, width: 100 }}>
+        <Image src={logoUrl} alt="Logo" fill style={{ objectFit: 'contain', objectPosition: 'left', filter: 'brightness(0) invert(1)' }} />
+      </div>
+    )
+  }
+  return <span style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 600, color: '#FAFAF9', letterSpacing: '0.02em' }}>Nicopixel</span>
 }
 
 export function AdminSidebar() {

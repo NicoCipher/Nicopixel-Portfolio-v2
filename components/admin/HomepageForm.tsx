@@ -145,18 +145,32 @@ export function HomepageForm({
   return (
     <div>
       {/* Tabs */}
-      <div style={{ display: 'flex', borderBottom: '1px solid #1F1F1F', marginBottom: 32, gap: 0 }}>
-        {TABS.map((t, i) => (
-          <button key={t} onClick={() => setTab(i)} style={{
-            padding: '12px 24px', background: 'none', border: 'none',
-            fontSize: 12, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase',
-            color: tab === i ? '#FAFAF9' : '#555',
-            borderBottom: tab === i ? '2px solid #C41E3A' : '2px solid transparent',
-            marginBottom: -1, fontFamily: 'inherit', transition: 'color 0.2s',
-          }}>{t}</button>
-        ))}
-        {saved && <span style={{ marginLeft: 'auto', alignSelf: 'center', fontSize: 12, color: '#4CAF50', paddingRight: 8 }}>✓ Saved</span>}
+      <div style={{ overflowX: 'auto', scrollbarWidth: 'none', borderBottom: '1px solid #1F1F1F', marginBottom: 32 }}>
+        <div style={{ display: 'flex', gap: 0, minWidth: 'max-content' }}>
+          {TABS.map((t, i) => (
+            <button key={t} onClick={() => setTab(i)} style={{
+              padding: '12px 24px', background: 'none', border: 'none',
+              fontSize: 12, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase',
+              color: tab === i ? '#FAFAF9' : '#555',
+              borderBottom: tab === i ? '2px solid #C41E3A' : '2px solid transparent',
+              marginBottom: -1, fontFamily: 'inherit', transition: 'color 0.2s', whiteSpace: 'nowrap',
+            }}>{t}</button>
+          ))}
+        </div>
       </div>
+
+      {/* Saved toast — fixed bottom right */}
+      {saved && (
+        <div style={{
+          position: 'fixed', bottom: 24, right: 24, zIndex: 999,
+          background: '#1A2A1A', border: '1px solid #4CAF50',
+          padding: '12px 20px', fontSize: 13, color: '#4CAF50',
+          display: 'flex', alignItems: 'center', gap: 8,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+        }}>
+          <span>✓</span> Saved successfully
+        </div>
+      )}
 
       {/* ── HERO TAB ── */}
       {tab === 0 && (
