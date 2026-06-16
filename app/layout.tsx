@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import { Analytics } from '@vercel/analytics/next'
+import { createClient } from '@/lib/supabase/server'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -61,7 +62,6 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Fetch favicon and logo from settings
-  const { createClient } = await import('@/lib/supabase/server')
   const supabase = await createClient()
   const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', ['favicon_url', 'logo_url'])
   const siteAssets: Record<string, string> = {}

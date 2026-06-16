@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { createClient as createBrowserClient } from '@/lib/supabase/client'
 import { createClient } from '@/lib/supabase/client'
 
 const navItems = [
@@ -66,8 +67,7 @@ function SidebarLogo() {
 
   useEffect(() => {
     const fetchLogo = async () => {
-      const { createClient } = await import('@/lib/supabase/client')
-      const supabase = createClient()
+      const supabase = createBrowserClient()
       const { data } = await supabase.from('site_settings').select('value').eq('key', 'logo_url').single()
       if (data?.value) setLogoUrl(data.value)
     }
