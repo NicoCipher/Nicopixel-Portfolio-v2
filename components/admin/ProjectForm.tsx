@@ -34,6 +34,14 @@ export function ProjectForm({ project }: { project?: Project }) {
     sort_order: project?.sort_order ?? 0,
     seo_title: (project as unknown as Record<string,string>)?.seo_title ?? '',
     seo_description: (project as unknown as Record<string,string>)?.seo_description ?? '',
+    client_name: (project as unknown as Record<string,string>)?.client_name ?? '',
+    industry: (project as unknown as Record<string,string>)?.industry ?? '',
+    brief: (project as unknown as Record<string,string>)?.brief ?? '',
+    challenge: (project as unknown as Record<string,string>)?.challenge ?? '',
+    approach: (project as unknown as Record<string,string>)?.approach ?? '',
+    outcome: (project as unknown as Record<string,string>)?.outcome ?? '',
+    results: (project as unknown as Record<string,string>)?.results ?? '',
+    is_case_study: (project as unknown as Record<string,boolean>)?.is_case_study ?? false,
   })
   const [coverImage, setCoverImage] = useState<string>(project?.cover_image ?? '')
   const [images, setImages] = useState<string[]>(project?.images ?? [])
@@ -201,6 +209,54 @@ export function ProjectForm({ project }: { project?: Project }) {
             onFocus={e => (e.target.style.borderColor = '#C41E3A')}
             onBlur={e => (e.target.style.borderColor = '#1F1F1F')}
           />
+        </div>
+
+        {/* Case Study */}
+        <div style={{ paddingTop: 8 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <p style={{ fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#C41E3A', margin: 0 }}>Case Study</p>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+              <div onClick={() => setForm(f => ({ ...f, is_case_study: !f.is_case_study }))} style={{ width: 36, height: 20, borderRadius: 10, background: form.is_case_study ? '#C41E3A' : '#333', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
+                <div style={{ position: 'absolute', top: 2, left: form.is_case_study ? 18 : 2, width: 16, height: 16, borderRadius: '50%', background: 'white', transition: 'left 0.2s' }} />
+              </div>
+              <span style={{ fontSize: 11, color: '#999' }}>Show as case study</span>
+            </label>
+          </div>
+
+          {form.is_case_study && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, background: '#0A0A0A', border: '1px solid #1F1F1F', padding: 20, marginBottom: 4 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div>
+                  <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Client Name</label>
+                  <input style={inputStyle} value={form.client_name} onChange={e => setForm(f => ({ ...f, client_name: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="e.g. Kemora Essentials" />
+                </div>
+                <div>
+                  <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Industry</label>
+                  <input style={inputStyle} value={form.industry} onChange={e => setForm(f => ({ ...f, industry: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="e.g. Skincare, Retail" />
+                </div>
+              </div>
+              <div>
+                <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Brief</label>
+                <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={2} value={form.brief} onChange={e => setForm(f => ({ ...f, brief: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="What the client asked for, in a sentence or two." />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Challenge</label>
+                <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={3} value={form.challenge} onChange={e => setForm(f => ({ ...f, challenge: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="The problem that needed solving — be specific." />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Approach</label>
+                <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={3} value={form.approach} onChange={e => setForm(f => ({ ...f, approach: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="How you thought through and tackled the challenge." />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Outcome</label>
+                <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={3} value={form.outcome} onChange={e => setForm(f => ({ ...f, outcome: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="What was delivered and how it was received." />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 6 }}>Results <span style={{ color: '#444', textTransform: 'none', letterSpacing: 0 }}>(optional, if available)</span></label>
+                <textarea style={{ ...inputStyle, resize: 'vertical' }} rows={2} value={form.results} onChange={e => setForm(f => ({ ...f, results: e.target.value }))} onFocus={e => (e.target.style.borderColor = '#C41E3A')} onBlur={e => (e.target.style.borderColor = '#1F1F1F')} placeholder="e.g. 40% increase in social engagement, sold out launch." />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* SEO */}
