@@ -83,10 +83,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {siteAssets.favicon_url
-          ? <><link rel="icon" href={siteAssets.favicon_url} /><link rel="apple-touch-icon" href={siteAssets.favicon_url} /></>
-          : <><link rel="icon" href="/favicon.ico" sizes="any" /><link rel="apple-touch-icon" href="/icon-192.png" /></>
-        }
+        {siteAssets.favicon_url && (
+          <>
+            <link rel="icon" type="image/png" href={siteAssets.favicon_url} />
+            <link rel="shortcut icon" href={siteAssets.favicon_url} />
+            <link rel="apple-touch-icon" href={siteAssets.favicon_url} />
+          </>
+        )}
         <meta name="theme-color" content="#0A0A0A" />
         <script
           type="application/ld+json"
