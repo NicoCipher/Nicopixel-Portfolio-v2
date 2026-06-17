@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -48,9 +49,13 @@ export default function ContactPage() {
             }}>
               Let&apos;s work<br /><em>together.</em>
             </h1>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)', marginBottom: 48 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)', marginBottom: 28 }}>
               Have a project in mind? A brand to build, an event to design for, or print to produce? Let&apos;s talk.
             </p>
+            <Link href="/book-a-call" className="contact-book-link">
+              Prefer to talk it through? <span className="contact-book-arrow">Book a free call →</span>
+            </Link>
+            <div style={{ marginTop: 40 }}>
             {[
               { label: 'Email', value: 'nicopixelll@gmail.com' },
               { label: 'Location', value: 'Lagos, Nigeria' },
@@ -67,6 +72,7 @@ export default function ContactPage() {
                 <span style={{ fontSize: 14, color: 'var(--fg-muted)' }}>{item.value}</span>
               </div>
             ))}
+            </div>
           </div>
 
           {/* Right — form */}
@@ -124,6 +130,14 @@ export default function ContactPage() {
       </div>
 
       <style>{`
+        .contact-book-link {
+          display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+          font-size: 13px; color: var(--fg-muted); text-decoration: none;
+          padding: 14px 18px; border: 1px solid var(--border);
+          transition: border-color 0.2s, background 0.2s;
+        }
+        .contact-book-link:hover { border-color: var(--accent); background: var(--bg-secondary); }
+        .contact-book-arrow { color: var(--accent); font-weight: 600; letter-spacing: 0.02em; }
         .contact-section {
           min-height: calc(100vh - 64px);
           padding: 80px 48px;
