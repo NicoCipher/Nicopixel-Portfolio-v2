@@ -65,9 +65,7 @@ export default async function ServicesPage() {
                     </div>
                   )}
                 </div>
-                <Link href="/contact" className="svc-card-cta">
-                  Get a Quote →
-                </Link>
+
               </div>
 
               {/* Right — deliverables */}
@@ -211,14 +209,7 @@ export default async function ServicesPage() {
           font-size: 15px; font-weight: 600; color: var(--fg);
           font-family: var(--font-heading);
         }
-        .svc-card-cta {
-          display: inline-block; padding: 13px 32px;
-          background: var(--fg); color: var(--bg);
-          font-size: 11px; font-weight: 600;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          text-decoration: none; transition: background 0.2s;
-        }
-        .svc-card-cta:hover { background: var(--accent); }
+
 
         /* Deliverables */
         .svc-card-right { padding-top: 8px; }

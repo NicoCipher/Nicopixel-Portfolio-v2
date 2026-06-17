@@ -157,8 +157,24 @@ export function AboutForm({ about }: { about?: AboutContent | null }) {
                 setNewTool('')
               }
             }}
-            placeholder="Add a tool and press Enter"
+            placeholder="Add a tool and press Enter or tap Add"
           />
+          <button
+            type="button"
+            onClick={() => {
+              if (newTool.trim()) {
+                setTools(t => [...t, newTool.trim()])
+                setNewTool('')
+              }
+            }}
+            style={{
+              padding: '0 18px',
+              background: '#C41E3A', color: 'white',
+              border: 'none', fontSize: 11, fontWeight: 600,
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              fontFamily: 'inherit', flexShrink: 0,
+            }}
+          >Add</button>
         </div>
       </div>
 
