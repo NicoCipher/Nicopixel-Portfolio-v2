@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
+import { AnimatedStat } from '@/components/ui/AnimatedStat'
 
 export const metadata = { title: 'About — Nicopixel' }
 
@@ -64,8 +65,7 @@ export default async function AboutPage() {
       <section className="about-stats">
         {stats.map(s => (
           <div key={s.label} className="about-stat">
-            <span className="about-stat-num">{s.num}</span>
-            <span className="about-stat-label">{s.label}</span>
+            <AnimatedStat value={s.num} label={s.label} numClass="about-stat-num" labelClass="about-stat-label" />
           </div>
         ))}
       </section>

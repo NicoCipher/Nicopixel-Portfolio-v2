@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/server'
+import { createAdminClient, createClient } from '@/lib/supabase/server'
 
 const MAX_ATTEMPTS = 5
 const LOCKOUT_MINUTES = 15
@@ -35,7 +35,6 @@ export async function POST(req: NextRequest) {
   }
 
   // Attempt login with user's Supabase client
-  const { createClient } = await import('@/lib/supabase/server')
   const userSupabase = await createClient()
   const { data, error } = await userSupabase.auth.signInWithPassword({ email, password })
 

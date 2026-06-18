@@ -6,7 +6,7 @@ import { BookingEmbed } from '@/components/sections/BookingEmbed'
 function ContactPageInner() {
   const searchParams = useSearchParams()
   const [mode, setMode] = useState<'message' | 'call'>('message')
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', website: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
 
@@ -30,7 +30,7 @@ function ContactPageInner() {
       const data = await res.json()
       if (!res.ok) { setError(data.error || 'Something went wrong.'); setStatus('error'); return }
       setStatus('success')
-      setForm({ name: '', email: '', subject: '', message: '' })
+      setForm({ name: '', email: '', subject: '', message: '', website: '' })
     } catch {
       setError('Network error. Please try again.')
       setStatus('error')
@@ -113,6 +113,17 @@ function ContactPageInner() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+                {/* Honeypot — hidden from real users, bots tend to fill every field */}
+                <input
+                  type="text"
+                  name="website"
+                  value={form.website}
+                  onChange={e => setForm({ ...form, website: e.target.value })}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+                  aria-hidden="true"
+                />
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Name</label>
