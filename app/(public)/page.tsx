@@ -324,7 +324,7 @@ export default async function HomePage() {
           .testimonials-grid { grid-template-columns: 1fr 1fr; }
         }
         @media(max-width: 767px) {
-          .hero-section { padding: 60px 20px 48px; }
+          .hero-section { padding: 24px 20px 48px; min-height: calc(100svh - 64px); }
           .hero-bg-letter { opacity: 0.3; }
           .services-section, .featured-section, .cta-strip { padding: 56px 20px; }
           .why-header { padding: 48px 20px !important; }
