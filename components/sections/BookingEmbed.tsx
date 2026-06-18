@@ -13,7 +13,7 @@ declare global {
 }
 
 const CAL_USERNAME = 'nicopixel'
-const CAL_EVENT = 'discovery-call' // update this if your event slug differs
+const CAL_EVENT = '25min'
 
 export function BookingEmbed() {
   const containerRef = useRef<HTMLDivElement>(null)
