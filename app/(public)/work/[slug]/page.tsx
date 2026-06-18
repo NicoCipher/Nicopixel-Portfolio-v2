@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { ProjectGalleryLightbox } from '@/components/sections/ProjectGalleryLightbox'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -147,18 +148,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       )}
       {project.images && project.images.length > 0 && (
         <div className="proj-gallery">
-          <div className="proj-gallery-grid">
-            {project.images.map((img: string, i: number) => (
-              <div key={i} style={{
-                position: 'relative', overflow: 'hidden',
-                aspectRatio: i === 0 ? '16/9' : '4/3',
-                gridColumn: i === 0 ? 'span 2' : 'span 1',
-                background: 'var(--bg-secondary)',
-              }}>
-                <Image src={img} alt={`${project.title} ${i + 1}`} fill style={{ objectFit: 'cover' }} />
-              </div>
-            ))}
-          </div>
+          <ProjectGalleryLightbox images={project.images} title={project.title} />
         </div>
       )}
 

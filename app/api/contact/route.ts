@@ -27,7 +27,12 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
-  const { name, email, subject, message } = body
+  const { name, email, subject, message, website } = body
+
+  // Honeypot check — if filled, it's a bot. Pretend success so bots don't learn.
+  if (website && website.trim() !== '') {
+    return NextResponse.json({ success: true })
+  }
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return NextResponse.json({ error: 'Name, email and message are required.' }, { status: 400 })

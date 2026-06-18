@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Project } from '@/types'
+import { AnimatedStat } from '@/components/ui/AnimatedStat'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -53,8 +54,7 @@ export default async function HomePage() {
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                 {i > 0 && <div className="h-stat-divider" />}
                 <div className="h-stat">
-                  <span className="h-stat-num">{stat.num}</span>
-                  <span className="h-stat-label">{stat.label}</span>
+                  <AnimatedStat value={stat.num} label={stat.label} />
                 </div>
               </div>
             ))}
