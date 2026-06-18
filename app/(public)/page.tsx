@@ -136,7 +136,7 @@ export default async function HomePage() {
           <p className="cta-strip-sub">{s.cta_strip_sub || 'Brand identity, event design, or print collateral — let\'s talk about what you need.'}</p>
           <div className="cta-strip-btns">
             <Link href="/contact" className="cta-strip-btn">Start a Project →</Link>
-            <Link href="/book-a-call" className="cta-strip-btn-ghost">Book a Free Call</Link>
+            <Link href="/contact?mode=call" className="cta-strip-btn-ghost">Book a Free Call</Link>
           </div>
         </div>
       </section>
