@@ -67,6 +67,11 @@ export default async function ServicesPage() {
                 </div>
 
               </div>
+              <div style={{ marginTop: 4 }}>
+                <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
+                  Get a Quote →
+                </Link>
+              </div>
 
               {/* Right — deliverables */}
               <div className="svc-card-right">
@@ -140,7 +145,7 @@ export default async function ServicesPage() {
           </p>
           <div className="svc-cta-btns">
             <Link href="/contact" className="btn-accent-svc">Start a Project →</Link>
-            <Link href="/work" className="btn-ghost-svc">See My Work</Link>
+            <Link href="/contact?mode=call" className="btn-ghost-svc">Book a Free Call</Link>
           </div>
         </div>
       </section>
@@ -153,7 +158,7 @@ export default async function ServicesPage() {
           max-width: 800px;
         }
         .svc-eyebrow {
-          font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+          font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
           color: var(--accent); margin-bottom: 20px;
           display: flex; align-items: center; gap: 12px;
         }
@@ -202,7 +207,7 @@ export default async function ServicesPage() {
         .svc-card-meta { display: flex; gap: 40px; margin-bottom: 36px; }
         .svc-meta-item { display: flex; flex-direction: column; gap: 4px; }
         .svc-meta-label {
-          font-size: 9px; letter-spacing: 0.18em;
+          font-size: 11px; letter-spacing: 0.12em;
           text-transform: uppercase; color: var(--fg-subtle);
         }
         .svc-meta-value {
@@ -214,7 +219,7 @@ export default async function ServicesPage() {
         /* Deliverables */
         .svc-card-right { padding-top: 8px; }
         .svc-deliverables-label {
-          font-size: 10px; letter-spacing: 0.18em;
+          font-size: 12px; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--fg-subtle);
           margin-bottom: 20px; display: block;
         }
@@ -261,7 +266,7 @@ export default async function ServicesPage() {
         .svc-step:nth-child(4), .svc-step:nth-child(5), .svc-step:nth-child(6) { border-bottom: none; }
         .svc-step-num {
           display: block; font-family: var(--font-heading);
-          font-size: 36px; font-style: italic; color: var(--border);
+          font-size: 44px; font-style: italic; color: var(--border);
           line-height: 1; margin-bottom: 16px;
           transition: color 0.3s;
         }
@@ -270,7 +275,7 @@ export default async function ServicesPage() {
           font-family: var(--font-heading); font-size: 18px;
           font-weight: 400; color: var(--fg); margin-bottom: 10px;
         }
-        .svc-step-desc { font-size: 13px; line-height: 1.75; color: var(--fg-muted); }
+        .svc-step-desc { font-size: 15px; line-height: 1.8; color: var(--fg-muted); }
 
         /* ── FAQ ── */
         .svc-faq {

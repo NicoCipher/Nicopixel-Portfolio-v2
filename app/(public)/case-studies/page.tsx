@@ -35,7 +35,10 @@ export default async function CaseStudiesPage() {
       {!studies || studies.length === 0 ? (
         <div className="cs-empty">
           <p>Case studies coming soon.</p>
-          <Link href="/work" className="cs-empty-link">See all work →</Link>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 8 }}>
+            <Link href="/work" className="cs-empty-link">See all work →</Link>
+            <Link href="/contact" className="cs-empty-link">Start a project →</Link>
+          </div>
         </div>
       ) : (
         <section className="cs-list">
@@ -78,7 +81,7 @@ export default async function CaseStudiesPage() {
 
       <style>{`
         .cs-header { padding: 80px 48px 64px; border-bottom: 1px solid var(--border); max-width: 800px; }
-        .cs-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .cs-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .cs-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .cs-title em { color: var(--accent); font-style: italic; }
         .cs-subtitle { font-size: 16px; line-height: 1.8; color: var(--fg-muted); max-width: 540px; }
@@ -107,12 +110,12 @@ export default async function CaseStudiesPage() {
         .cs-card-body { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
         .cs-card-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent); letter-spacing: 0.18em; }
         .cs-card-meta { display: flex; align-items: center; gap: 8px; }
-        .cs-card-cat { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-subtle); }
-        .cs-card-dot { color: var(--fg-subtle); font-size: 10px; }
-        .cs-card-industry { font-size: 10px; letter-spacing: 0.1em; color: var(--fg-subtle); }
+        .cs-card-cat { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
+        .cs-card-dot { color: var(--fg-subtle); font-size: 11px; }
+        .cs-card-industry { font-size: 11px; letter-spacing: 0.08em; color: var(--fg-subtle); }
         .cs-card-title { font-family: var(--font-heading); font-size: clamp(26px, 3.5vw, 42px); font-weight: 400; line-height: 1.1; color: var(--fg); }
-        .cs-card-brief { font-size: 14px; line-height: 1.75; color: var(--fg-muted); max-width: 440px; }
-        .cs-card-cta { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+        .cs-card-brief { font-size: 15px; line-height: 1.8; color: var(--fg-muted); max-width: 440px; }
+        .cs-card-cta { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; }
         .cs-arrow { transition: transform 0.3s; display: inline-block; }
         .cs-card-link:hover .cs-arrow { transform: translateX(4px); }
 
