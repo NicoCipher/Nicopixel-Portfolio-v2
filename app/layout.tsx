@@ -8,6 +8,9 @@ const BASE_URL = 'https://nicopixel.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
+  verification: {
+    google: 'Iwi20c1kX7mijGTU8x8pfOLmsGdjNlNy9D0v5EOy3qM',
+  },
   title: {
     default: 'Nicopixel — Graphic Designer Lagos',
     template: '%s | Nicopixel',
