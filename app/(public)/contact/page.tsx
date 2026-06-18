@@ -1,11 +1,21 @@
 'use client'
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { BookingEmbed } from '@/components/sections/BookingEmbed'
 
-export default function ContactPage() {
+function ContactPageInner() {
+  const searchParams = useSearchParams()
+  const [mode, setMode] = useState<'message' | 'call'>('message')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (searchParams.get('mode') === 'call') {
+      const t = setTimeout(() => setMode('call'), 0)
+      return () => clearTimeout(t)
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -52,9 +62,16 @@ export default function ContactPage() {
             <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)', marginBottom: 28 }}>
               Have a project in mind? A brand to build, an event to design for, or print to produce? Let&apos;s talk.
             </p>
-            <Link href="/book-a-call" className="contact-book-link">
-              Prefer to talk it through? <span className="contact-book-arrow">Book a free call →</span>
-            </Link>
+            <div className="contact-mode-toggle">
+              <button
+                className={`contact-mode-btn ${mode === 'message' ? 'contact-mode-btn-active' : ''}`}
+                onClick={() => setMode('message')}
+              >Send a Message</button>
+              <button
+                className={`contact-mode-btn ${mode === 'call' ? 'contact-mode-btn-active' : ''}`}
+                onClick={() => setMode('call')}
+              >Book a Call</button>
+            </div>
             <div style={{ marginTop: 40 }}>
             {[
               { label: 'Email', value: 'nicopixelll@gmail.com' },
@@ -75,9 +92,13 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right — form */}
+          {/* Right — form or booking */}
           <div>
-            {status === 'success' ? (
+            {mode === 'call' ? (
+              <div className="contact-booking-wrap">
+                <BookingEmbed />
+              </div>
+            ) : status === 'success' ? (
               <div style={{
                 padding: '48px 40px', border: '1px solid var(--border)',
                 textAlign: 'center',
@@ -130,14 +151,24 @@ export default function ContactPage() {
       </div>
 
       <style>{`
-        .contact-book-link {
-          display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
-          font-size: 13px; color: var(--fg-muted); text-decoration: none;
-          padding: 14px 18px; border: 1px solid var(--border);
-          transition: border-color 0.2s, background 0.2s;
+        .contact-mode-toggle {
+          display: flex; gap: 0;
+          border: 1px solid var(--border);
+          width: fit-content;
         }
-        .contact-book-link:hover { border-color: var(--accent); background: var(--bg-secondary); }
-        .contact-book-arrow { color: var(--accent); font-weight: 600; letter-spacing: 0.02em; }
+        .contact-mode-btn {
+          padding: 12px 24px;
+          background: transparent; border: none;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          color: var(--fg-muted); font-family: var(--font-body);
+          cursor: pointer; transition: background 0.2s, color 0.2s;
+          border-right: 1px solid var(--border);
+        }
+        .contact-mode-btn:last-child { border-right: none; }
+        .contact-mode-btn-active { background: var(--fg); color: var(--bg); }
+        .contact-mode-btn:not(.contact-mode-btn-active):hover { background: var(--bg-secondary); color: var(--fg); }
+        .contact-booking-wrap { min-height: 560px; }
         .contact-section {
           min-height: calc(100vh - 64px);
           padding: 80px 48px;
@@ -212,5 +243,13 @@ export default function ContactPage() {
         }
       `}</style>
     </section>
+  )
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense>
+      <ContactPageInner />
+    </Suspense>
   )
 }
