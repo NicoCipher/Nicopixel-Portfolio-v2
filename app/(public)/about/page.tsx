@@ -100,10 +100,34 @@ export default async function AboutPage() {
 
 
 
+      {/* ── CTA ── */}
+      <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+          <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
+            Work together
+          </p>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 400, lineHeight: 1.05 }}>
+            Let&apos;s build something<br /><em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>worth noticing.</em>
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 480 }}>
+            If you need a graphic designer who takes the brief seriously and delivers work that holds up — let&apos;s talk.
+          </p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link href="/contact" style={{ display: 'inline-block', padding: '14px 36px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
+              Start a Project →
+            </Link>
+            <Link href="/work" style={{ display: 'inline-block', padding: '14px 28px', border: '1px solid var(--border)', color: 'var(--fg-muted)', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}>
+              See My Work
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <style>{`
         .about-hero { border-bottom: 1px solid var(--border); overflow: hidden; }
         .about-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 80vh; }
-        .about-hero-text { padding: 100px 60px 80px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
+        .about-hero-text { padding: 80px 60px 64px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
         .about-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
         .about-eyebrow-line { display: inline-block; width: 24px; height: 1px; background: var(--accent); }
         .about-title { font-family: var(--font-heading); font-size: clamp(42px, 6vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; white-space: pre-line; }
@@ -123,10 +147,10 @@ export default async function AboutPage() {
         .about-stat { padding: 48px 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
         .about-stat:last-child { border-right: none; }
         .about-stat-num { font-family: var(--font-heading); font-size: clamp(40px, 5vw, 64px); font-weight: 400; line-height: 1; color: var(--fg); }
-        .about-stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
+        .about-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-disciplines { border-bottom: 1px solid var(--border); }
         .about-disciplines-inner { padding: 72px 48px; }
-        .about-section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
+        .about-section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
         .about-section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .about-disciplines-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
         .about-discipline { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); }
@@ -134,7 +158,7 @@ export default async function AboutPage() {
         .about-discipline:not(:first-child) { padding-left: 40px; }
         .about-discipline-num { font-family: var(--font-heading); font-size: 11px; color: var(--accent); letter-spacing: 0.16em; display: block; margin-bottom: 16px; }
         .about-discipline-title { font-family: var(--font-heading); font-size: 22px; font-weight: 400; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
-        .about-discipline-desc { font-size: 14px; line-height: 1.8; color: var(--fg-muted); }
+        .about-discipline-desc { font-size: 15px; line-height: 1.85; color: var(--fg-muted); }
         .about-tools { border-bottom: 1px solid var(--border); }
         .about-tools-inner { padding: 60px 48px; }
         .about-tools-list { display: flex; flex-wrap: wrap; gap: 10px; }

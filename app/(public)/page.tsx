@@ -119,8 +119,8 @@ export default async function HomePage() {
                     : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 24, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{project.category}</span></div>
                   }
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px 20px' }}>
-                    <span style={{ fontSize: 8, letterSpacing: '0.2em', textTransform: 'capitalize', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 4 }}>{project.category}</span>
-                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 400, color: 'white', margin: 0 }}>{project.title}</h4>
+                    <span style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'capitalize', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 6 }}>{project.category}</span>
+                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 18, fontWeight: 400, color: 'white', margin: 0 }}>{project.title}</h4>
                   </div>
                 </div>
               </Link>
@@ -209,11 +209,32 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* ── BOTTOM CTA ── */}
+      <section className="bottom-cta-section">
+        <div className="bottom-cta-inner">
+          <p className="bottom-cta-eyebrow">
+            <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
+            Ready to start?
+          </p>
+          <h2 className="bottom-cta-title">Your brand deserves to<br /><em>look the part.</em></h2>
+          <div className="bottom-cta-btns">
+            <Link href="/contact" className="btn-accent">Start a Project →</Link>
+            <Link href="/contact?mode=call" className="btn-ghost">Book a Free Call</Link>
+          </div>
+        </div>
+      </section>
+
       <style>{`
+        .bottom-cta-section { padding: 100px 48px; border-top: 1px solid var(--border); text-align: center; }
+        .bottom-cta-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .bottom-cta-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 12px; }
+        .bottom-cta-title { font-family: var(--font-heading); font-size: clamp(32px, 5vw, 64px); font-weight: 400; line-height: 1.05; }
+        .bottom-cta-title em { font-style: italic; color: var(--accent); }
+        .bottom-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-section { min-height: calc(100svh - 64px); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
         .hero-bg-letter { position: absolute; bottom: -60px; right: -20px; font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: clamp(200px, 35vw, 500px); color: var(--border); line-height: 1; user-select: none; pointer-events: none; }
-        .hero-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+        .hero-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
         .hero-title { font-family: var(--font-heading); font-size: clamp(42px, 7vw, 108px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .hero-title em { color: var(--accent); font-style: italic; }
         .hero-sub { font-size: clamp(14px, 1.5vw, 16px); line-height: 1.8; color: var(--fg-muted); max-width: 520px; margin-bottom: 40px; }
@@ -221,7 +242,7 @@ export default async function HomePage() {
         .hero-stats { display: flex; align-items: center; gap: 0; }
         .h-stat { display: flex; flex-direction: column; gap: 2px; }
         .h-stat-num { font-family: var(--font-heading); font-size: 28px; font-weight: 400; color: var(--fg); line-height: 1; }
-        .h-stat-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-subtle); }
+        .h-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .h-stat-divider { width: 1px; height: 32px; background: var(--border); margin: 0 24px; }
         .btn-accent { display: inline-block; padding: 14px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s; }
         .btn-accent:hover { background: #a01830; transform: translateY(-1px); }
@@ -242,12 +263,12 @@ export default async function HomePage() {
         .service-title { font-family: var(--font-heading); font-size: 22px; font-weight: 400; color: var(--fg); line-height: 1.2; }
         .service-desc { font-size: 14px; line-height: 1.8; color: var(--fg-muted); flex: 1; }
         .service-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
-        .service-list li { font-size: 12px; color: var(--fg-muted); display: flex; align-items: center; }
+        .service-list li { font-size: 13px; color: var(--fg-muted); display: flex; align-items: center; }
         .service-cta { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; font-weight: 600; transition: letter-spacing 0.2s; margin-top: 4px; }
         .service-cta:hover { letter-spacing: 0.18em; }
         .featured-section { padding: 80px 48px; border-bottom: 1px solid var(--border); }
         .featured-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
-        .section-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .section-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .section-eyebrow::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--accent); }
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
         .section-title em { font-style: italic; color: var(--accent); }
@@ -324,7 +345,7 @@ export default async function HomePage() {
           .testimonials-grid { grid-template-columns: 1fr 1fr; }
         }
         @media(max-width: 767px) {
-          .hero-section { padding: 24px 20px 48px; min-height: calc(100svh - 64px); }
+          .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
           .hero-bg-letter { opacity: 0.3; }
           .services-section, .featured-section, .cta-strip { padding: 56px 20px; }
           .why-header { padding: 48px 20px !important; }
@@ -342,6 +363,7 @@ export default async function HomePage() {
           .sub-card { aspect-ratio: 1/1; border-radius: 4px; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 12px; }
           .testimonials-grid { grid-template-columns: 1fr; }
+          .bottom-cta-section { padding: 72px 20px; }
         }
       `}</style>
     </>

@@ -173,23 +173,43 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       )}
 
+      {/* ── CTA ── */}
+      <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', background: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}>
+            Want work like this<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>for your brand?</em>
+          </h2>
+          <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)' }}>
+            Every project starts with a conversation. Let&apos;s talk about what you need.
+          </p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link href="/contact" style={{ display: 'inline-block', padding: '14px 36px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
+              Start a Project →
+            </Link>
+            <Link href="/contact?mode=call" style={{ display: 'inline-block', padding: '14px 28px', border: '1px solid var(--border)', color: 'var(--fg-muted)', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}>
+              Book a Free Call
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <style>{`
         .proj-meta { padding: 60px 48px; border-bottom: 1px solid var(--border); }
 
         .case-study-section { border-bottom: 1px solid var(--border); padding: 56px 48px 64px; background: var(--bg-secondary); }
         .case-study-meta-row { display: flex; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
         .cs-meta-item { display: flex; flex-direction: column; gap: 5px; }
-        .cs-meta-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-subtle); }
+        .cs-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .cs-meta-value { font-size: 15px; font-weight: 600; color: var(--fg); font-family: var(--font-heading); }
         .case-study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--border); }
         .cs-block { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .cs-block:nth-child(2n) { border-right: none; padding-right: 0; padding-left: 40px; }
         .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: none; }
-        .cs-block-num { display: block; font-family: var(--font-heading); font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 14px; }
+        .cs-block-num { display: block; font-family: var(--font-heading); font-size: 12px; color: var(--accent); letter-spacing: 0.14em; margin-bottom: 14px; }
         .cs-block-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin-bottom: 12px; }
         .cs-block-text { font-size: 14px; line-height: 1.85; color: var(--fg-muted); }
         .cs-results { margin-top: 40px; padding: 28px 32px; background: var(--accent); display: flex; flex-direction: column; gap: 8px; }
-        .cs-results-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+        .cs-results-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
         .cs-results-text { font-family: var(--font-heading); font-size: 18px; font-style: italic; color: white; line-height: 1.5; }
 
         .proj-gallery { padding: 48px 48px; border-bottom: 1px solid var(--border); }

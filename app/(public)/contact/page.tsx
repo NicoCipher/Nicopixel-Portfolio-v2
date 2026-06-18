@@ -168,13 +168,14 @@ function ContactPageInner() {
           width: fit-content;
         }
         .contact-mode-btn {
-          padding: 12px 24px;
+          padding: 14px 28px;
           background: transparent; border: none;
-          font-size: 11px; font-weight: 600;
+          font-size: 12px; font-weight: 600;
           letter-spacing: 0.1em; text-transform: uppercase;
           color: var(--fg-muted); font-family: var(--font-body);
           cursor: pointer; transition: background 0.2s, color 0.2s;
           border-right: 1px solid var(--border);
+          min-height: 48px;
         }
         .contact-mode-btn:last-child { border-right: none; }
         .contact-mode-btn-active { background: var(--fg); color: var(--bg); }
@@ -251,6 +252,7 @@ function ContactPageInner() {
             gap: 28px;
           }
           .form-submit { width: 100%; text-align: center; }
+          .form-submit button { width: 100% !important; padding: 16px 32px !important; font-size: 13px !important; }
         }
       `}</style>
     </section>
