@@ -100,7 +100,7 @@ export default async function HomePage() {
             <Link href={`/work/${projects[0].slug}`} style={{ display: 'block', textDecoration: 'none', marginBottom: 2 }}>
               <div className="hero-project" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
                 {projects[0].cover_image
-                  ? <Image src={projects[0].cover_image} alt={projects[0].title} fill style={{ objectFit: 'cover' }} />
+                  ? <Image src={projects[0].cover_image} alt={`${projects[0].title} — ${projects[0].category} design by Nicopixel, Lagos`} fill style={{ objectFit: 'cover' }} />
                   : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 60, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{projects[0].category}</span></div>
                 }
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(20px, 4vw, 40px)' }}>
@@ -115,7 +115,7 @@ export default async function HomePage() {
               <Link key={project.id} href={`/work/${project.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <div className="sub-card" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
                   {project.cover_image
-                    ? <Image src={project.cover_image} alt={project.title} fill style={{ objectFit: 'cover' }} />
+                    ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design by Nicopixel`} fill style={{ objectFit: 'cover' }} />
                     : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 24, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{project.category}</span></div>
                   }
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px 20px' }}>

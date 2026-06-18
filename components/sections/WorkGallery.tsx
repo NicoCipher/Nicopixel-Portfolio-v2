@@ -88,7 +88,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
 
                   <div style={{ position: 'absolute', inset: 0 }}>
                     {featured.cover_image
-                      ? <Image src={featured.cover_image} alt={featured.title} fill className="gallery-img" style={{ objectFit: 'cover' }} priority />
+                      ? <Image src={featured.cover_image} alt={`${featured.title} — ${featured.category} design by Nicopixel`} fill className="gallery-img" style={{ objectFit: 'cover' }} priority />
                       : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <span style={{ fontFamily: 'var(--font-heading)', fontSize: 60, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{featured.category}</span>
                         </div>
@@ -121,7 +121,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
 
                       <div style={{ position: 'absolute', inset: 0 }}>
                         {project.cover_image
-                          ? <Image src={project.cover_image} alt={project.title} fill className="gallery-img" style={{ objectFit: 'cover' }} />
+                          ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design by Nicopixel`} fill className="gallery-img" style={{ objectFit: 'cover' }} />
                           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                               <span style={{ fontFamily: 'var(--font-heading)', fontSize: 24, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{project.category}</span>
                             </div>

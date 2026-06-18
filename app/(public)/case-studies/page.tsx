@@ -48,7 +48,7 @@ export default async function CaseStudiesPage() {
               <article className="cs-card">
                 <div className="cs-card-img-wrap">
                   {study.cover_image
-                    ? <Image src={study.cover_image} alt={study.title} fill className="cs-card-img" style={{ objectFit: 'cover' }} />
+                    ? <Image src={study.cover_image} alt={`${study.title} case study — ${study.category} design by Nicopixel`} fill className="cs-card-img" style={{ objectFit: 'cover' }} />
                     : <div className="cs-card-placeholder"><span>{study.category}</span></div>
                   }
                   <div className="cs-card-overlay" />

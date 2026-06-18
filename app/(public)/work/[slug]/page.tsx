@@ -68,7 +68,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Hero image */}
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/8', background: 'var(--bg-secondary)', overflow: 'hidden' }}>
         {project.cover_image
-          ? <Image src={project.cover_image} alt={project.title} fill style={{ objectFit: 'cover' }} priority />
+          ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design case study by Nicopixel, Lagos`} fill style={{ objectFit: 'cover' }} priority />
           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontFamily: 'var(--font-heading)', fontSize: 80, fontStyle: 'italic', color: 'var(--fg-subtle)' }}>{project.category}</span>
             </div>
@@ -162,7 +162,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {related.map((p: typeof project) => (
               <Link key={p.id} href={`/work/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-secondary)', overflow: 'hidden' }}>
-                  {p.cover_image && <Image src={p.cover_image} alt={p.title} fill style={{ objectFit: 'cover' }} />}
+                  {p.cover_image && <Image src={p.cover_image} alt={`${p.title} — design by Nicopixel`} fill style={{ objectFit: 'cover' }} />}
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 20 }}>
                     <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 400, color: 'white', margin: 0 }}>{p.title}</h4>
                   </div>
