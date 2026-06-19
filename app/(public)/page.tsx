@@ -129,18 +129,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── MID CTA STRIP ── */}
-      <section className="cta-strip">
-        <div className="cta-strip-inner">
-          <h2 className="cta-strip-title">{s.cta_strip_title || 'Got a project in mind?'}</h2>
-          <p className="cta-strip-sub">{s.cta_strip_sub || 'Brand identity, event design, or print collateral — let\'s talk about what you need.'}</p>
-          <div className="cta-strip-btns">
-            <Link href="/contact" className="cta-strip-btn">Start a Project →</Link>
-            <Link href="/contact?mode=call" className="cta-strip-btn-ghost">Book a Free Call</Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── WHY NICOPIXEL ── */}
       {whyItems && whyItems.length > 0 && (
         <section className="why-section">
@@ -275,15 +263,6 @@ export default async function HomePage() {
         .hero-project { aspect-ratio: 16/7; }
         .projects-subgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; } .projects-subgrid .sub-card-wrap:nth-child(3n+1):last-child { grid-column: span 3; }
         .sub-card { aspect-ratio: 4/3; }
-        .cta-strip { background: var(--accent); padding: 72px 48px; }
-        .cta-strip-inner { max-width: 700px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .cta-strip-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 52px); font-weight: 400; color: white; }
-        .cta-strip-sub { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; }
-        .cta-strip-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-        .cta-strip-btn { display: inline-block; padding: 14px 36px; background: white; color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
-        .cta-strip-btn:hover { background: rgba(255,255,255,0.9); }
-        .cta-strip-btn-ghost { display: inline-block; padding: 14px 28px; border: 1px solid rgba(255,255,255,0.4); color: white; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
-        .cta-strip-btn-ghost:hover { border-color: white; background: rgba(255,255,255,0.1); }
         /* ── WHY ── */
         .why-section { border-bottom: 1px solid var(--border); overflow: hidden; }
         .why-header { padding: 80px 48px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 48px; }
@@ -347,7 +326,7 @@ export default async function HomePage() {
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
           .hero-bg-letter { opacity: 0.3; }
-          .services-section, .featured-section, .cta-strip { padding: 56px 20px; }
+          .services-section, .featured-section { padding: 56px 20px; }
           .why-header { padding: 48px 20px !important; }
           .why-grid { grid-template-columns: 1fr !important; }
           .why-card { padding: 32px 20px !important; border-right: none !important; }
