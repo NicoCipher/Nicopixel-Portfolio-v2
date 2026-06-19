@@ -1,35 +1,10 @@
 import type { MetadataRoute } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createStaticClient } from '@/lib/supabase/static'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = await createClient()
-  const { data: projects } = await supabase
-    .from('projects')
-    .select('slug, updated_at')
-    .eq('published', true)
-
-  const { data: posts } = await supabase
-    .from('blog_posts')
-    .select('slug, updated_at')
-    .eq('published', true)
-
-  const projectUrls: MetadataRoute.Sitemap = (projects || []).map(p => ({
-    url: `${BASE_URL}/work/${p.slug}`,
-    lastModified: new Date(p.updated_at),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }))
-
-  const blogUrls: MetadataRoute.Sitemap = (posts || []).map(p => ({
-    url: `${BASE_URL}/blog/${p.slug}`,
-    lastModified: new Date(p.updated_at),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }))
-
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${BASE_URL}/work`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
@@ -39,7 +14,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.2 },
     { url: `${BASE_URL}/terms-of-service`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.2 },
-    ...projectUrls,
-    ...blogUrls,
   ]
+
+  try {
+    const supabase = createStaticClient()
+    const { data: projects } = await supabase
+      .from('projects')
+      .select('slug, updated_at')
+      .eq('published', true)
+
+    const { data: posts } = await supabase
+      .from('blog_posts')
+      .select('slug, updated_at')
+      .eq('published', true)
+
+    const projectUrls: MetadataRoute.Sitemap = (projects || []).map(p => ({
+      url: `${BASE_URL}/work/${p.slug}`,
+      lastModified: new Date(p.updated_at),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }))
+
+    const blogUrls: MetadataRoute.Sitemap = (posts || []).map(p => ({
+      url: `${BASE_URL}/blog/${p.slug}`,
+      lastModified: new Date(p.updated_at),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }))
+
+    return [...staticPages, ...projectUrls, ...blogUrls]
+  } catch {
+    // If Supabase is briefly unreachable, still return a valid sitemap
+    // with the static pages rather than letting the whole route fail.
+    return staticPages
+  }
 }
