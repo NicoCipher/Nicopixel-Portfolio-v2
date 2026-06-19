@@ -78,7 +78,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Meta */}
       <div className="proj-meta">
         <Link href="/work" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--fg-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: 24 }}>← Back to Work</Link>
-        <span style={{ display: 'block', fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12 }}>{project.category}</span>
+        <span style={{ display: 'block', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12, fontWeight: 600 }}>{project.category}</span>
         <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, lineHeight: 1.1, marginBottom: 24 }}>{project.title}</h1>
         {project.description && (
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 600 }}>{project.description}</p>
