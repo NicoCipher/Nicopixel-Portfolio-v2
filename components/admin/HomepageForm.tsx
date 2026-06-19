@@ -208,15 +208,6 @@ export function HomepageForm({
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#C41E3A', marginBottom: 16 }}>CTA Strip</p>
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Strip Title</label>
-            <input style={inputStyle} value={hero.cta_strip_title} onChange={e => setHero(h => ({ ...h, cta_strip_title: e.target.value }))} onFocus={e => (e.target.style.borderColor='#C41E3A')} onBlur={e => (e.target.style.borderColor='#1F1F1F')} />
-          </div>
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Strip Subtitle</label>
-            <input style={inputStyle} value={hero.cta_strip_sub} onChange={e => setHero(h => ({ ...h, cta_strip_sub: e.target.value }))} onFocus={e => (e.target.style.borderColor='#C41E3A')} onBlur={e => (e.target.style.borderColor='#1F1F1F')} />
-          </div>
           <p style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#C41E3A', marginBottom: 16, marginTop: 8 }}>Why Section Heading</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 28 }}>
             <div style={fieldStyle}>
