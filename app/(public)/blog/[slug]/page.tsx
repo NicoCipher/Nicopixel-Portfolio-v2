@@ -102,7 +102,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <div className="post-cta">
         <h2 className="post-cta-title">Want this kind of thinking on your brand?</h2>
-        <Link href="/contact" className="post-cta-btn">Start a Project →</Link>
+        <div className="post-cta-btns">
+          <Link href="/contact" className="post-cta-btn">Start a Project →</Link>
+          <Link href="/contact?mode=call" className="post-cta-btn-ghost">Book a Free Call</Link>
+        </div>
       </div>
 
       {related && related.length > 0 && (
@@ -147,8 +150,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         .post-cta { max-width: 700px; margin: 64px auto 0; padding: 48px; background: var(--bg-secondary); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
         .post-cta-title { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 32px); font-weight: 400; }
+        .post-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .post-cta-btn { display: inline-block; padding: 13px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
         .post-cta-btn:hover { background: #a01830; }
+        .post-cta-btn-ghost { display: inline-block; padding: 13px 24px; border: 1px solid var(--border); color: var(--fg-muted); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+        .post-cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
         .post-related { max-width: 1000px; margin: 64px auto 0; padding: 56px 48px; border-top: 1px solid var(--border); }
         .post-related-title { font-family: var(--font-heading); font-size: 24px; font-weight: 400; margin-bottom: 32px; }

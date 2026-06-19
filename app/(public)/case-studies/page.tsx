@@ -75,7 +75,10 @@ export default async function CaseStudiesPage() {
       <section className="cs-cta">
         <div className="cs-cta-inner">
           <h2 className="cs-cta-title">Want results like these?</h2>
-          <Link href="/contact" className="cs-cta-btn">Start a Project →</Link>
+          <div className="cs-cta-btns">
+            <Link href="/contact" className="cs-cta-btn">Start a Project →</Link>
+            <Link href="/contact?mode=call" className="cs-cta-btn-ghost">Book a Free Call</Link>
+          </div>
         </div>
       </section>
 
@@ -122,8 +125,11 @@ export default async function CaseStudiesPage() {
         .cs-cta { padding: 100px 48px; text-align: center; }
         .cs-cta-inner { display: flex; flex-direction: column; align-items: center; gap: 28px; }
         .cs-cta-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 52px); font-weight: 400; }
+        .cs-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .cs-cta-btn { display: inline-block; padding: 14px 36px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
         .cs-cta-btn:hover { background: #a01830; }
+        .cs-cta-btn-ghost { display: inline-block; padding: 14px 28px; border: 1px solid var(--border); color: var(--fg-muted); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+        .cs-cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
         @media(max-width: 900px) {
           .cs-card { grid-template-columns: 1fr; min-height: auto; }

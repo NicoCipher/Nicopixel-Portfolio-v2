@@ -55,7 +55,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
                 marginBottom: -1,
               }}>
                 {cat.label}
-                <span style={{ fontSize: 9, color: isActive ? 'var(--accent)' : 'var(--fg-subtle)', letterSpacing: '0.08em' }}>{count}</span>
+                <span style={{ fontSize: 11, color: isActive ? 'var(--accent)' : 'var(--fg-subtle)', letterSpacing: '0.04em' }}>{count}</span>
               </button>
             )
           })}
@@ -155,12 +155,13 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
         .card-cat-tag {
           position: absolute; top: 14px; left: 16px;
           z-index: 3;
-          font-size: 9px; letter-spacing: 0.2em;
+          font-size: 11px; letter-spacing: 0.12em;
+          font-weight: 500;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.9);
-          background: rgba(0,0,0,0.45);
+          color: rgba(255,255,255,0.95);
+          background: rgba(0,0,0,0.55);
           backdrop-filter: blur(6px);
-          padding: 4px 10px;
+          padding: 5px 12px;
           border: 1px solid rgba(255,255,255,0.15);
           border-radius: 2px;
           pointer-events: none;

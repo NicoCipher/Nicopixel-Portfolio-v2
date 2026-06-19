@@ -104,7 +104,7 @@ export default async function HomePage() {
                   : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 60, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{projects[0].category}</span></div>
                 }
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(20px, 4vw, 40px)' }}>
-                  <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'capitalize', color: 'rgba(255,255,255,0.5)', marginBottom: 8, display: 'block' }}>{projects[0].category}</span>
+                  <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'capitalize', color: 'rgba(255,255,255,0.75)', marginBottom: 8, display: 'block', fontWeight: 500 }}>{projects[0].category}</span>
                   <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 42px)', fontWeight: 400, color: 'white', margin: 0 }}>{projects[0].title}</h3>
                 </div>
               </div>
