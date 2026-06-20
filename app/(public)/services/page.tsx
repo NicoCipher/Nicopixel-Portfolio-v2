@@ -24,7 +24,7 @@ export default async function ServicesPage() {
   return (
     <>
       {/* ── HEADER ── */}
-      <section className="svc-header">
+      <section className="svc-header px-page">
         <p className="svc-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Services
@@ -66,11 +66,6 @@ export default async function ServicesPage() {
                   )}
                 </div>
 
-              </div>
-              <div style={{ marginTop: 4 }}>
-                <Link href="/contact" style={{ display: 'inline-block', padding: '12px 28px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
-                  Get a Quote →
-                </Link>
               </div>
 
               {/* Right — deliverables */}
@@ -153,9 +148,9 @@ export default async function ServicesPage() {
       <style>{`
         /* ── HEADER ── */
         .svc-header {
-          padding: 80px 48px 72px;
+          padding-top: 80px;
+          padding-bottom: 72px;
           border-bottom: 1px solid var(--border);
-          max-width: 800px;
         }
         .svc-eyebrow {
           font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;

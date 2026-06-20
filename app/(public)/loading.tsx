@@ -1,6 +1,6 @@
 export default function HomeLoading() {
   return (
-    <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '80px 48px 64px' }}>
+    <div style={{ minHeight: 'calc(100svh - 64px)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }} className="home-loading-hero">
       <div style={{ maxWidth: 760 }}>
         <div className="shimmer" style={{ width: 220, height: 11, borderRadius: 2, marginBottom: 28 }} />
         <div className="shimmer" style={{ width: '65%', height: 80, borderRadius: 2, marginBottom: 12, animationDelay: '0.1s' }} />
@@ -14,13 +14,14 @@ export default function HomeLoading() {
         </div>
       </div>
       <style>{`
+        .home-loading-hero { padding: 80px 48px 64px; }
         .shimmer {
           background: linear-gradient(90deg, var(--bg-secondary) 0%, var(--border) 50%, var(--bg-secondary) 100%);
           background-size: 200% 100%;
           animation: skeleton-shimmer 1.4s ease-in-out infinite;
         }
         @media(max-width: 767px) {
-          div[style*="padding: 80px 48px"] { padding: 60px 20px 48px !important; }
+          .home-loading-hero { padding: 0 20px 48px !important; }
         }
       `}</style>
     </div>

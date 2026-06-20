@@ -46,7 +46,7 @@ export default async function AboutPage() {
       </section>
 
       <section className="about-intro">
-        <div className="about-intro-inner">
+        <div className="about-intro-inner px-page">
           <div className="about-quote">
             <span className="about-quote-mark">&ldquo;</span>
             <p>{about?.pull_quote || 'Every brand has a story worth telling well. I make sure it gets told.'}</p>
@@ -62,7 +62,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="about-stats">
+      <section className="about-stats px-page">
         {stats.map(s => (
           <div key={s.label} className="about-stat">
             <AnimatedStat value={s.num} label={s.label} numClass="about-stat-num" labelClass="about-stat-label" />
@@ -71,7 +71,7 @@ export default async function AboutPage() {
       </section>
 
       <section className="about-disciplines">
-        <div className="about-disciplines-inner">
+        <div className="about-disciplines-inner px-page">
           <p className="about-section-label">What I do</p>
           <div className="about-disciplines-grid">
             {disciplines.map(d => (
@@ -87,7 +87,7 @@ export default async function AboutPage() {
 
       {about?.tools && about.tools.length > 0 && (
         <section className="about-tools">
-          <div className="about-tools-inner">
+          <div className="about-tools-inner px-page">
             <p className="about-section-label">Tools</p>
             <div className="about-tools-list">
               {about.tools.map((tool: string) => (
@@ -113,14 +113,9 @@ export default async function AboutPage() {
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 480 }}>
             If you need a graphic designer who takes the brief seriously and delivers work that holds up — let&apos;s talk.
           </p>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link href="/contact" style={{ display: 'inline-block', padding: '14px 36px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
-              Start a Project →
-            </Link>
-            <Link href="/work" style={{ display: 'inline-block', padding: '14px 28px', border: '1px solid var(--border)', color: 'var(--fg-muted)', fontSize: 11, fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}>
-              See My Work
-            </Link>
-          </div>
+          <Link href="/contact" style={{ display: 'inline-block', padding: '14px 36px', background: 'var(--accent)', color: 'white', fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}>
+            Start a Project →
+          </Link>
         </div>
       </section>
 
@@ -135,7 +130,7 @@ export default async function AboutPage() {
         .about-image-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
         .about-image-placeholder span { font-family: var(--font-heading); font-size: 180px; font-style: italic; color: var(--border); line-height: 1; user-select: none; }
         .about-intro { border-bottom: 1px solid var(--border); }
-        .about-intro-inner { display: grid; grid-template-columns: 1fr 1fr; max-width: var(--content-max); margin: 0 auto; }
+        .about-intro-inner { display: grid; grid-template-columns: 1fr 1fr; }
         .about-quote { padding: 72px 60px 72px 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
         .about-quote-mark { font-family: var(--font-heading); font-size: 120px; line-height: 0.6; color: var(--accent); display: block; margin-bottom: 20px; opacity: 0.4; }
         .about-quote p { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 36px); font-weight: 400; font-style: italic; line-height: 1.3; color: var(--fg); }
@@ -143,13 +138,13 @@ export default async function AboutPage() {
         .about-bio p { font-size: 16px; line-height: 1.9; color: var(--fg-muted); }
         .about-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-meta-dot { color: var(--accent); }
-        .about-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); max-width: var(--content-max); margin: 0 auto; }
+        .about-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
         .about-stat { padding: 48px 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
         .about-stat:last-child { border-right: none; }
         .about-stat-num { font-family: var(--font-heading); font-size: clamp(40px, 5vw, 64px); font-weight: 400; line-height: 1; color: var(--fg); }
         .about-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-disciplines { border-bottom: 1px solid var(--border); }
-        .about-disciplines-inner { padding: 72px 48px; max-width: var(--content-max); margin: 0 auto; }
+        .about-disciplines-inner { padding-top: 72px; padding-bottom: 72px; }
         .about-section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
         .about-section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .about-disciplines-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
@@ -160,7 +155,7 @@ export default async function AboutPage() {
         .about-discipline-title { font-family: var(--font-heading); font-size: 23px; font-weight: 500; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
         .about-discipline-desc { font-size: 15px; line-height: 1.85; color: var(--fg-muted); }
         .about-tools { border-bottom: 1px solid var(--border); }
-        .about-tools-inner { padding: 60px 48px; max-width: var(--content-max); margin: 0 auto; }
+        .about-tools-inner { padding-top: 60px; padding-bottom: 60px; }
         .about-tools-list { display: flex; flex-wrap: wrap; gap: 10px; }
         .about-tool { padding: 8px 20px; border: 1px solid var(--border); font-size: 12px; letter-spacing: 0.08em; color: var(--fg-muted); transition: border-color 0.2s, color 0.2s; }
         .about-tool:hover { border-color: var(--fg); color: var(--fg); }

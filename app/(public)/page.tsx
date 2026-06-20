@@ -150,10 +150,6 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-          <div className="why-cta-row">
-            <Link href="/contact" className="btn-accent">Start a Project →</Link>
-            <span className="why-cta-note">No commitments. Just a conversation.</span>
-          </div>
         </section>
       )}
 
@@ -292,8 +288,6 @@ export default async function HomePage() {
         .why-card-body { position: relative; z-index: 1; }
         .why-card-title { font-family: var(--font-heading); font-size: 22px; font-weight: 500; color: var(--fg); margin-bottom: 10px; line-height: 1.3; }
         .why-card-desc { font-size: 14.5px; line-height: 1.8; color: var(--fg-muted); }
-        .why-cta-row { padding: 40px 48px; display: flex; align-items: center; gap: 24px; background: var(--bg-secondary); }
-        .why-cta-note { font-size: 12px; color: var(--fg-subtle); letter-spacing: 0.06em; font-style: italic; }
 
         /* ── TESTIMONIALS ── */
         .testimonials-section { background: var(--test-bg); border-bottom: 1px solid var(--border); transition: background 0.3s; }
@@ -332,7 +326,6 @@ export default async function HomePage() {
           .why-card { padding: 32px 20px !important; border-right: none !important; }
           .why-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border) !important; }
           .why-card:last-child { border-bottom: none !important; }
-          .why-cta-row { padding: 32px 20px !important; flex-direction: column; align-items: flex-start; gap: 12px; }
           .testimonials-inner { grid-template-columns: 1fr !important; }
           .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.08); }
           .testimonial-item { padding: 32px 20px !important; }
