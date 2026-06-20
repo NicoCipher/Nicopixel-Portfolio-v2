@@ -35,21 +35,44 @@ export default async function HomePage() {
       {/* ── HERO ── */}
       <section className="hero-section">
         <span className="hero-bg-letter">N</span>
+
+        {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
+        <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="7" />
+          <line x1="16" y1="0" x2="16" y2="32" />
+          <line x1="0" y1="16" x2="32" y2="16" />
+        </svg>
+        <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="7" />
+          <line x1="16" y1="0" x2="16" y2="32" />
+          <line x1="0" y1="16" x2="32" y2="16" />
+        </svg>
+        <svg className="reg-mark reg-mark-br" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="7" />
+          <line x1="16" y1="0" x2="16" y2="32" />
+          <line x1="0" y1="16" x2="32" y2="16" />
+        </svg>
+
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 760 }}>
-          <p className="hero-eyebrow">
+          <p className="hero-eyebrow hero-anim hero-anim-1">
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
             {s.hero_eyebrow || 'Brand · Events · Print · Lagos, Nigeria'}
           </p>
           <h1 className="hero-title">
-            {s.hero_title || 'Nicopixel'}<br />
-            <em>{s.hero_subtitle || 'Graphic Designer'}</em>
+            <span className="hero-line-mask">
+              <span className="hero-line-inner hero-anim-2">{s.hero_title || 'Nicopixel'}</span>
+            </span>
+            <br />
+            <span className="hero-line-mask">
+              <em className="hero-line-inner hero-anim-3">{s.hero_subtitle || 'Graphic Designer'}</em>
+            </span>
           </h1>
-          <p className="hero-sub">{s.hero_sub || 'Graphic designer specialising in brand identity, events design, and print collateral.'}</p>
-          <div className="hero-cta">
+          <p className="hero-sub hero-anim hero-anim-4">{s.hero_sub || 'Graphic designer specialising in brand identity, events design, and print collateral.'}</p>
+          <div className="hero-cta hero-anim hero-anim-5">
             <Link href="/contact" className="btn-accent">Start a Project →</Link>
             <Link href="/work" className="btn-ghost">See My Work</Link>
           </div>
-          <div className="hero-stats">
+          <div className="hero-stats hero-anim hero-anim-6">
             {stats.map((stat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                 {i > 0 && <div className="h-stat-divider" />}
@@ -65,10 +88,10 @@ export default async function HomePage() {
       {/* ── SERVICES ── */}
       {services && services.length > 0 && (
         <section className="services-section">
-          <div className="services-label">What I Do</div>
+          <div className="services-label scroll-reveal">What I Do</div>
           <div className="services-grid">
-            {services.map((svc: { id: string; num: string; title: string; description: string | null; deliverables: string[] }) => (
-              <div key={svc.id} className="service-card">
+            {services.map((svc: { id: string; num: string; title: string; description: string | null; deliverables: string[] }, i: number) => (
+              <div key={svc.id} className="service-card scroll-reveal" style={{ animationDelay: `${i * 90}ms` }}>
                 <span className="service-num">{svc.num}</span>
                 <h3 className="service-title">{svc.title}</h3>
                 <p className="service-desc">{svc.description}</p>
@@ -79,7 +102,6 @@ export default async function HomePage() {
                     ))}
                   </ul>
                 )}
-                <Link href="/contact" className="service-cta">Get a quote →</Link>
               </div>
             ))}
           </div>
@@ -89,7 +111,7 @@ export default async function HomePage() {
       {/* ── FEATURED WORK ── */}
       {projects && projects.length > 0 && (
         <section className="featured-section">
-          <div className="featured-header">
+          <div className="featured-header scroll-reveal">
             <div>
               <p className="section-eyebrow">Selected Work</p>
               <h2 className="section-title">Recent Projects</h2>
@@ -97,7 +119,7 @@ export default async function HomePage() {
             <Link href="/work" className="link-muted">View All →</Link>
           </div>
           {projects[0] && (
-            <Link href={`/work/${projects[0].slug}`} style={{ display: 'block', textDecoration: 'none', marginBottom: 2 }}>
+            <Link href={`/work/${projects[0].slug}`} style={{ display: 'block', textDecoration: 'none', marginBottom: 2 }} className="scroll-reveal">
               <div className="hero-project" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
                 {projects[0].cover_image
                   ? <Image src={projects[0].cover_image} alt={`${projects[0].title} — ${projects[0].category} design by Nicopixel, Lagos`} fill style={{ objectFit: 'cover' }} />
@@ -111,8 +133,8 @@ export default async function HomePage() {
             </Link>
           )}
           <div className="projects-subgrid">
-            {(projects as Project[]).slice(1).map((project) => (
-              <Link key={project.id} href={`/work/${project.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
+            {(projects as Project[]).slice(1).map((project, i) => (
+              <Link key={project.id} href={`/work/${project.slug}`} style={{ display: 'block', textDecoration: 'none', animationDelay: `${i * 80}ms` }} className="scroll-reveal sub-card-link">
                 <div className="sub-card" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
                   {project.cover_image
                     ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design by Nicopixel`} fill style={{ objectFit: 'cover' }} />
@@ -132,7 +154,7 @@ export default async function HomePage() {
       {/* ── WHY NICOPIXEL ── */}
       {whyItems && whyItems.length > 0 && (
         <section className="why-section">
-          <div className="why-header">
+          <div className="why-header scroll-reveal">
             <p className="section-eyebrow">Why Nicopixel</p>
             <h2 className="why-headline">
               {s.why_title || 'Design that works'}<br />
@@ -141,7 +163,7 @@ export default async function HomePage() {
           </div>
           <div className="why-grid">
             {whyItems.map((w: { id: string; title: string; description: string | null }, i: number) => (
-              <div key={w.id} className="why-card">
+              <div key={w.id} className="why-card scroll-reveal" style={{ animationDelay: `${i * 100}ms` }}>
                 <div className="why-card-num">{String(i + 1).padStart(2, '0')}</div>
                 <div className="why-card-body">
                   <h4 className="why-card-title">{w.title}</h4>
@@ -157,13 +179,13 @@ export default async function HomePage() {
       {testimonials && testimonials.length > 0 && (
         <section className="testimonials-section">
           <div className="testimonials-inner">
-            <div className="testimonials-label">
+            <div className="testimonials-label scroll-reveal">
               <p className="section-eyebrow">Client Results</p>
               <h2 className="testimonials-headline">Words from<br /><em>the work.</em></h2>
             </div>
             <div className="testimonials-list">
               {testimonials.map((t: { id: string; quote: string; name: string; role: string | null }, i: number) => (
-                <div key={t.id} className={`testimonial-item ${i === 0 ? 'testimonial-featured' : ''}`}>
+                <div key={t.id} className={`testimonial-item scroll-reveal ${i === 0 ? 'testimonial-featured' : ''}`} style={{ animationDelay: `${i * 110}ms` }}>
                   <div className="testimonial-quote-wrap">
                     <span className="tq-mark">&ldquo;</span>
                     <p className="tq-text">{t.quote}</p>
@@ -217,7 +239,43 @@ export default async function HomePage() {
         .bottom-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-section { min-height: calc(100svh - 64px); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .hero-bg-letter { position: absolute; bottom: -60px; right: -20px; font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: clamp(200px, 35vw, 500px); color: var(--border); line-height: 1; user-select: none; pointer-events: none; }
+        .hero-bg-letter {
+          position: absolute; bottom: -60px; right: -20px;
+          font-family: var(--font-heading); font-style: italic; font-weight: 700;
+          font-size: clamp(200px, 35vw, 500px); color: var(--border); line-height: 1;
+          user-select: none; pointer-events: none;
+          opacity: 0; transform: scale(1.08);
+          animation: hero-letter-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+        @keyframes hero-letter-in { to { opacity: 1; transform: scale(1); } }
+
+        /* Registration marks — print-craft signature, align the page like a printer aligning plates */
+        .reg-mark {
+          position: absolute; width: 28px; height: 28px;
+          stroke: var(--accent); stroke-width: 1; fill: none;
+          opacity: 0; transform: scale(0.6);
+          animation: reg-mark-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .reg-mark-tl { top: 28px; left: 28px; animation-delay: 0.05s; }
+        .reg-mark-tr { top: 28px; right: 28px; animation-delay: 0.15s; }
+        .reg-mark-br { bottom: 28px; right: 28px; animation-delay: 0.25s; }
+        @keyframes reg-mark-in { to { opacity: 0.45; transform: scale(1); } }
+
+        /* Staged entrance for hero text elements */
+        .hero-anim { opacity: 0; transform: translateY(16px); animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .hero-anim-1 { animation-delay: 0.45s; }
+        .hero-anim-4 { animation-delay: 1.05s; }
+        .hero-anim-5 { animation-delay: 1.2s; }
+        .hero-anim-6 { animation-delay: 1.35s; }
+        @keyframes hero-fade-up { to { opacity: 1; transform: translateY(0); } }
+
+        /* Headline mask-reveal — text rises into place like ink settling on a press */
+        .hero-line-mask { display: inline-block; overflow: hidden; vertical-align: top; }
+        .hero-line-inner { display: inline-block; transform: translateY(110%); animation: hero-line-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .hero-anim-2 { animation-delay: 0.6s; }
+        .hero-anim-3 { animation-delay: 0.75s; }
+        @keyframes hero-line-up { to { transform: translateY(0); } }
+
         .hero-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
         .hero-title { font-family: var(--font-heading); font-size: clamp(42px, 7vw, 108px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .hero-title em { color: var(--accent); font-style: italic; }
@@ -228,8 +286,8 @@ export default async function HomePage() {
         .h-stat-num { font-family: var(--font-heading); font-size: 28px; font-weight: 400; color: var(--fg); line-height: 1; }
         .h-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .h-stat-divider { width: 1px; height: 32px; background: var(--border); margin: 0 24px; }
-        .btn-accent { display: inline-block; padding: 14px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s; }
-        .btn-accent:hover { background: #a01830; transform: translateY(-1px); }
+        .btn-accent { display: inline-block; padding: 14px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.3s; }
+        .btn-accent:hover { background: #a01830; transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(196, 30, 58, 0.45); }
         .btn-primary { display: inline-block; padding: 14px 32px; background: var(--fg); color: var(--bg); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
         .btn-primary:hover { background: var(--accent); }
         .btn-ghost { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; border-bottom: 1px solid var(--border); padding-bottom: 2px; }
@@ -240,7 +298,8 @@ export default async function HomePage() {
         .services-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .services-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: var(--content-max); margin: 0 auto; }
-        .service-card { padding: 40px 36px 40px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px; }
+        .service-card { padding: 40px 36px 40px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .service-card:hover { transform: translateY(-6px); }
         .service-card:last-child { border-right: none; padding-right: 0; }
         .service-card:not(:first-child) { padding-left: 36px; }
         .service-num { font-family: var(--font-heading); font-size: 11px; color: var(--accent); letter-spacing: 0.16em; }
@@ -257,8 +316,12 @@ export default async function HomePage() {
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
         .section-title em { font-style: italic; color: var(--accent); }
         .hero-project { aspect-ratio: 16/7; max-width: var(--content-max); margin: 0 auto; }
+        .hero-project img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .scroll-reveal:hover .hero-project img { transform: scale(1.035); }
         .projects-subgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; max-width: var(--content-max); margin-left: auto; margin-right: auto; } .projects-subgrid .sub-card-wrap:nth-child(3n+1):last-child { grid-column: span 3; }
         .sub-card { aspect-ratio: 4/3; }
+        .sub-card img { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        a.sub-card-link:hover .sub-card img { transform: scale(1.06); }
         /* ── WHY ── */
         .why-section { border-bottom: 1px solid var(--border); overflow: hidden; }
         .why-header { padding: 88px 48px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 48px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
@@ -271,11 +334,11 @@ export default async function HomePage() {
           border-bottom: 1px solid var(--border);
           display: flex; flex-direction: column; gap: 20px;
           position: relative; overflow: hidden;
-          transition: background 0.3s;
+          transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .why-card:nth-child(even) { border-right: none; }
         .why-card:nth-last-child(-n+2) { border-bottom: none; }
-        .why-card:hover { background: var(--bg-secondary); }
+        .why-card:hover { background: var(--bg-secondary); transform: translateY(-4px); }
         .why-card-num {
           font-family: var(--font-heading);
           font-size: 80px; font-weight: 400; font-style: italic;
@@ -320,6 +383,11 @@ export default async function HomePage() {
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
           .hero-bg-letter { opacity: 0.3; }
+          .reg-mark { width: 20px; height: 20px; }
+          .reg-mark-tl, .reg-mark-tr { top: 16px; }
+          .reg-mark-tl { left: 16px; }
+          .reg-mark-tr { right: 16px; }
+          .reg-mark-br { display: none; }
           .services-section, .featured-section { padding: 56px 20px; }
           .why-header { padding: 48px 20px !important; }
           .why-grid { grid-template-columns: 1fr !important; }
