@@ -1,25 +1,31 @@
 import { createClient } from '@/lib/supabase/server'
+import { ClearSecurityLogsButton } from '@/components/admin/ClearSecurityLogsButton'
 
 async function getSecurityData() {
   const supabase = await createClient()
   const cutoff = new Date(Date.now() - 86400000).toISOString()
 
-  const [{ data: logs }, { data: attempts }, { count: failedCount }] = await Promise.all([
+  const [{ data: logs }, { data: attempts }, { count: failedCount }, { count: totalLogs }, { count: totalAttempts }] = await Promise.all([
     supabase.from('activity_log').select('*').order('created_at', { ascending: false }).limit(20),
     supabase.from('login_attempts').select('*').order('attempted_at', { ascending: false }).limit(20),
     supabase.from('login_attempts').select('*', { count: 'exact', head: true }).eq('success', false).gte('attempted_at', cutoff),
+    supabase.from('activity_log').select('*', { count: 'exact', head: true }),
+    supabase.from('login_attempts').select('*', { count: 'exact', head: true }),
   ])
-  return { logs, attempts, failedCount }
+  return { logs, attempts, failedCount, totalLogs, totalAttempts }
 }
 
 export default async function SecurityPage() {
-  const { logs, attempts, failedCount } = await getSecurityData()
+  const { logs, attempts, failedCount, totalLogs, totalAttempts } = await getSecurityData()
 
   return (
     <div style={{ padding: '40px 48px' }}>
-      <div style={{ marginBottom: 40 }}>
-        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 28, fontWeight: 400, color: '#FAFAF9', marginBottom: 4 }}>Security</h1>
-        <p style={{ fontSize: 13, color: '#555' }}>Login attempts and activity log.</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
+        <div>
+          <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 28, fontWeight: 400, color: '#FAFAF9', marginBottom: 4 }}>Security</h1>
+          <p style={{ fontSize: 13, color: '#555' }}>Login attempts and activity log. Showing latest 20 of each — logs older than 90 days are pruned automatically.</p>
+        </div>
+        <ClearSecurityLogsButton />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 40 }}>
@@ -37,7 +43,8 @@ export default async function SecurityPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
         <div style={{ background: '#0A0A0A', border: '1px solid #1F1F1F', padding: 24 }}>
-          <h2 style={{ fontSize: 13, fontWeight: 600, color: '#FAFAF9', marginBottom: 20, letterSpacing: '0.06em' }}>Activity Log</h2>
+          <h2 style={{ fontSize: 13, fontWeight: 600, color: '#FAFAF9', marginBottom: 4, letterSpacing: '0.06em' }}>Activity Log</h2>
+          <p style={{ fontSize: 11, color: '#444', marginBottom: 16 }}>{totalLogs ?? 0} total entries</p>
           {!logs?.length
             ? <p style={{ fontSize: 13, color: '#444', fontStyle: 'italic' }}>No activity yet.</p>
             : <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -56,7 +63,8 @@ export default async function SecurityPage() {
         </div>
 
         <div style={{ background: '#0A0A0A', border: '1px solid #1F1F1F', padding: 24 }}>
-          <h2 style={{ fontSize: 13, fontWeight: 600, color: '#FAFAF9', marginBottom: 20, letterSpacing: '0.06em' }}>Login Attempts</h2>
+          <h2 style={{ fontSize: 13, fontWeight: 600, color: '#FAFAF9', marginBottom: 4, letterSpacing: '0.06em' }}>Login Attempts</h2>
+          <p style={{ fontSize: 11, color: '#444', marginBottom: 16 }}>{totalAttempts ?? 0} total entries</p>
           {!attempts?.length
             ? <p style={{ fontSize: 13, color: '#444', fontStyle: 'italic' }}>No attempts yet.</p>
             : <div style={{ display: 'flex', flexDirection: 'column' }}>
