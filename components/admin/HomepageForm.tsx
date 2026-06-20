@@ -363,7 +363,7 @@ function TestimonialEditor({ t, onSave, onDelete, onChange }: { t: Testimonial; 
           {t.role && <span style={{ fontSize: 11, color: '#555', marginLeft: 10 }}>{t.role}</span>}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: 9, color: t.active ? '#4CAF50' : '#555', letterSpacing: '0.1em', textTransform: 'uppercase', border: `1px solid ${t.active ? '#4CAF50' : '#333'}`, padding: '2px 8px' }}>{t.active ? 'Visible' : 'Hidden'}</span>
+          <span style={{ fontSize: 10, color: t.active ? '#4CAF50' : '#555', letterSpacing: '0.08em', textTransform: 'uppercase', border: `1px solid ${t.active ? '#4CAF50' : '#333'}`, padding: '2px 8px' }}>{t.active ? 'Visible' : 'Hidden'}</span>
           <span style={{ color: '#555', fontSize: 12 }}>{open ? '▲' : '▼'}</span>
         </div>
       </div>

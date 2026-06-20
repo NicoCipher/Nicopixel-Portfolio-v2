@@ -45,7 +45,7 @@ function SortableRow({ project }: { project: Project }) {
       <span style={{ fontSize: 11, color: '#666', textTransform: 'capitalize' }}>{project.category}</span>
       <span style={{ fontSize: 11, color: project.featured ? '#C41E3A' : '#444' }}>{project.featured ? '★ Yes' : '—'}</span>
       <span style={{
-        fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase',
+        fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
         color: project.published ? '#4CAF50' : '#666',
         padding: '3px 8px', border: `1px solid ${project.published ? '#4CAF50' : '#333'}`,
         display: 'inline-block',
@@ -79,7 +79,7 @@ function SortableCard({ project }: { project: Project }) {
           </div>
         </div>
         <span style={{
-          fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase',
+          fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
           color: project.published ? '#4CAF50' : '#666',
           padding: '3px 8px', border: `1px solid ${project.published ? '#4CAF50' : '#333'}`,
         }}>{project.published ? 'Live' : 'Draft'}</span>
