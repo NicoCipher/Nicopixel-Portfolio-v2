@@ -19,7 +19,7 @@ export default async function CaseStudiesPage() {
 
   return (
     <>
-      <section className="cs-header">
+      <section className="cs-header px-page">
         <p className="cs-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Case Studies
@@ -41,7 +41,7 @@ export default async function CaseStudiesPage() {
           </div>
         </div>
       ) : (
-        <section className="cs-list">
+        <section className="cs-list px-page">
           {studies.map((study: {
             id: string; title: string; slug: string; category: string;
             cover_image: string | null; client_name: string | null;
@@ -83,7 +83,7 @@ export default async function CaseStudiesPage() {
       </section>
 
       <style>{`
-        .cs-header { padding: 80px 48px 64px; border-bottom: 1px solid var(--border); max-width: 800px; }
+        .cs-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
         .cs-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .cs-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .cs-title em { color: var(--accent); font-style: italic; }
@@ -93,7 +93,7 @@ export default async function CaseStudiesPage() {
         .cs-empty p { font-family: var(--font-heading); font-size: 22px; font-style: italic; color: var(--fg-subtle); margin-bottom: 20px; }
         .cs-empty-link { font-size: 12px; color: var(--accent); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .cs-list { display: flex; flex-direction: column; max-width: var(--content-max); margin: 0 auto; }
+        .cs-list { display: flex; flex-direction: column; }
         .cs-card-link { display: block; text-decoration: none; border-bottom: 1px solid var(--border); }
         .cs-card-link:last-child { border-bottom: none; }
         .cs-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; transition: background 0.3s; }

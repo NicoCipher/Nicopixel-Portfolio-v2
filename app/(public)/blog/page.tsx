@@ -18,7 +18,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="blog-header">
+      <section className="blog-header px-page">
         <p className="blog-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Insights
@@ -36,7 +36,7 @@ export default async function BlogPage() {
           <p>New posts coming soon.</p>
         </div>
       ) : (
-        <section className="blog-grid">
+        <section className="blog-grid px-page">
           {posts.map((post: {
             id: string; title: string; slug: string; excerpt: string | null;
             cover_image: string | null; category: string; published_at: string
@@ -88,7 +88,7 @@ export default async function BlogPage() {
       </section>
 
       <style>{`
-        .blog-header { padding: 80px 48px 64px; border-bottom: 1px solid var(--border); max-width: 800px; }
+        .blog-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
         .blog-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .blog-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 84px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .blog-title em { color: var(--accent); font-style: italic; }
@@ -99,8 +99,7 @@ export default async function BlogPage() {
 
         .blog-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);
-          gap: 1px; padding: 0;
-          max-width: var(--content-max); margin: 0 auto;
+          gap: 1px;
         }
         .blog-card-link { display: block; text-decoration: none; }
         .blog-card { background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; height: 100%; display: flex; flex-direction: column; }
