@@ -100,6 +100,7 @@ export default async function BlogPage() {
         .blog-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 1px; padding: 0;
+          max-width: var(--content-max); margin: 0 auto;
         }
         .blog-card-link { display: block; text-decoration: none; }
         .blog-card { background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; height: 100%; display: flex; flex-direction: column; }

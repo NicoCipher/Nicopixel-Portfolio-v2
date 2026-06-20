@@ -36,7 +36,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
         background: 'var(--bg)',
         overflowX: 'auto', scrollbarWidth: 'none' as React.CSSProperties['scrollbarWidth'],
       }}>
-        <div style={{ display: 'flex', padding: '0 48px', minWidth: 'max-content', alignItems: 'center' }}>
+        <div style={{ display: 'flex', padding: '0 48px', minWidth: 'max-content', alignItems: 'center', maxWidth: 1400, margin: '0 auto' }}>
           {CATEGORIES.map(cat => {
             const count = cat.key === 'all' ? projects.length : projects.filter(p => p.category === cat.key).length
             const isActive = active === cat.key

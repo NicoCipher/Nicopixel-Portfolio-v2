@@ -155,10 +155,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Related */}
       {related && related.length > 0 && (
         <div className="proj-related">
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 400, marginBottom: 32, textTransform: 'capitalize' }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 500, marginBottom: 32, textTransform: 'capitalize', maxWidth: 'var(--content-max)', marginLeft: 'auto', marginRight: 'auto' }}>
             More {project.category} work
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, maxWidth: 'var(--content-max)', margin: '0 auto' }}>
             {related.map((p: typeof project) => (
               <Link key={p.id} href={`/work/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-secondary)', overflow: 'hidden' }}>
@@ -197,23 +197,23 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .proj-meta { padding: 60px 48px; border-bottom: 1px solid var(--border); }
 
         .case-study-section { border-bottom: 1px solid var(--border); padding: 56px 48px 64px; background: var(--bg-secondary); }
-        .case-study-meta-row { display: flex; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+        .case-study-meta-row { display: flex; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .cs-meta-item { display: flex; flex-direction: column; gap: 5px; }
         .cs-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .cs-meta-value { font-size: 15px; font-weight: 600; color: var(--fg); font-family: var(--font-heading); }
-        .case-study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--border); }
+        .case-study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--border); max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .cs-block { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .cs-block:nth-child(2n) { border-right: none; padding-right: 0; padding-left: 40px; }
         .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: none; }
         .cs-block-num { display: block; font-family: var(--font-heading); font-size: 12px; color: var(--accent); letter-spacing: 0.14em; margin-bottom: 14px; }
         .cs-block-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin-bottom: 12px; }
         .cs-block-text { font-size: 14px; line-height: 1.85; color: var(--fg-muted); }
-        .cs-results { margin-top: 40px; padding: 28px 32px; background: var(--accent); display: flex; flex-direction: column; gap: 8px; }
+        .cs-results { margin-top: 40px; padding: 28px 32px; background: var(--accent); display: flex; flex-direction: column; gap: 8px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .cs-results-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
         .cs-results-text { font-family: var(--font-heading); font-size: 18px; font-style: italic; color: white; line-height: 1.5; }
 
         .proj-gallery { padding: 48px 48px; border-bottom: 1px solid var(--border); }
-        .proj-gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+        .proj-gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; max-width: var(--content-max); margin: 0 auto; }
         .proj-related { padding: 60px 48px; }
         @media(max-width: 767px) {
           .proj-meta { padding: 40px 20px; }

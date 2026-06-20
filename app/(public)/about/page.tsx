@@ -126,7 +126,7 @@ export default async function AboutPage() {
 
       <style>{`
         .about-hero { border-bottom: 1px solid var(--border); overflow: hidden; }
-        .about-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 80vh; }
+        .about-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 80vh; max-width: var(--content-max); margin: 0 auto; }
         .about-hero-text { padding: 80px 60px 64px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
         .about-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
         .about-eyebrow-line { display: inline-block; width: 24px; height: 1px; background: var(--accent); }
@@ -135,7 +135,7 @@ export default async function AboutPage() {
         .about-image-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
         .about-image-placeholder span { font-family: var(--font-heading); font-size: 180px; font-style: italic; color: var(--border); line-height: 1; user-select: none; }
         .about-intro { border-bottom: 1px solid var(--border); }
-        .about-intro-inner { display: grid; grid-template-columns: 1fr 1fr; }
+        .about-intro-inner { display: grid; grid-template-columns: 1fr 1fr; max-width: var(--content-max); margin: 0 auto; }
         .about-quote { padding: 72px 60px 72px 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
         .about-quote-mark { font-family: var(--font-heading); font-size: 120px; line-height: 0.6; color: var(--accent); display: block; margin-bottom: 20px; opacity: 0.4; }
         .about-quote p { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 36px); font-weight: 400; font-style: italic; line-height: 1.3; color: var(--fg); }
@@ -143,13 +143,13 @@ export default async function AboutPage() {
         .about-bio p { font-size: 16px; line-height: 1.9; color: var(--fg-muted); }
         .about-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-meta-dot { color: var(--accent); }
-        .about-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+        .about-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); max-width: var(--content-max); margin: 0 auto; }
         .about-stat { padding: 48px 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
         .about-stat:last-child { border-right: none; }
         .about-stat-num { font-family: var(--font-heading); font-size: clamp(40px, 5vw, 64px); font-weight: 400; line-height: 1; color: var(--fg); }
         .about-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-disciplines { border-bottom: 1px solid var(--border); }
-        .about-disciplines-inner { padding: 72px 48px; }
+        .about-disciplines-inner { padding: 72px 48px; max-width: var(--content-max); margin: 0 auto; }
         .about-section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
         .about-section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .about-disciplines-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
@@ -157,10 +157,10 @@ export default async function AboutPage() {
         .about-discipline:last-child { border-right: none; padding-right: 0; }
         .about-discipline:not(:first-child) { padding-left: 40px; }
         .about-discipline-num { font-family: var(--font-heading); font-size: 11px; color: var(--accent); letter-spacing: 0.16em; display: block; margin-bottom: 16px; }
-        .about-discipline-title { font-family: var(--font-heading); font-size: 22px; font-weight: 400; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
+        .about-discipline-title { font-family: var(--font-heading); font-size: 23px; font-weight: 500; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
         .about-discipline-desc { font-size: 15px; line-height: 1.85; color: var(--fg-muted); }
         .about-tools { border-bottom: 1px solid var(--border); }
-        .about-tools-inner { padding: 60px 48px; }
+        .about-tools-inner { padding: 60px 48px; max-width: var(--content-max); margin: 0 auto; }
         .about-tools-list { display: flex; flex-wrap: wrap; gap: 10px; }
         .about-tool { padding: 8px 20px; border: 1px solid var(--border); font-size: 12px; letter-spacing: 0.08em; color: var(--fg-muted); transition: border-color 0.2s, color 0.2s; }
         .about-tool:hover { border-color: var(--fg); color: var(--fg); }
