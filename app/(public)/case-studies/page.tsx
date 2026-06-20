@@ -93,7 +93,7 @@ export default async function CaseStudiesPage() {
         .cs-empty p { font-family: var(--font-heading); font-size: 22px; font-style: italic; color: var(--fg-subtle); margin-bottom: 20px; }
         .cs-empty-link { font-size: 12px; color: var(--accent); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .cs-list { display: flex; flex-direction: column; }
+        .cs-list { display: flex; flex-direction: column; max-width: var(--content-max); margin: 0 auto; }
         .cs-card-link { display: block; text-decoration: none; border-bottom: 1px solid var(--border); }
         .cs-card-link:last-child { border-bottom: none; }
         .cs-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; transition: background 0.3s; }
@@ -110,19 +110,19 @@ export default async function CaseStudiesPage() {
         .cs-card-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background 0.3s; }
         .cs-card-link:hover .cs-card-overlay { background: rgba(0,0,0,0.08); }
 
-        .cs-card-body { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+        .cs-card-body { padding: 56px 56px; display: flex; flex-direction: column; justify-content: center; gap: 16px; }
         .cs-card-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent); letter-spacing: 0.18em; }
         .cs-card-meta { display: flex; align-items: center; gap: 8px; }
         .cs-card-cat { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .cs-card-dot { color: var(--fg-subtle); font-size: 11px; }
         .cs-card-industry { font-size: 11px; letter-spacing: 0.08em; color: var(--fg-subtle); }
-        .cs-card-title { font-family: var(--font-heading); font-size: clamp(26px, 3.5vw, 42px); font-weight: 400; line-height: 1.1; color: var(--fg); }
-        .cs-card-brief { font-size: 15px; line-height: 1.8; color: var(--fg-muted); max-width: 440px; }
+        .cs-card-title { font-family: var(--font-heading); font-size: clamp(26px, 3.2vw, 38px); font-weight: 500; line-height: 1.15; color: var(--fg); }
+        .cs-card-brief { font-size: 15px; line-height: 1.8; color: var(--fg-muted); }
         .cs-card-cta { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; }
         .cs-arrow { transition: transform 0.3s; display: inline-block; }
         .cs-card-link:hover .cs-arrow { transform: translateX(4px); }
 
-        .cs-cta { padding: 100px 48px; text-align: center; }
+        .cs-cta { padding: 88px 48px; text-align: center; }
         .cs-cta-inner { display: flex; flex-direction: column; align-items: center; gap: 28px; }
         .cs-cta-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 52px); font-weight: 400; }
         .cs-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }

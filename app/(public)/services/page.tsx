@@ -187,7 +187,7 @@ export default async function ServicesPage() {
         .svc-card-inner {
           display: grid; grid-template-columns: 1fr 1fr;
           gap: 80px; align-items: start;
-          max-width: 1200px; margin: 0 auto;
+          max-width: var(--content-max); margin: 0 auto;
         }
         .svc-card-num {
           display: block;
@@ -243,7 +243,7 @@ export default async function ServicesPage() {
           border-bottom: 1px solid var(--border);
           padding: 80px 48px;
         }
-        .svc-process-inner { max-width: 1200px; margin: 0 auto; }
+        .svc-process-inner { max-width: var(--content-max); margin: 0 auto; }
         .svc-process-header { margin-bottom: 64px; }
         .svc-section-title {
           font-family: var(--font-heading);
@@ -272,8 +272,8 @@ export default async function ServicesPage() {
         }
         .svc-step:hover .svc-step-num { color: var(--accent); }
         .svc-step-title {
-          font-family: var(--font-heading); font-size: 18px;
-          font-weight: 400; color: var(--fg); margin-bottom: 10px;
+          font-family: var(--font-heading); font-size: 19px;
+          font-weight: 500; color: var(--fg); margin-bottom: 10px;
         }
         .svc-step-desc { font-size: 15px; line-height: 1.8; color: var(--fg-muted); }
 
@@ -285,13 +285,13 @@ export default async function ServicesPage() {
         .svc-faq-inner {
           display: grid; grid-template-columns: 320px 1fr;
           gap: 80px; align-items: start;
-          max-width: 1200px; margin: 0 auto;
+          max-width: var(--content-max); margin: 0 auto;
         }
         .svc-faq-header { position: sticky; top: 80px; }
         .svc-faq-list {}
 
         /* ── CTA ── */
-        .svc-cta { padding: 100px 48px; }
+        .svc-cta { padding: 88px 48px; }
         .svc-cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
         .svc-cta-title {
           font-family: var(--font-heading);
