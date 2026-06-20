@@ -30,7 +30,9 @@ CREATE TRIGGER trg_prune_activity_log
 CREATE OR REPLACE FUNCTION public.prune_login_attempts()
 RETURNS TRIGGER AS $$
 BEGIN
-  DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '90 days';
+  -- Shorter retention than activity_log — login attempts are only useful
+  -- for short-term pattern detection and could grow fast under bot activity.
+  DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '14 days';
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql

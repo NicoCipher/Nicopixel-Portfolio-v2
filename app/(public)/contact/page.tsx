@@ -127,26 +127,26 @@ function ContactPageInner() {
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Name</label>
-                    <input className="form-input" placeholder="Your name" value={form.name}
+                    <input className="form-input" placeholder="Your name" value={form.name} maxLength={100}
                       onChange={e => setForm({ ...form, name: e.target.value })} required />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Email</label>
-                    <input className="form-input" type="email" placeholder="your@email.com" value={form.email}
+                    <input className="form-input" type="email" placeholder="your@email.com" value={form.email} maxLength={150}
                       onChange={e => setForm({ ...form, email: e.target.value })} required />
                   </div>
                 </div>
 
                 <div className="form-group">
                   <label className="form-label">Subject</label>
-                  <input className="form-input" placeholder="Brand identity project" value={form.subject}
+                  <input className="form-input" placeholder="Brand identity project" value={form.subject} maxLength={150}
                     onChange={e => setForm({ ...form, subject: e.target.value })} />
                 </div>
 
                 <div className="form-group">
                   <label className="form-label">Message</label>
                   <textarea className="form-input form-textarea"
-                    rows={6} placeholder="Tell me about your project..."
+                    rows={6} placeholder="Tell me about your project..." maxLength={5000}
                     value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
                 </div>
 
