@@ -39,16 +39,23 @@ export default async function DashboardPage() {
           <Link key={stat.label} href={stat.href} style={{ textDecoration: 'none' }}>
             <div style={{
               background: '#0A0A0A', border: '1px solid #1F1F1F',
+              borderLeft: stat.accent ? '3px solid #C41E3A' : '3px solid #1F1F1F',
               padding: '28px 24px',
               transition: 'border-color 0.2s',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
             }} className="stat-card">
-              <div style={{
-                fontSize: 36, fontFamily: 'Georgia, serif', fontWeight: 400,
-                color: stat.accent ? '#C41E3A' : '#FAFAF9', marginBottom: 8,
-              }}>{stat.value}</div>
-              <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#555' }}>
-                {stat.label}
+              <div>
+                <div style={{
+                  fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#555', marginBottom: 12,
+                }}>
+                  {stat.label}
+                </div>
+                <div style={{
+                  fontSize: 42, fontFamily: 'Georgia, serif', fontWeight: 400,
+                  color: stat.accent ? '#C41E3A' : '#FAFAF9', lineHeight: 1,
+                }}>{stat.value}</div>
               </div>
+              <span style={{ fontSize: 11, color: '#444', letterSpacing: '0.04em' }}>→</span>
             </div>
           </Link>
         ))}

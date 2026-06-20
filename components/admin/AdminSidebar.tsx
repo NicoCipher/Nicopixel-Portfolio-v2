@@ -28,8 +28,8 @@ function SidebarLinks({ pathname, onClose, onLogout }: { pathname: string; onClo
   return (
     <div style={sidebarStyle}>
       <div style={{ padding: '28px 24px', borderBottom: '1px solid #1F1F1F' }}>
-        <span style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 600, color: '#FAFAF9' }}>Nicopixel</span>
-        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#555', marginTop: 4 }}>Admin Panel</span>
+        <SidebarLogo />
+        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#555', marginTop: 8 }}>Admin Panel</span>
       </div>
       <nav style={{ flex: 1, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: 2 }}>
         {navItems.map(item => {

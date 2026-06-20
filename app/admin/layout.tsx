@@ -7,11 +7,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
       <AdminSidebar />
       <main style={{ marginLeft: 240, background: '#111111', minHeight: '100vh' }}>
-        <Suspense>
-          <SessionGuard>
-            {children}
-          </SessionGuard>
-        </Suspense>
+        <div style={{ maxWidth: 1480, margin: '0 auto' }}>
+          <Suspense>
+            <SessionGuard>
+              {children}
+            </SessionGuard>
+          </Suspense>
+        </div>
       </main>
       <style>{`
         @media(max-width: 900px) {
