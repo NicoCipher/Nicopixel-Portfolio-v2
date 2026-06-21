@@ -1,6 +1,9 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import Masonry from 'react-masonry-css'
+
+const BREAKPOINTS = { default: 3, 900: 2, 600: 2 }
 
 export function ProjectGallery({ images, title }: { images: string[]; title: string }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
@@ -30,8 +33,9 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
 
   return (
     <>
-      {/* All images shown at once, in a clean uniform grid — nothing hidden, nothing to scroll within */}
-      <div className="pg-grid">
+      {/* Masonry — each image at its own natural proportions, every image
+          visible at once, nothing hidden or requiring scroll-to-discover. */}
+      <Masonry breakpointCols={BREAKPOINTS} className="pg-masonry" columnClassName="pg-masonry-col">
         {images.map((img, i) => (
           <button
             key={i}
@@ -40,17 +44,11 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
             className="pg-thumb"
             aria-label={`View ${title} image ${i + 1} of ${images.length} full size`}
           >
-            <Image
-              src={img}
-              alt={`${title} ${i + 1}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              className="pg-thumb-img"
-              sizes="(max-width: 767px) 50vw, 33vw"
-            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={img} alt={`${title} ${i + 1}`} className="pg-thumb-img" loading="lazy" />
           </button>
         ))}
-      </div>
+      </Masonry>
 
       {activeIndex !== null && (
         <div className="pg-overlay" role="dialog" aria-modal="true" aria-label={`${title} image viewer`} onClick={close}>
@@ -82,20 +80,24 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
       )}
 
       <style>{`
-        .pg-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 4px;
-        }
+        .pg-masonry { display: flex; margin-left: -8px; width: auto; }
+        .pg-masonry-col { padding-left: 8px; background-clip: padding-box; }
+        .pg-masonry-col > button { display: block; margin-bottom: 8px; width: 100%; }
+
         .pg-thumb {
           position: relative;
-          aspect-ratio: 4/3;
           background: var(--bg-secondary);
           border: none; padding: 0; margin: 0;
           cursor: zoom-in; overflow: hidden;
           display: block; width: 100%;
+          border-radius: 3px;
         }
-        .pg-thumb-img { transition: transform 0.4s ease; }
+        .pg-thumb-img {
+          display: block; width: 100%; height: auto;
+          max-height: 560px; min-height: 140px;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
         .pg-thumb:hover .pg-thumb-img { transform: scale(1.04); }
 
         .pg-overlay {
@@ -141,7 +143,10 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
         .pg-counter { font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); }
 
         @media(max-width: 767px) {
-          .pg-grid { grid-template-columns: 1fr 1fr; }
+          .pg-masonry { margin-left: -6px; }
+          .pg-masonry-col { padding-left: 6px; }
+          .pg-masonry-col > button { margin-bottom: 6px; }
+          .pg-thumb-img { max-height: 380px; }
           .pg-overlay { padding: 12px; }
           .pg-nav { width: 44px; height: 44px; font-size: 24px; }
           .pg-nav-prev { left: 8px; }

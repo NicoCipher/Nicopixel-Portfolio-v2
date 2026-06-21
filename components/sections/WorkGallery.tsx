@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import Masonry from 'react-masonry-css'
 import type { Project, Category } from '@/types'
 
 const CATEGORIES = [
@@ -10,6 +10,8 @@ const CATEGORIES = [
   { key: 'events', label: 'Events' },
   { key: 'print', label: 'Print' },
 ]
+
+const BREAKPOINTS = { default: 3, 1024: 2, 640: 2 }
 
 export function WorkGallery({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<'all' | Category>('all')
@@ -33,7 +35,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
         background: 'var(--bg)',
         overflowX: 'auto', scrollbarWidth: 'none' as React.CSSProperties['scrollbarWidth'],
       }}>
-        <div style={{ display: 'flex', padding: '0 48px', minWidth: 'max-content', alignItems: 'center', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'flex', padding: '0 48px', minWidth: 'max-content', alignItems: 'center', maxWidth: 1320, margin: '0 auto' }}>
           {CATEGORIES.map(cat => {
             const count = cat.key === 'all' ? projects.length : projects.filter(p => p.category === cat.key).length
             const isActive = active === cat.key
@@ -63,9 +65,8 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
         </div>
       </div>
 
-      {/* ── GALLERY — clean, uniform grid. Every card is the same size and
-          aspect ratio so nothing needs to stretch beyond a typical upload's
-          native resolution, and the whole thing scans easily at a glance. ── */}
+      {/* ── MASONRY GALLERY — each image keeps its own natural proportions,
+          like a real showcase wall, not a uniform app-icon grid. ── */}
       <div style={{
         opacity: animating ? 0 : 1,
         transform: animating ? 'translateY(6px)' : 'translateY(0)',
@@ -77,27 +78,24 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
           </div>
         ) : (
           <div className="gallery-wrap">
-            <div className="projects-grid">
-              {visible.map((project: Project) => (
+            <Masonry breakpointCols={BREAKPOINTS} className="masonry-grid" columnClassName="masonry-col">
+              {visible.map(project => (
                 <Link key={project.id} href={`/work/${project.slug}`} className="proj-slot">
                   <article className="proj-card">
                     <div className="card-cat-tag">{project.category}</div>
 
-                    <div style={{ position: 'absolute', inset: 0 }}>
-                      {project.cover_image
-                        ? <Image
-                            src={project.cover_image}
-                            alt={`${project.title} — ${project.category} design by Nicopixel`}
-                            fill
-                            className="gallery-img"
-                            style={{ objectFit: 'cover' }}
-                            sizes="(max-width: 767px) 50vw, (max-width: 1024px) 33vw, 420px"
-                          />
-                        : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{project.category}</span>
-                          </div>
-                      }
-                    </div>
+                    {project.cover_image
+                      ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={project.cover_image}
+                          alt={`${project.title} — ${project.category} design by Nicopixel`}
+                          className="gallery-img"
+                          loading="lazy"
+                        />
+                      )
+                      : <div className="proj-card-placeholder"><span>{project.category}</span></div>
+                    }
 
                     <div className="proj-overlay">
                       <div className="proj-info">
@@ -108,7 +106,7 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
                   </article>
                 </Link>
               ))}
-            </div>
+            </Masonry>
           </div>
         )}
       </div>
@@ -116,9 +114,13 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
       <style>{`
         .gallery-wrap {
           padding: 32px 48px 80px;
-          max-width: 1280px;
+          max-width: 1320px;
           margin: 0 auto;
         }
+
+        .masonry-grid { display: flex; margin-left: -10px; width: auto; }
+        .masonry-col { padding-left: 10px; background-clip: padding-box; }
+        .masonry-col > a { display: block; margin-bottom: 10px; }
 
         .card-cat-tag {
           position: absolute; top: 14px; left: 14px;
@@ -135,27 +137,32 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
           pointer-events: none;
         }
 
-        /* ── UNIFORM GRID — every card identical size, no special hero treatment ── */
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 4px;
-        }
         .proj-slot { display: block; text-decoration: none; }
         .proj-card {
           position: relative; overflow: hidden;
-          aspect-ratio: 4/3;
           background: var(--bg-secondary);
+          border-radius: 3px;
         }
-        .gallery-img { transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important; }
-        .proj-card:hover .gallery-img { transform: scale(1.05); }
+        .gallery-img {
+          display: block; width: 100%; height: auto;
+          /* Sane bounds — varied like Pinterest, but never absurdly tall/short */
+          max-height: 640px; min-height: 160px;
+          object-fit: cover;
+          transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .proj-card:hover .gallery-img { transform: scale(1.04); }
+        .proj-card-placeholder {
+          aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+        }
+        .proj-card-placeholder span { font-family: var(--font-heading); font-size: 26px; font-style: italic; color: var(--fg-subtle); text-transform: capitalize; }
+
         .proj-overlay {
           position: absolute; inset: 0;
           background: rgba(0,0,0,0);
           transition: background 0.35s ease;
           display: flex; flex-direction: column; justify-content: flex-end;
         }
-        .proj-card:hover .proj-overlay { background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.15) 55%, transparent 85%); }
+        .proj-card:hover .proj-overlay { background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.15) 55%, transparent 85%); }
         .proj-info {
           padding: 20px;
           transform: translateY(10px);
@@ -177,13 +184,12 @@ export function WorkGallery({ projects }: { projects: Project[] }) {
         }
         .proj-card:hover .proj-view { opacity: 1; }
 
-        @media(max-width: 900px) {
-          .projects-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
         @media(max-width: 767px) {
           .gallery-wrap { padding: 16px 16px 60px; }
-          .projects-grid { gap: 8px; }
+          .masonry-grid { margin-left: -6px; }
+          .masonry-col { padding-left: 6px; }
+          .masonry-col > a { margin-bottom: 6px; }
+          .gallery-img { max-height: 420px; }
 
           /* Always show title on mobile — no hover available */
           .proj-overlay { background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%) !important; }
