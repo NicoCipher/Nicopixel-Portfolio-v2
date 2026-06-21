@@ -121,7 +121,7 @@ export default async function AboutPage() {
 
       <style>{`
         .about-hero { border-bottom: 1px solid var(--border); overflow: hidden; }
-        .about-hero-inner { display: grid; grid-template-columns: 1fr 420px; min-height: 80vh; max-width: var(--content-max); margin: 0 auto; }
+        .about-hero-inner { display: grid; grid-template-columns: 1.3fr 1fr; min-height: min(680px, 78vh); max-width: var(--content-max); margin: 0 auto; }
         .about-hero-text { padding: 80px 60px 64px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
         .about-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
         .about-eyebrow-line { display: inline-block; width: 24px; height: 1px; background: var(--accent); }

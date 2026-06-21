@@ -39,6 +39,13 @@ function ContactPageInner() {
 
   return (
     <section className="contact-section">
+      <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
+      </svg>
+      <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
+      </svg>
+
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
@@ -59,7 +66,7 @@ function ContactPageInner() {
             }}>
               Let&apos;s work<br /><em>together.</em>
             </h1>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)', marginBottom: 28 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)', marginBottom: 32 }}>
               Have a project in mind? A brand to build, an event to design for, or print to produce? Let&apos;s talk.
             </p>
             <div className="contact-mode-toggle">
@@ -72,47 +79,42 @@ function ContactPageInner() {
                 onClick={() => setMode('call')}
               >Book a Call</button>
             </div>
-            <div style={{ marginTop: 40 }}>
-            {[
-              { label: 'Email', value: 'nicopixelll@gmail.com' },
-              { label: 'Location', value: 'Lagos, Nigeria' },
-              { label: 'Response', value: 'Within 24 hours' },
-            ].map(item => (
-              <div key={item.label} style={{
-                padding: '18px 0', borderBottom: '1px solid var(--border)',
-                display: 'flex', gap: 32, alignItems: 'baseline',
-              }}>
-                <span style={{
-                  fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase',
-                  color: 'var(--fg-subtle)', width: 72, flexShrink: 0,
-                }}>{item.label}</span>
-                <span style={{ fontSize: 14, color: 'var(--fg-muted)' }}>{item.value}</span>
-              </div>
-            ))}
+
+            <div className="contact-info-card">
+              {[
+                { label: 'Email', value: 'nicopixelll@gmail.com' },
+                { label: 'Location', value: 'Lagos, Nigeria' },
+                { label: 'Response', value: 'Within 24 hours' },
+              ].map((item, i) => (
+                <div key={item.label} className="contact-info-row">
+                  <span className="contact-info-num">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <span className="contact-info-label">{item.label}</span>
+                    <span className="contact-info-value">{item.value}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Right — form or booking */}
           <div>
             {mode === 'call' ? (
-              <div className="contact-booking-wrap">
+              <div className="contact-booking-wrap contact-card">
                 <BookingEmbed />
               </div>
             ) : status === 'success' ? (
-              <div style={{
-                padding: '48px 40px', border: '1px solid var(--border)',
-                textAlign: 'center',
-              }}>
+              <div className="contact-card" style={{ textAlign: 'center', padding: '56px 40px' }}>
                 <p style={{
                   fontFamily: 'var(--font-heading)', fontSize: 28,
-                  fontStyle: 'italic', marginBottom: 12,
+                  fontStyle: 'italic', marginBottom: 12, color: 'var(--accent)',
                 }}>Message sent.</p>
                 <p style={{ fontSize: 14, color: 'var(--fg-muted)' }}>
                   I&apos;ll get back to you within 24 hours.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+              <form onSubmit={handleSubmit} className="contact-card" style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
                 {/* Honeypot — hidden from real users, bots tend to fill every field */}
                 <input
                   type="text"
@@ -153,7 +155,7 @@ function ContactPageInner() {
                 {error && <p style={{ fontSize: 13, color: 'var(--accent)' }}>{error}</p>}
 
                 <button type="submit" disabled={status === 'sending'} className="form-submit">
-                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                  {status === 'sending' ? 'Sending...' : 'Send Message →'}
                 </button>
               </form>
             )}
@@ -162,10 +164,15 @@ function ContactPageInner() {
       </div>
 
       <style>{`
+        .reg-mark { position: absolute; width: 26px; height: 26px; stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.35; }
+        .reg-mark-tl { top: 28px; left: 28px; }
+        .reg-mark-tr { top: 28px; right: 28px; }
+
         .contact-mode-toggle {
           display: flex; gap: 0;
           border: 1px solid var(--border);
           width: fit-content;
+          margin-bottom: 32px;
         }
         .contact-mode-btn {
           padding: 14px 28px;
@@ -180,10 +187,22 @@ function ContactPageInner() {
         .contact-mode-btn:last-child { border-right: none; }
         .contact-mode-btn-active { background: var(--fg); color: var(--bg); }
         .contact-mode-btn:not(.contact-mode-btn-active):hover { background: var(--bg-secondary); color: var(--fg); }
+
+        .contact-info-card { border: 1px solid var(--border); }
+        .contact-info-row { display: flex; align-items: center; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .contact-info-row:last-child { border-bottom: none; }
+        .contact-info-row:hover { background: var(--bg-secondary); }
+        .contact-info-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent); letter-spacing: 0.1em; flex-shrink: 0; }
+        .contact-info-label { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 4px; }
+        .contact-info-value { font-size: 15px; color: var(--fg); font-weight: 500; }
+
+        .contact-card { border: 1px solid var(--border); background: var(--bg-secondary); padding: 40px; }
         .contact-booking-wrap { min-height: 560px; }
         .contact-section {
           min-height: calc(100vh - 64px);
           padding: 80px 48px;
+          position: relative;
+          overflow: hidden;
         }
         .contact-grid {
           display: grid;
@@ -210,38 +229,42 @@ function ContactPageInner() {
         }
         .form-input {
           width: 100%;
-          padding: 12px 0;
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid var(--border);
+          padding: 13px 16px;
+          background: var(--bg);
+          border: 1px solid var(--border);
           color: var(--fg);
           font-size: 15px;
           font-family: var(--font-body);
           outline: none;
-          transition: border-color 0.2s;
+          transition: border-color 0.2s, box-shadow 0.2s;
           -webkit-appearance: none;
         }
-        .form-input:focus { border-bottom-color: var(--accent); }
+        .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1); }
         .form-input::placeholder { color: var(--fg-subtle); }
         .form-textarea { resize: none; }
         .form-submit {
           align-self: flex-start;
-          padding: 14px 40px;
-          background: var(--fg);
-          color: var(--bg);
+          padding: 15px 40px;
+          background: var(--accent);
+          color: white;
           border: none;
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           font-family: var(--font-body);
-          transition: background 0.2s;
+          transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
         }
-        .form-submit:hover { background: var(--accent); }
-        .form-submit:disabled { background: var(--fg-subtle); }
+        .form-submit:hover { background: #a01830; transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(196, 30, 58, 0.45); }
+        .form-submit:disabled { background: var(--fg-subtle); transform: none; box-shadow: none; }
 
         @media (max-width: 767px) {
+          .reg-mark { width: 20px; height: 20px; }
+          .reg-mark-tl, .reg-mark-tr { top: 16px; }
+          .reg-mark-tl { left: 16px; }
+          .reg-mark-tr { right: 16px; }
           .contact-section { padding: 60px 24px; }
+          .contact-card { padding: 28px; }
           .contact-grid {
             grid-template-columns: 1fr;
             gap: 52px;
@@ -252,7 +275,6 @@ function ContactPageInner() {
             gap: 28px;
           }
           .form-submit { width: 100%; text-align: center; }
-          .form-submit button { width: 100% !important; padding: 16px 32px !important; font-size: 13px !important; }
         }
       `}</style>
     </section>

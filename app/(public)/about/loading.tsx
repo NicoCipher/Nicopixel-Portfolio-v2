@@ -20,7 +20,7 @@ export default function AboutLoading() {
       </div>
 
       <style>{`
-        .about-loading-hero { display: grid; grid-template-columns: 1fr 420px; min-height: 80vh; border-bottom: 1px solid var(--border); }
+        .about-loading-hero { display: grid; grid-template-columns: 1.3fr 1fr; min-height: min(680px, 78vh); border-bottom: 1px solid var(--border); }
         .about-loading-hero-text { padding: 80px 60px 64px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
         .about-loading-hero-img { background: var(--bg-secondary); }
         .about-loading-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); padding: 0 48px; }

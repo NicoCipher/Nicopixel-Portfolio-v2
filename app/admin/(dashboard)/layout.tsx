@@ -2,7 +2,7 @@ import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { SessionGuard } from '@/components/admin/SessionGuard'
 import { Suspense } from 'react'
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
       <AdminSidebar />

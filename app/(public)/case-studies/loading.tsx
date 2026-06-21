@@ -22,7 +22,7 @@ export default function CaseStudiesLoading() {
 
       <style>{`
         .cs-loading-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
-        .cs-loading-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; border-bottom: 1px solid var(--border); }
+        .cs-loading-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 440px; border-bottom: 1px solid var(--border); }
         .cs-loading-img { aspect-ratio: auto; }
         .cs-loading-body { padding: 56px; display: flex; flex-direction: column; justify-content: center; }
         .shimmer {
