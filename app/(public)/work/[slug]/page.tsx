@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { ProjectGallery } from '@/components/sections/ProjectGallery'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -147,13 +148,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       )}
       {project.images && project.images.length > 0 && (
         <div className="proj-gallery">
-          <div className="proj-gallery-grid">
-            {project.images.map((img: string, i: number) => (
-              <a key={i} href={img} target="_blank" rel="noopener noreferrer" className="proj-gallery-item" aria-label={`Open ${project.title} image ${i + 1} full size`}>
-                <Image src={img} alt={`${project.title} ${i + 1}`} fill style={{ objectFit: 'cover' }} className="proj-gallery-img" sizes="(max-width: 767px) 100vw, (max-width: 900px) 50vw, 33vw" />
-              </a>
-            ))}
-          </div>
+          <ProjectGallery images={project.images} title={project.title} />
         </div>
       )}
 
@@ -217,11 +212,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .cs-results-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
         .cs-results-text { font-family: var(--font-heading); font-size: 18px; font-style: italic; color: white; line-height: 1.5; }
 
-        .proj-gallery { padding: 48px 48px; border-bottom: 1px solid var(--border); }
-        .proj-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; max-width: var(--content-max); margin: 0 auto; }
-        .proj-gallery-item { position: relative; display: block; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-secondary); cursor: zoom-in; }
-        .proj-gallery-img { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
-        .proj-gallery-item:hover .proj-gallery-img { transform: scale(1.04); }
+        .proj-gallery { padding: 48px 48px; border-bottom: 1px solid var(--border); max-width: var(--content-max); margin: 0 auto; }
         .proj-related { padding: 60px 48px; }
         @media(max-width: 767px) {
           .proj-meta { padding: 40px 20px; }

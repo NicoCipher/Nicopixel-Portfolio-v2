@@ -119,26 +119,12 @@ export default async function HomePage() {
             </div>
             <Link href="/work" className="link-muted">View All →</Link>
           </div>
-          {projects[0] && (
-            <Link href={`/work/${projects[0].slug}`} style={{ display: 'block', textDecoration: 'none', marginBottom: 2 }} className="scroll-reveal">
-              <div className="hero-project" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
-                {projects[0].cover_image
-                  ? <Image src={projects[0].cover_image} alt={`${projects[0].title} — ${projects[0].category} design by Nicopixel, Lagos`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 1240px" />
-                  : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 60, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{projects[0].category}</span></div>
-                }
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(20px, 4vw, 40px)' }}>
-                  <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'capitalize', color: 'rgba(255,255,255,0.75)', marginBottom: 8, display: 'block', fontWeight: 500 }}>{projects[0].category}</span>
-                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 42px)', fontWeight: 400, color: 'white', margin: 0 }}>{projects[0].title}</h3>
-                </div>
-              </div>
-            </Link>
-          )}
           <div className="projects-subgrid">
-            {(projects as Project[]).slice(1).map((project, i) => (
+            {(projects as Project[]).slice(0, 4).map((project, i) => (
               <Link key={project.id} href={`/work/${project.slug}`} style={{ display: 'block', textDecoration: 'none', animationDelay: `${i * 80}ms` }} className="scroll-reveal sub-card-link">
                 <div className="sub-card" style={{ position: 'relative', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
                   {project.cover_image
-                    ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design by Nicopixel`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 413px" />
+                    ? <Image src={project.cover_image} alt={`${project.title} — ${project.category} design by Nicopixel`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 50vw, 300px" />
                     : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: 'var(--font-heading)', fontSize: 24, fontStyle: 'italic', color: 'var(--fg-subtle)', textTransform: 'capitalize' }}>{project.category}</span></div>
                   }
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px 20px' }}>
@@ -329,10 +315,7 @@ export default async function HomePage() {
         .section-eyebrow::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--accent); }
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
         .section-title em { font-style: italic; color: var(--accent); }
-        .hero-project { aspect-ratio: 16/7; max-width: var(--content-max); margin: 0 auto; }
-        .hero-project img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .scroll-reveal:hover .hero-project img { transform: scale(1.035); }
-        .projects-subgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; max-width: var(--content-max); margin-left: auto; margin-right: auto; } .projects-subgrid .sub-card-wrap:nth-child(3n+1):last-child { grid-column: span 3; }
+        .projects-subgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; max-width: var(--content-max); margin: 0 auto; }
         .sub-card { aspect-ratio: 4/3; }
         .sub-card img { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         a.sub-card-link:hover .sub-card img { transform: scale(1.06); }
@@ -425,8 +408,7 @@ export default async function HomePage() {
           .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.08); }
           .testimonial-item { padding: 32px 20px 32px 24px !important; }
           .testimonial-featured { padding: 36px 20px 36px 24px !important; }
-          .hero-project { aspect-ratio: 4/3; }
-          .projects-subgrid { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+          .projects-subgrid { grid-template-columns: 1fr 1fr; gap: 8px; }
           .sub-card { aspect-ratio: 1/1; border-radius: 4px; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 12px; }
           .testimonials-grid { grid-template-columns: 1fr; }
