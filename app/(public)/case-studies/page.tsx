@@ -20,9 +20,6 @@ export default async function CaseStudiesPage() {
   return (
     <>
       <section className="cs-header px-page">
-        <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
-        </svg>
         <p className="cs-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Case Studies
@@ -82,9 +79,6 @@ export default async function CaseStudiesPage() {
       )}
 
       <section className="cs-cta">
-        <svg className="reg-mark reg-mark-bl" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
-        </svg>
         <div className="cs-cta-inner">
           <h2 className="cs-cta-title">Want results like these?</h2>
           <Link href="/contact" className="cs-cta-btn">Start a Project →</Link>
@@ -93,9 +87,6 @@ export default async function CaseStudiesPage() {
 
       <style>{`
         .cs-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); position: relative; }
-        .reg-mark { position: absolute; width: 26px; height: 26px; stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.35; }
-        .cs-header .reg-mark-tr { top: 28px; right: 28px; }
-        .cs-cta .reg-mark-bl { bottom: 28px; left: 28px; }
         .cs-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .cs-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
         .cs-title em { color: var(--accent); font-style: italic; }
@@ -156,9 +147,6 @@ export default async function CaseStudiesPage() {
           .cs-header { padding: 56px 20px 44px; }
           .cs-card-body { padding: 32px 20px; }
           .cs-cta { padding: 64px 20px; }
-          .reg-mark { width: 20px; height: 20px; }
-          .cs-header .reg-mark-tr { top: 16px; right: 16px; }
-          .cs-cta .reg-mark-bl { bottom: 16px; left: 16px; }
         }
       `}</style>
     </>

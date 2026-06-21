@@ -10,13 +10,13 @@ export default async function PublicLayout({ children }: { children: React.React
   settingsRows?.forEach((r: { key: string; value: string | null }) => { settings[r.key] = r.value })
 
   return (
-    <>
+    <div className="public-site">
       <Navbar settings={settings} />
       <PageTracker />
       <main style={{ paddingTop: 64, overflowX: 'hidden', maxWidth: '100vw' }}>
         {children}
       </main>
       <Footer settings={settings} />
-    </>
+    </div>
   )
 }

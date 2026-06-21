@@ -39,13 +39,6 @@ function ContactPageInner() {
 
   return (
     <section className="contact-section">
-      <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
-      </svg>
-      <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
-        <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
-      </svg>
-
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
@@ -164,10 +157,6 @@ function ContactPageInner() {
       </div>
 
       <style>{`
-        .reg-mark { position: absolute; width: 26px; height: 26px; stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.35; }
-        .reg-mark-tl { top: 28px; left: 28px; }
-        .reg-mark-tr { top: 28px; right: 28px; }
-
         .contact-mode-toggle {
           display: flex; gap: 0;
           border: 1px solid var(--border);
@@ -259,10 +248,6 @@ function ContactPageInner() {
         .form-submit:disabled { background: var(--fg-subtle); transform: none; box-shadow: none; }
 
         @media (max-width: 767px) {
-          .reg-mark { width: 20px; height: 20px; }
-          .reg-mark-tl, .reg-mark-tr { top: 16px; }
-          .reg-mark-tl { left: 16px; }
-          .reg-mark-tr { right: 16px; }
           .contact-section { padding: 60px 24px; }
           .contact-card { padding: 28px; }
           .contact-grid {
