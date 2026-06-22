@@ -44,7 +44,7 @@ export default async function ServicesPage() {
           deliverables: string[]; timeline: string | null;
           pricing_from: string | null; pricing_to: string | null
         }, i: number) => (
-          <div key={svc.id} className={`svc-card ${i % 2 === 1 ? 'svc-card-alt' : ''}`}>
+          <div key={svc.id} id={`service-${svc.id}`} className={`svc-card ${i % 2 === 1 ? 'svc-card-alt' : ''}`}>
             <div className="svc-card-inner">
               {/* Left */}
               <div className="svc-card-left">
@@ -175,6 +175,7 @@ export default async function ServicesPage() {
           border-bottom: 1px solid var(--border);
           padding: 72px 48px;
           transition: background 0.3s;
+          scroll-margin-top: 84px;
         }
         .svc-card:hover { background: var(--bg-secondary); }
         .svc-card-alt { background: var(--bg-secondary); }

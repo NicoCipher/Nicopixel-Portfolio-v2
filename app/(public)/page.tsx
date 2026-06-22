@@ -91,7 +91,7 @@ export default async function HomePage() {
           <div className="services-label scroll-reveal">What I Do</div>
           <div className="services-grid">
             {services.map((svc: { id: string; num: string; title: string; description: string | null; deliverables: string[] }, i: number) => (
-              <div key={svc.id} className="service-card scroll-reveal" style={{ animationDelay: `${i * 90}ms` }}>
+              <Link key={svc.id} href={`/services#service-${svc.id}`} className="service-card scroll-reveal" style={{ animationDelay: `${i * 90}ms` }}>
                 <span className="service-num">{svc.num}</span>
                 <h3 className="service-title">{svc.title}</h3>
                 <p className="service-desc">{svc.description}</p>
@@ -102,8 +102,8 @@ export default async function HomePage() {
                     ))}
                   </ul>
                 )}
-                <span className="service-arrow">→</span>
-              </div>
+                <span className="service-cta">Learn more <span className="service-arrow">→</span></span>
+              </Link>
             ))}
           </div>
         </section>
@@ -272,7 +272,9 @@ export default async function HomePage() {
         .services-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .services-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: var(--content-max); margin: 0 auto; }
-        .service-card { padding: 44px 40px 40px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .service-card { padding: 44px 40px 40px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); text-decoration: none; color: inherit; }
+        .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; height: 2px; width: 0; background: var(--accent); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2; }
+        .service-card:hover::before { width: 100%; }
         .service-card:hover { transform: translateY(-6px); }
         .service-card:last-child { border-right: none; padding-right: 0; }
         .service-card:not(:first-child) { padding-left: 40px; }
@@ -288,14 +290,16 @@ export default async function HomePage() {
         .service-desc { position: relative; z-index: 1; font-size: 14.5px; line-height: 1.8; color: var(--fg-muted); flex: 1; }
         .service-list { position: relative; z-index: 1; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
         .service-list li { font-size: 13px; color: var(--fg-muted); display: flex; align-items: center; }
-        .service-arrow {
+        .service-cta {
           position: relative; z-index: 1;
-          display: inline-flex; align-items: center; justify-content: center;
-          width: 34px; height: 34px; border: 1px solid var(--border);
-          font-size: 14px; color: var(--fg-muted); margin-top: 8px;
-          transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+          color: var(--fg-muted); margin-top: 10px;
+          transition: color 0.25s;
         }
-        .service-card:hover .service-arrow { background: var(--accent); color: white; border-color: var(--accent); transform: translateX(4px); }
+        .service-card:hover .service-cta { color: var(--accent); }
+        .service-arrow { display: inline-block; transition: transform 0.25s; }
+        .service-card:hover .service-arrow { transform: translateX(4px); }
         .featured-section { padding: 88px 48px; border-bottom: 1px solid var(--border); }
         .featured-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .section-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
