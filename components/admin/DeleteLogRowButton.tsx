@@ -10,7 +10,12 @@ export function DeleteLogRowButton({ table, id }: { table: 'activity_log' | 'log
   const handleDelete = async () => {
     setDeleting(true)
     const supabase = createClient()
-    await supabase.from(table).delete().eq('id', id)
+    const { error } = await supabase.from(table).delete().eq('id', id)
+    setDeleting(false)
+    if (error) {
+      alert(`Couldn't delete this entry: ${error.message}`)
+      return
+    }
     router.refresh()
   }
 

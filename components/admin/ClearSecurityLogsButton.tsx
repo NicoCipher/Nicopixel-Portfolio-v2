@@ -23,11 +23,13 @@ export function ClearSecurityLogsButton() {
     const cutoff = cutoffs[period]
 
     if (cutoff) {
-      await supabase.from('activity_log').delete().lt('created_at', cutoff)
-      await supabase.from('login_attempts').delete().lt('attempted_at', cutoff)
+      const { error: e1 } = await supabase.from('activity_log').delete().lt('created_at', cutoff)
+      const { error: e2 } = await supabase.from('login_attempts').delete().lt('attempted_at', cutoff)
+      if (e1 || e2) alert(`Some logs couldn't be cleared: ${e1?.message || e2?.message}`)
     } else {
-      await supabase.from('activity_log').delete().neq('id', '00000000-0000-0000-0000-000000000000')
-      await supabase.from('login_attempts').delete().neq('id', '00000000-0000-0000-0000-000000000000')
+      const { error: e1 } = await supabase.from('activity_log').delete().neq('id', '00000000-0000-0000-0000-000000000000')
+      const { error: e2 } = await supabase.from('login_attempts').delete().neq('id', '00000000-0000-0000-0000-000000000000')
+      if (e1 || e2) alert(`Some logs couldn't be cleared: ${e1?.message || e2?.message}`)
     }
 
     setClearing(false)
