@@ -6,7 +6,8 @@ export function MarkReadButton({ id }: { id: string }) {
   const router = useRouter()
   const handleMarkRead = async () => {
     const supabase = createClient()
-    await supabase.from('messages').update({ read: true }).eq('id', id)
+    const { error } = await supabase.from('messages').update({ read: true }).eq('id', id)
+    if (error) { alert(`Couldn't update: ${error.message}`); return }
     router.refresh()
   }
 

@@ -8,7 +8,8 @@ export function DeleteProjectButton({ id }: { id: string }) {
   const handleDelete = async () => {
     if (!confirm('Delete this project? This cannot be undone.')) return
     const supabase = createClient()
-    await supabase.from('projects').delete().eq('id', id)
+    const { error } = await supabase.from('projects').delete().eq('id', id)
+    if (error) { alert(`Couldn't delete: ${error.message}`); return }
     router.refresh()
   }
 

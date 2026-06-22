@@ -26,14 +26,13 @@ export function ClearAnalyticsButton() {
     }
 
     const cutoff = cutoffs[period]
-    if (cutoff) {
-      await supabase.from('page_views').delete().gte('created_at', cutoff)
-    } else {
-      await supabase.from('page_views').delete().neq('id', '00000000-0000-0000-0000-000000000000')
-    }
+    const { error } = cutoff
+      ? await supabase.from('page_views').delete().gte('created_at', cutoff)
+      : await supabase.from('page_views').delete().neq('id', '00000000-0000-0000-0000-000000000000')
 
     setClearing(false)
     setOpen(false)
+    if (error) { alert(`Couldn't clear analytics: ${error.message}`); return }
     router.refresh()
   }
 

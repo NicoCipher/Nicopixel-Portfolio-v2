@@ -2,6 +2,9 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { BookingEmbed } from '@/components/sections/BookingEmbed'
+import { createClient } from '@/lib/supabase/client'
+
+const FALLBACK_EMAIL = 'nicopixelll@gmail.com'
 
 function ContactPageInner() {
   const searchParams = useSearchParams()
@@ -9,6 +12,7 @@ function ContactPageInner() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', website: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [contactEmail, setContactEmail] = useState(FALLBACK_EMAIL)
 
   useEffect(() => {
     if (searchParams.get('mode') === 'call') {
@@ -16,6 +20,12 @@ function ContactPageInner() {
       return () => clearTimeout(t)
     }
   }, [searchParams])
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.from('site_settings').select('value').eq('key', 'email').maybeSingle()
+      .then(({ data }) => { if (data?.value) setContactEmail(data.value) })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,7 +85,7 @@ function ContactPageInner() {
 
             <div className="contact-info-card">
               {[
-                { label: 'Email', value: 'nicopixelll@gmail.com' },
+                { label: 'Email', value: contactEmail },
                 { label: 'Location', value: 'Lagos, Nigeria' },
                 { label: 'Response', value: 'Within 24 hours' },
               ].map((item, i) => (

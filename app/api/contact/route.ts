@@ -48,6 +48,9 @@ export async function POST(req: NextRequest) {
 
   const supabase = await createAdminClient()
 
+  const { data: emailSetting } = await supabase.from('site_settings').select('value').eq('key', 'email').maybeSingle()
+  const destinationEmail = emailSetting?.value || process.env.CONTACT_EMAIL!
+
   // Database-backed rate limit — checks recent submissions from this IP.
   // An in-memory counter would not work reliably across serverless
   // function instances, so this queries persistent storage instead.
@@ -72,7 +75,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: 'Nicopixel <onboarding@resend.dev>',
-      to: [process.env.CONTACT_EMAIL!],
+      to: [destinationEmail],
       replyTo: email,
       subject: subject ? `[Nicopixel] ${safeSubject}` : `[Nicopixel] New message from ${safeName}`,
       html: `

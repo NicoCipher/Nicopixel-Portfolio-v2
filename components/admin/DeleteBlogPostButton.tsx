@@ -8,7 +8,8 @@ export function DeleteBlogPostButton({ id }: { id: string }) {
   const handleDelete = async () => {
     if (!confirm('Delete this post? This cannot be undone.')) return
     const supabase = createClient()
-    await supabase.from('blog_posts').delete().eq('id', id)
+    const { error } = await supabase.from('blog_posts').delete().eq('id', id)
+    if (error) { alert(`Couldn't delete: ${error.message}`); return }
     router.refresh()
   }
 

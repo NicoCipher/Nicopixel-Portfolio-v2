@@ -52,12 +52,12 @@ export function AboutForm({ about }: { about?: AboutContent | null }) {
     const supabase = createClient()
     const payload = { ...form, profile_image: profileImage || null, tools }
 
-    if (about?.id) {
-      await supabase.from('about_content').update(payload).eq('id', about.id)
-    } else {
-      await supabase.from('about_content').insert(payload)
-    }
+    const { error } = about?.id
+      ? await supabase.from('about_content').update(payload).eq('id', about.id)
+      : await supabase.from('about_content').insert(payload)
+
     setSaving(false)
+    if (error) { alert(`Couldn't save: ${error.message}`); return }
     setSaved(true)
     setTimeout(() => setSaved(false), 3000)
   }

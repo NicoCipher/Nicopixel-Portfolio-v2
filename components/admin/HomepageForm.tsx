@@ -69,17 +69,17 @@ export function HomepageForm({
   const saveHero = async () => {
     setSaving(true)
     const supabase = createClient()
-    await Promise.all(
-      Object.entries(hero).map(([key, value]) =>
+    const results = await Promise.all([
+      ...Object.entries(hero).map(([key, value]) =>
         supabase.from('site_settings').upsert({ key, value }, { onConflict: 'key' })
-      )
-    )
-    // also save why title/subtitle
-    await Promise.all([
+      ),
       supabase.from('site_settings').upsert({ key: 'why_title', value: why.title }, { onConflict: 'key' }),
       supabase.from('site_settings').upsert({ key: 'why_subtitle', value: why.subtitle }, { onConflict: 'key' }),
     ])
-    setSaving(false); flash(); router.refresh()
+    setSaving(false)
+    const firstError = results.find(r => r.error)?.error
+    if (firstError) { alert(`Save failed: ${firstError.message}`); return }
+    flash(); router.refresh()
   }
 
   // ── SAVE SERVICE ──
@@ -87,10 +87,12 @@ export function HomepageForm({
     const supabase = createClient()
     const { id, ...rest } = svc
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('services').insert(rest).select().single()
+      const { data, error } = await supabase.from('services').insert(rest).select().single()
+      if (error) { alert(`Couldn't save service: ${error.message}`); return }
       if (data) setSvcs(s => s.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('services').update(rest).eq('id', id)
+      const { error } = await supabase.from('services').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save service: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -98,7 +100,10 @@ export function HomepageForm({
   const deleteService = async (id: string) => {
     if (!confirm('Delete this service?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('services').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('services').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setSvcs(s => s.filter(x => x.id !== id))
   }
 
@@ -107,10 +112,12 @@ export function HomepageForm({
     const supabase = createClient()
     const { id, ...rest } = item
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('why_items').insert(rest).select().single()
+      const { data, error } = await supabase.from('why_items').insert(rest).select().single()
+      if (error) { alert(`Couldn't save: ${error.message}`); return }
       if (data) setWhyList(w => w.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('why_items').update(rest).eq('id', id)
+      const { error } = await supabase.from('why_items').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -118,7 +125,10 @@ export function HomepageForm({
   const deleteWhyItem = async (id: string) => {
     if (!confirm('Delete this item?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('why_items').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('why_items').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setWhyList(w => w.filter(x => x.id !== id))
   }
 
@@ -127,10 +137,12 @@ export function HomepageForm({
     const supabase = createClient()
     const { id, ...rest } = t
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('testimonials').insert(rest).select().single()
+      const { data, error } = await supabase.from('testimonials').insert(rest).select().single()
+      if (error) { alert(`Couldn't save: ${error.message}`); return }
       if (data) setTests(ts => ts.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('testimonials').update(rest).eq('id', id)
+      const { error } = await supabase.from('testimonials').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -138,7 +150,10 @@ export function HomepageForm({
   const deleteTestimonial = async (id: string) => {
     if (!confirm('Delete this testimonial?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('testimonials').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('testimonials').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setTests(ts => ts.filter(x => x.id !== id))
   }
 

@@ -39,10 +39,12 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
     const supabase = createClient()
     const { id, ...rest } = svc
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('services').insert(rest).select().single()
+      const { data, error } = await supabase.from('services').insert(rest).select().single()
+      if (error) { alert(`Couldn't save service: ${error.message}`); return }
       if (data) setServices(s => s.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('services').update(rest).eq('id', id)
+      const { error } = await supabase.from('services').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save service: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -50,7 +52,10 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
   const deleteService = async (id: string) => {
     if (!confirm('Delete this service?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('services').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('services').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setServices(s => s.filter(x => x.id !== id))
   }
 
@@ -59,10 +64,12 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
     const supabase = createClient()
     const { id, ...rest } = step
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('process_steps').insert(rest).select().single()
+      const { data, error } = await supabase.from('process_steps').insert(rest).select().single()
+      if (error) { alert(`Couldn't save step: ${error.message}`); return }
       if (data) setSteps(s => s.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('process_steps').update(rest).eq('id', id)
+      const { error } = await supabase.from('process_steps').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save step: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -70,7 +77,10 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
   const deleteStep = async (id: string) => {
     if (!confirm('Delete this step?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('process_steps').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('process_steps').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setSteps(s => s.filter(x => x.id !== id))
   }
 
@@ -79,10 +89,12 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
     const supabase = createClient()
     const { id, ...rest } = faq
     if (id.startsWith('new-')) {
-      const { data } = await supabase.from('faqs').insert(rest).select().single()
+      const { data, error } = await supabase.from('faqs').insert(rest).select().single()
+      if (error) { alert(`Couldn't save FAQ: ${error.message}`); return }
       if (data) setFaqs(f => f.map(x => x.id === id ? data : x))
     } else {
-      await supabase.from('faqs').update(rest).eq('id', id)
+      const { error } = await supabase.from('faqs').update(rest).eq('id', id)
+      if (error) { alert(`Couldn't save FAQ: ${error.message}`); return }
     }
     flash(); router.refresh()
   }
@@ -90,7 +102,10 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
   const deleteFaq = async (id: string) => {
     if (!confirm('Delete this FAQ?')) return
     const supabase = createClient()
-    if (!id.startsWith('new-')) await supabase.from('faqs').delete().eq('id', id)
+    if (!id.startsWith('new-')) {
+      const { error } = await supabase.from('faqs').delete().eq('id', id)
+      if (error) { alert(`Couldn't delete: ${error.message}`); return }
+    }
     setFaqs(f => f.filter(x => x.id !== id))
   }
 
