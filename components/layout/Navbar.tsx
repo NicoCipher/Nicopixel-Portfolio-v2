@@ -114,9 +114,21 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         <div className="nav-drawer-footer" style={{ transitionDelay: menuOpen ? `${links.length * 0.04 + 0.15}s` : '0s' }}>
           <div className="nav-drawer-divider" />
           <div className="nav-drawer-socials">
-            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="nav-drawer-social">Behance</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="nav-drawer-social">Instagram</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="nav-drawer-social">LinkedIn</a>
+            {[
+              { key: 'behance', label: 'Behance' },
+              { key: 'instagram', label: 'Instagram' },
+              { key: 'tiktok', label: 'TikTok' },
+              { key: 'linkedin', label: 'LinkedIn' },
+              { key: 'twitter', label: 'Twitter / X' },
+            ]
+              .filter(s => {
+                const url = settings?.[s.key]
+                const enabled = settings?.[`${s.key}_enabled`]
+                return !!url && enabled !== 'false'
+              })
+              .map(s => (
+                <a key={s.key} href={settings?.[s.key] as string} target="_blank" rel="noopener noreferrer" className="nav-drawer-social">{s.label}</a>
+              ))}
           </div>
           <span className="nav-drawer-location">Lagos, Nigeria · Available for projects</span>
         </div>

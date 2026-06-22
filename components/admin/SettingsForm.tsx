@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
+import { FONT_PAIRINGS, DEFAULT_FONT_PAIRING } from '@/lib/fontPairings'
 
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '12px 16px',
@@ -33,22 +34,21 @@ const FIELDS = [
       { key: 'email', label: 'Email Address', placeholder: 'nicopixelll@gmail.com' },
     ]
   },
-  {
-    section: 'Social Links',
-    fields: [
-      { key: 'behance', label: 'Behance URL', placeholder: 'https://behance.net/nicopixel' },
-      { key: 'instagram', label: 'Instagram URL', placeholder: 'https://instagram.com/nicopixel' },
-      { key: 'linkedin', label: 'LinkedIn URL', placeholder: 'https://linkedin.com/in/...' },
-      { key: 'twitter', label: 'Twitter / X URL', placeholder: 'https://x.com/nicopixel' },
-    ]
-  },
-  {
-    section: 'Typography',
-    fields: [
-      { key: 'font_heading', label: 'Heading Font', placeholder: 'Playfair Display' },
-      { key: 'font_body', label: 'Body Font', placeholder: 'DM Sans' },
-    ]
-  },
+]
+
+const SOCIAL_PLATFORMS = [
+  { key: 'behance', label: 'Behance', placeholder: 'https://behance.net/nicopixel' },
+  { key: 'instagram', label: 'Instagram', placeholder: 'https://instagram.com/nicopixel' },
+  { key: 'tiktok', label: 'TikTok', placeholder: 'https://tiktok.com/@nicopixel' },
+  { key: 'linkedin', label: 'LinkedIn', placeholder: 'https://linkedin.com/in/...' },
+  { key: 'twitter', label: 'Twitter / X', placeholder: 'https://x.com/nicopixel' },
+]
+
+const SESSION_TIMEOUT_OPTIONS = [
+  { value: '10', label: '10 minutes — strictest' },
+  { value: '15', label: '15 minutes' },
+  { value: '30', label: '30 minutes — recommended' },
+  { value: '60', label: '60 minutes — most relaxed' },
 ]
 
 export function SettingsForm({ settings }: { settings: Record<string, string> }) {
@@ -149,6 +149,95 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
           </div>
         </div>
       ))}
+
+      {/* Social Links — URL + show/hide toggle per platform */}
+      <div>
+        <p style={sectionTitle}>Social Links</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {SOCIAL_PLATFORMS.map(platform => {
+            const enabled = values[`${platform.key}_enabled`] !== 'false'
+            return (
+              <div key={platform.key} style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={labelStyle}>{platform.label}</label>
+                  <input
+                    style={{ ...inputStyle, opacity: enabled ? 1 : 0.5 }}
+                    value={values[platform.key] ?? ''}
+                    onChange={e => setValues(v => ({ ...v, [platform.key]: e.target.value }))}
+                    onFocus={e => (e.target.style.borderColor = '#C41E3A')}
+                    onBlur={e => (e.target.style.borderColor = '#1F1F1F')}
+                    placeholder={platform.placeholder}
+                  />
+                </div>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, cursor: 'pointer', flexShrink: 0 }}>
+                  <div
+                    onClick={() => setValues(v => ({ ...v, [`${platform.key}_enabled`]: enabled ? 'false' : 'true' }))}
+                    style={{ width: 36, height: 20, borderRadius: 10, background: enabled ? '#C41E3A' : '#333', position: 'relative', transition: 'background 0.2s' }}
+                  >
+                    <div style={{ position: 'absolute', top: 2, left: enabled ? 18 : 2, width: 16, height: 16, borderRadius: '50%', background: 'white', transition: 'left 0.2s' }} />
+                  </div>
+                  <span style={{ fontSize: 11, color: '#666', width: 38 }}>{enabled ? 'Shown' : 'Hidden'}</span>
+                </label>
+              </div>
+            )
+          })}
+        </div>
+        <p style={{ fontSize: 11, color: '#444', marginTop: 10 }}>Toggle off to hide a link from the site without losing the saved URL.</p>
+      </div>
+
+      {/* Typography — curated pairings only, to keep the site's design coherent */}
+      <div>
+        <p style={sectionTitle}>Typography</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {FONT_PAIRINGS.map(pairing => {
+            const isActive = (values.font_pairing || DEFAULT_FONT_PAIRING) === pairing.key
+            return (
+              <label key={pairing.key} style={{
+                display: 'flex', alignItems: 'flex-start', gap: 14,
+                padding: '16px 18px', cursor: 'pointer',
+                background: isActive ? '#1A0A0C' : '#0A0A0A',
+                border: `1px solid ${isActive ? '#C41E3A' : '#1F1F1F'}`,
+                transition: 'border-color 0.2s, background 0.2s',
+              }}>
+                <input
+                  type="radio"
+                  name="font_pairing"
+                  checked={isActive}
+                  onChange={() => setValues(v => ({ ...v, font_pairing: pairing.key }))}
+                  style={{ marginTop: 4, accentColor: '#C41E3A', cursor: 'pointer' }}
+                />
+                <div>
+                  <div style={{ fontFamily: pairing.heading, fontSize: 19, color: '#FAFAF9', marginBottom: 4 }}>{pairing.label}</div>
+                  <p style={{ fontSize: 12, color: '#666', margin: 0, fontFamily: pairing.body }}>{pairing.description}</p>
+                </div>
+              </label>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Session & Security */}
+      <div>
+        <p style={sectionTitle}>Session &amp; Security</p>
+        <div>
+          <label style={labelStyle}>Inactivity Timeout</label>
+          <select
+            style={{ ...inputStyle, cursor: 'pointer' }}
+            value={values.session_timeout_minutes || '30'}
+            onChange={e => setValues(v => ({ ...v, session_timeout_minutes: e.target.value }))}
+          >
+            {SESSION_TIMEOUT_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <p style={{ fontSize: 11, color: '#444', marginTop: 8, lineHeight: 1.6 }}>
+            You&apos;ll be automatically signed out of the admin panel after this much time with no activity.
+            30 minutes is a reasonable, commonly-used default for a site like this — tighten it to 10–15 minutes
+            if you often use shared or public computers; relax it to 60 if you&apos;re always on a private device.
+            There&apos;s also a fixed 8-hour absolute session limit regardless of activity.
+          </p>
+        </div>
+      </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <button onClick={handleSave} disabled={saving} style={{

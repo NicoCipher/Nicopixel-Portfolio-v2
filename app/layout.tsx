@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/ui/ThemeProvider'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { createClient } from '@/lib/supabase/server'
+import { getFontPairing } from '@/lib/fontPairings'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -67,9 +68,10 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Fetch favicon and logo from settings
   const supabase = await createClient()
-  const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', ['favicon_url', 'logo_url'])
+  const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', ['favicon_url', 'logo_url', 'font_pairing'])
   const siteAssets: Record<string, string> = {}
   rows?.forEach((r: { key: string; value: string | null }) => { if (r.value) siteAssets[r.key] = r.value })
+  const fontPairing = getFontPairing(siteAssets.font_pairing)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -87,6 +89,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: `:root { --font-heading: ${fontPairing.heading} !important; --font-body: ${fontPairing.body} !important; }` }} />
         {siteAssets.favicon_url ? (
           <>
             <link rel="icon" type="image/png" href={siteAssets.favicon_url} />

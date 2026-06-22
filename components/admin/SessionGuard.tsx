@@ -5,8 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 
 const SESSION_KEY = 'np_admin_login_time'
 const ACTIVITY_KEY = 'np_admin_last_active'
-const TIMEOUT_MS = 30 * 60 * 1000   // 30 min inactivity
-const MAX_SESSION_MS = 8 * 60 * 60 * 1000  // 8 hr absolute max
+const MAX_SESSION_MS = 8 * 60 * 60 * 1000  // 8 hr absolute max, regardless of timeout setting
 
 async function forceSignOut(router: ReturnType<typeof useRouter>, reason: string) {
   const supabase = createClient()
@@ -16,9 +15,10 @@ async function forceSignOut(router: ReturnType<typeof useRouter>, reason: string
   router.replace(`/admin/login?reason=${reason}`)
 }
 
-export function SessionGuard({ children }: { children: React.ReactNode }) {
+export function SessionGuard({ children, timeoutMinutes = 30 }: { children: React.ReactNode; timeoutMinutes?: number }) {
   const router = useRouter()
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const timeoutMs = timeoutMinutes * 60 * 1000
 
   useEffect(() => {
     // Record login time if not already recorded
@@ -37,8 +37,8 @@ export function SessionGuard({ children }: { children: React.ReactNode }) {
         return
       }
 
-      // Inactivity timeout (30 min)
-      if (now - lastActive > TIMEOUT_MS) {
+      // Inactivity timeout (admin-configurable, default 30 min)
+      if (now - lastActive > timeoutMs) {
         forceSignOut(router, 'timeout')
         return
       }
@@ -62,7 +62,7 @@ export function SessionGuard({ children }: { children: React.ReactNode }) {
       if (timerRef.current) clearInterval(timerRef.current)
       events.forEach(e => window.removeEventListener(e, updateActivity))
     }
-  }, [router])
+  }, [router, timeoutMs])
 
   return <>{children}</>
 }

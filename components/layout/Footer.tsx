@@ -7,11 +7,22 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
   const pathname = usePathname()
   const hideCTA = pathname === '/contact'
 
-  const socials = [
-    { label: 'Behance', href: settings?.behance || '#' },
-    { label: 'Instagram', href: settings?.instagram || '#' },
-    { label: 'LinkedIn', href: settings?.linkedin || '#' },
+  const ALL_SOCIALS = [
+    { key: 'behance', label: 'Behance' },
+    { key: 'instagram', label: 'Instagram' },
+    { key: 'tiktok', label: 'TikTok' },
+    { key: 'linkedin', label: 'LinkedIn' },
+    { key: 'twitter', label: 'Twitter / X' },
   ]
+  const socials = ALL_SOCIALS
+    .filter(s => {
+      const url = settings?.[s.key]
+      const enabled = settings?.[`${s.key}_enabled`]
+      // A saved URL with no explicit enabled flag yet defaults to shown
+      // (keeps existing configured links working after this update).
+      return !!url && enabled !== 'false'
+    })
+    .map(s => ({ label: s.label, href: settings?.[s.key] as string }))
 
   return (
     <footer>

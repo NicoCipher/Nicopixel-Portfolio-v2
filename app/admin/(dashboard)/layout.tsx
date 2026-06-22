@@ -1,15 +1,20 @@
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { SessionGuard } from '@/components/admin/SessionGuard'
 import { Suspense } from 'react'
+import { createClient } from '@/lib/supabase/server'
 
-export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient()
+  const { data } = await supabase.from('site_settings').select('value').eq('key', 'session_timeout_minutes').maybeSingle()
+  const timeoutMinutes = data?.value ? parseInt(data.value, 10) : 30
+
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
       <AdminSidebar />
       <main style={{ marginLeft: 240, background: '#111111', minHeight: '100vh' }}>
         <div style={{ maxWidth: 1480, margin: '0 auto' }}>
           <Suspense>
-            <SessionGuard>
+            <SessionGuard timeoutMinutes={timeoutMinutes}>
               {children}
             </SessionGuard>
           </Suspense>

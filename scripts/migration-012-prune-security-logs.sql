@@ -15,7 +15,7 @@
 CREATE OR REPLACE FUNCTION public.prune_activity_log()
 RETURNS TRIGGER AS $$
 BEGIN
-  DELETE FROM activity_log WHERE created_at < NOW() - INTERVAL '90 days';
+  DELETE FROM public.activity_log WHERE created_at < NOW() - INTERVAL '90 days';
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql
@@ -32,7 +32,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   -- Shorter retention than activity_log — login attempts are only useful
   -- for short-term pattern detection and could grow fast under bot activity.
-  DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL '14 days';
+  DELETE FROM public.login_attempts WHERE attempted_at < NOW() - INTERVAL '14 days';
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql
