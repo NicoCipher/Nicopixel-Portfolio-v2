@@ -1,11 +1,17 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/sections/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'Services',
   description: 'Brand identity, events design, and print collateral. See exactly what Nicopixel offers, what is included, and how the process works.',
+}
+
+type ServiceRow = {
+  id: string; num: string; title: string; description: string | null;
+  deliverables: string[]; timeline: string | null; category: string
 }
 
 export default async function ServicesPage() {
@@ -21,10 +27,44 @@ export default async function ServicesPage() {
     supabase.from('faqs').select('*').eq('active', true).order('sort_order'),
   ])
 
+  // One representative project per category, to back up each service with real proof
+  const categories = [...new Set((services || []).map((s: ServiceRow) => s.category).filter(Boolean))]
+  const projectsByCategory: Record<string, { slug: string; title: string; cover_image: string | null } | null> = {}
+  if (categories.length > 0) {
+    const { data: matchingProjects } = await supabase
+      .from('projects')
+      .select('slug, title, cover_image, category')
+      .eq('published', true)
+      .in('category', categories)
+      .order('sort_order')
+    categories.forEach(cat => {
+      projectsByCategory[cat] = (matchingProjects || []).find(p => p.category === cat) || null
+    })
+  }
+
+  const jsonLd = (services && services.length > 0) ? {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: services.map((svc: ServiceRow, i: number) => ({
+      '@type': 'Service',
+      position: i + 1,
+      name: svc.title,
+      description: svc.description,
+      provider: { '@type': 'ProfessionalService', name: 'Nicopixel' },
+      areaServed: ['Lagos', 'Nigeria'],
+    })),
+  } : null
+
   return (
     <>
+      {jsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      )}
       {/* ── HEADER ── */}
       <section className="svc-header px-page">
+        <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
+        </svg>
         <p className="svc-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Services
@@ -33,63 +73,68 @@ export default async function ServicesPage() {
           What I create<br /><em>for you.</em>
         </h1>
         <p className="svc-subtitle">
-          Every service is built around one goal — making your brand impossible to ignore. Here is exactly what you get, how long it takes, and what it costs.
+          Every service is built around one goal — making your brand impossible to ignore. Here is exactly what you get, how long it takes, and the work it&apos;s already produced.
         </p>
       </section>
 
       {/* ── SERVICE CARDS ── */}
       <section className="svc-list">
-        {(services || []).map((svc: {
-          id: string; num: string; title: string; description: string | null;
-          deliverables: string[]; timeline: string | null;
-          pricing_from: string | null; pricing_to: string | null
-        }, i: number) => (
-          <div key={svc.id} id={`service-${svc.id}`} className={`svc-card ${i % 2 === 1 ? 'svc-card-alt' : ''}`}>
-            <div className="svc-card-inner">
-              {/* Left */}
-              <div className="svc-card-left">
-                <span className="svc-card-num">{svc.num}</span>
-                <h2 className="svc-card-title">{svc.title}</h2>
-                <p className="svc-card-desc">{svc.description}</p>
-                <div className="svc-card-meta">
+        {(services || []).map((svc: ServiceRow, i: number) => {
+          const proof = projectsByCategory[svc.category]
+          return (
+            <div key={svc.id} id={`service-${svc.id}`} className={`svc-card scroll-reveal ${i % 2 === 1 ? 'svc-card-alt' : ''}`}>
+              <div className="svc-card-inner">
+                {/* Left */}
+                <div className="svc-card-left">
+                  <span className="svc-card-num">{svc.num}</span>
+                  <h2 className="svc-card-title">{svc.title}</h2>
+                  <p className="svc-card-desc">{svc.description}</p>
                   {svc.timeline && (
                     <div className="svc-meta-item">
                       <span className="svc-meta-label">Timeline</span>
                       <span className="svc-meta-value">{svc.timeline}</span>
                     </div>
                   )}
-                  {svc.pricing_from && (
-                    <div className="svc-meta-item">
-                      <span className="svc-meta-label">Starting from</span>
-                      <span className="svc-meta-value" style={{ color: 'var(--accent)' }}>{svc.pricing_from}</span>
-                    </div>
+
+                  {proof && (
+                    <Link href={`/work/${proof.slug}`} className="svc-proof">
+                      <div className="svc-proof-img">
+                        {proof.cover_image
+                          ? <Image src={proof.cover_image} alt={`${proof.title} — example of ${svc.title} by Nicopixel`} fill style={{ objectFit: 'cover' }} sizes="120px" />
+                          : <div className="svc-proof-placeholder" />
+                        }
+                      </div>
+                      <div>
+                        <span className="svc-proof-label">See it in action</span>
+                        <span className="svc-proof-title">{proof.title} →</span>
+                      </div>
+                    </Link>
                   )}
                 </div>
 
-              </div>
-
-              {/* Right — deliverables */}
-              <div className="svc-card-right">
-                <p className="svc-deliverables-label">What&apos;s included</p>
-                <ul className="svc-deliverables">
-                  {(svc.deliverables || []).map((d: string) => (
-                    <li key={d} className="svc-deliverable">
-                      <span className="svc-tick">✓</span>
-                      {d}
-                    </li>
-                  ))}
-                </ul>
+                {/* Right — deliverables */}
+                <div className="svc-card-right">
+                  <p className="svc-deliverables-label">What&apos;s included</p>
+                  <ul className="svc-deliverables">
+                    {(svc.deliverables || []).map((d: string) => (
+                      <li key={d} className="svc-deliverable">
+                        <span className="svc-tick">✓</span>
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </section>
 
       {/* ── PROCESS ── */}
       {steps && steps.length > 0 && (
         <section className="svc-process">
           <div className="svc-process-inner">
-            <div className="svc-process-header">
+            <div className="svc-process-header scroll-reveal">
               <p className="svc-eyebrow">
                 <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
                 How it works
@@ -99,8 +144,8 @@ export default async function ServicesPage() {
               </h2>
             </div>
             <div className="svc-steps">
-              {(steps as { id: string; num: string; title: string; description: string | null }[]).map((step) => (
-                <div key={step.id} className="svc-step">
+              {(steps as { id: string; num: string; title: string; description: string | null }[]).map((step, i) => (
+                <div key={step.id} className="svc-step scroll-reveal" style={{ animationDelay: `${i * 80}ms` }}>
                   <span className="svc-step-num">{step.num}</span>
                   <h3 className="svc-step-title">{step.title}</h3>
                   <p className="svc-step-desc">{step.description}</p>
@@ -114,6 +159,9 @@ export default async function ServicesPage() {
       {/* ── FAQ ── */}
       {faqs && faqs.length > 0 && (
         <section className="svc-faq">
+          <svg className="reg-mark reg-mark-bl" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
+          </svg>
           <div className="svc-faq-inner">
             <div className="svc-faq-header">
               <p className="svc-eyebrow">
@@ -136,12 +184,9 @@ export default async function ServicesPage() {
         <div className="svc-cta-inner">
           <h2 className="svc-cta-title">Ready to build something great?</h2>
           <p className="svc-cta-sub">
-            Start with a free 20-minute discovery call. No commitment, no pressure — just a conversation about what your brand needs.
+            Tell me about your brand and what you need — I&apos;ll get back to you within 24 hours.
           </p>
-          <div className="svc-cta-btns">
-            <Link href="/contact" className="btn-accent-svc">Start a Project →</Link>
-            <Link href="/contact?mode=call" className="btn-ghost-svc">Book a Free Call</Link>
-          </div>
+          <Link href="/contact" className="btn-accent-svc">Start a Project →</Link>
         </div>
       </section>
 
@@ -151,6 +196,7 @@ export default async function ServicesPage() {
           padding-top: 80px;
           padding-bottom: 72px;
           border-bottom: 1px solid var(--border);
+          position: relative;
         }
         .svc-eyebrow {
           font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -200,8 +246,8 @@ export default async function ServicesPage() {
           font-size: 15px; line-height: 1.8;
           color: var(--fg-muted); margin-bottom: 32px;
         }
-        .svc-card-meta { display: flex; gap: 40px; margin-bottom: 36px; }
-        .svc-meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .svc-card-meta { display: flex; gap: 40px; margin-bottom: 24px; }
+        .svc-meta-item { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
         .svc-meta-label {
           font-size: 11px; letter-spacing: 0.12em;
           text-transform: uppercase; color: var(--fg-subtle);
@@ -210,6 +256,26 @@ export default async function ServicesPage() {
           font-size: 15px; font-weight: 600; color: var(--fg);
           font-family: var(--font-heading);
         }
+
+        /* Proof — links the service to real, matching work */
+        .svc-proof {
+          display: flex; align-items: center; gap: 16px;
+          padding: 14px; border: 1px solid var(--border);
+          text-decoration: none; color: inherit;
+          transition: border-color 0.25s, background 0.25s;
+          margin-bottom: 8px;
+        }
+        .svc-proof:hover { border-color: var(--accent); background: var(--bg); }
+        .svc-proof-img { position: relative; width: 64px; height: 64px; flex-shrink: 0; background: var(--bg-secondary); overflow: hidden; }
+        .svc-proof-placeholder { position: absolute; inset: 0; background: var(--bg-secondary); }
+        .svc-proof-label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 4px; }
+        .svc-proof-title { display: block; font-size: 14px; font-weight: 600; color: var(--fg); transition: color 0.25s; }
+        .svc-proof:hover .svc-proof-title { color: var(--accent); }
+
+        /* Registration marks — print-craft signature, consistent with the rest of the site */
+        .reg-mark { position: absolute; width: 26px; height: 26px; stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.4; }
+        .svc-header .reg-mark-tr { top: 28px; right: 28px; }
+        .svc-faq .reg-mark-bl { bottom: 28px; left: 28px; }
 
 
         /* Deliverables */
@@ -277,6 +343,7 @@ export default async function ServicesPage() {
         .svc-faq {
           border-bottom: 1px solid var(--border);
           padding: 80px 48px;
+          position: relative;
         }
         .svc-faq-inner {
           display: grid; grid-template-columns: 320px 1fr;
@@ -298,24 +365,14 @@ export default async function ServicesPage() {
           font-size: 15px; line-height: 1.8;
           color: var(--fg-muted); margin-bottom: 40px;
         }
-        .svc-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .btn-accent-svc {
           display: inline-block; padding: 14px 36px;
           background: var(--accent); color: white;
           font-size: 11px; font-weight: 600;
           letter-spacing: 0.14em; text-transform: uppercase;
-          text-decoration: none; transition: background 0.2s;
+          text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
         }
-        .btn-accent-svc:hover { background: #a01830; }
-        .btn-ghost-svc {
-          display: inline-block; padding: 14px 28px;
-          border: 1px solid var(--border);
-          font-size: 11px; font-weight: 500;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          color: var(--fg-muted); text-decoration: none;
-          transition: border-color 0.2s, color 0.2s;
-        }
-        .btn-ghost-svc:hover { border-color: var(--fg); color: var(--fg); }
+        .btn-accent-svc:hover { background: #a01830; transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(196, 30, 58, 0.45); }
 
         /* ── RESPONSIVE ── */
         @media(max-width: 900px) {
@@ -337,6 +394,9 @@ export default async function ServicesPage() {
           .svc-step:last-child { border-bottom: none !important; }
           .svc-faq { padding: 60px 20px; }
           .svc-cta { padding: 72px 20px; }
+          .reg-mark { width: 20px; height: 20px; }
+          .svc-header .reg-mark-tr { top: 16px; right: 16px; }
+          .svc-faq .reg-mark-bl { bottom: 16px; left: 16px; }
         }
       `}</style>
     </>

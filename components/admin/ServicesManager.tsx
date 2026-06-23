@@ -14,7 +14,7 @@ const blur  = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => (
 const label: React.CSSProperties = { fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#555', display: 'block', marginBottom: 7 }
 const field: React.CSSProperties = { display: 'flex', flexDirection: 'column', marginBottom: 16 }
 
-type Service = { id: string; num: string; title: string; description: string | null; deliverables: string[]; timeline: string | null; pricing_from: string | null; pricing_to: string | null; sort_order: number; active: boolean }
+type Service = { id: string; num: string; title: string; description: string | null; deliverables: string[]; timeline: string | null; pricing_from: string | null; pricing_to: string | null; sort_order: number; active: boolean; category: string }
 type Step    = { id: string; num: string; title: string; description: string | null; sort_order: number }
 type Faq     = { id: string; question: string; answer: string; active: boolean; sort_order: number }
 
@@ -132,7 +132,7 @@ export function ServicesManager({ initialServices, initialSteps, initialFaqs }: 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 20 }}>
             {services.map(svc => <ServiceEditor key={svc.id} svc={svc} onSave={saveService} onDelete={deleteService} onChange={u => setServices(s => s.map(x => x.id === svc.id ? u : x))} />)}
           </div>
-          <button onClick={() => setServices(s => [...s, { id: `new-${Date.now()}`, num: `0${s.length + 1}`, title: '', description: null, deliverables: [], timeline: null, pricing_from: null, pricing_to: null, sort_order: s.length + 1, active: true }])}
+          <button onClick={() => setServices(s => [...s, { id: `new-${Date.now()}`, num: `0${s.length + 1}`, title: '', description: null, deliverables: [], timeline: null, pricing_from: null, pricing_to: null, sort_order: s.length + 1, active: true, category: 'brand' }])}
             style={{ padding: '10px 24px', background: 'transparent', border: '1px dashed #333', color: '#555', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'inherit' }}>
             + Add Service
           </button>
@@ -206,10 +206,16 @@ function ServiceEditor({ svc, onSave, onDelete, onChange }: { svc: Service; onSa
         <div><label style={label}>Title</label><input style={inputStyle} value={svc.title} onChange={e => onChange({ ...svc, title: e.target.value })} onFocus={focus} onBlur={blur} /></div>
       </div>
       <div style={field}><label style={label}>Description</label><textarea style={{ ...inputStyle, resize: 'vertical' }} rows={2} value={svc.description || ''} onChange={e => onChange({ ...svc, description: e.target.value })} onFocus={focus} onBlur={blur} /></div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
         <div style={field}><label style={label}>Timeline</label><input style={inputStyle} value={svc.timeline || ''} onChange={e => onChange({ ...svc, timeline: e.target.value })} placeholder="2–3 weeks" onFocus={focus} onBlur={blur} /></div>
-        <div style={field}><label style={label}>Price From</label><input style={inputStyle} value={svc.pricing_from || ''} onChange={e => onChange({ ...svc, pricing_from: e.target.value })} placeholder="₦150,000" onFocus={focus} onBlur={blur} /></div>
-        <div style={field}><label style={label}>Price To</label><input style={inputStyle} value={svc.pricing_to || ''} onChange={e => onChange({ ...svc, pricing_to: e.target.value })} placeholder="₦400,000" onFocus={focus} onBlur={blur} /></div>
+        <div style={field}>
+          <label style={label}>Category <span style={{ color: '#444', textTransform: 'none', letterSpacing: 0 }}>(links to matching work)</span></label>
+          <select style={{ ...inputStyle, cursor: 'pointer' }} value={svc.category || 'brand'} onChange={e => onChange({ ...svc, category: e.target.value })}>
+            <option value="brand">Brand</option>
+            <option value="events">Events</option>
+            <option value="print">Print</option>
+          </select>
+        </div>
       </div>
       <div style={{ marginBottom: 16 }}>
         <label style={label}>Deliverables</label>
