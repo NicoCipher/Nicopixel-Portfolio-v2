@@ -66,24 +66,49 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Fetch favicon and logo from settings
+  // Fetch favicon, logo, and social links from settings
   const supabase = await createClient()
-  const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', ['favicon_url', 'logo_url', 'font_pairing'])
+  const { data: rows } = await supabase.from('site_settings').select('key, value').in('key', [
+    'favicon_url', 'logo_url', 'font_pairing',
+    'behance', 'behance_enabled', 'instagram', 'instagram_enabled',
+    'tiktok', 'tiktok_enabled', 'linkedin', 'linkedin_enabled',
+    'twitter', 'twitter_enabled',
+  ])
   const siteAssets: Record<string, string> = {}
   rows?.forEach((r: { key: string; value: string | null }) => { if (r.value) siteAssets[r.key] = r.value })
   const fontPairing = getFontPairing(siteAssets.font_pairing)
 
+  const sameAs = ['behance', 'instagram', 'tiktok', 'linkedin', 'twitter']
+    .filter(key => siteAssets[key] && siteAssets[`${key}_enabled`] !== 'false')
+    .map(key => siteAssets[key])
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Taiwo Olumide',
-    alternateName: 'Nicopixel',
-    url: BASE_URL,
-    jobTitle: 'Graphic Designer',
-    worksFor: { '@type': 'Organization', name: 'Nicopixel' },
-    address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' },
-    knowsAbout: ['Brand Identity', 'Graphic Design', 'Events Design', 'Print Design', 'Logo Design'],
-    sameAs: ['https://behance.net/nicopixel', 'https://instagram.com/nicopixel'],
+    '@graph': [
+      {
+        '@type': 'ProfessionalService',
+        '@id': `${BASE_URL}/#business`,
+        name: 'Nicopixel',
+        url: BASE_URL,
+        description: 'Graphic design studio specialising in brand identity, events design, and print collateral.',
+        areaServed: ['Lagos', 'Nigeria'],
+        address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' },
+        founder: { '@id': `${BASE_URL}/#founder` },
+        sameAs,
+      },
+      {
+        '@type': 'Person',
+        '@id': `${BASE_URL}/#founder`,
+        name: 'Taiwo Olumide',
+        alternateName: 'Nicopixel',
+        url: BASE_URL,
+        jobTitle: 'Graphic Designer',
+        worksFor: { '@id': `${BASE_URL}/#business` },
+        address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' },
+        knowsAbout: ['Brand Identity', 'Graphic Design', 'Events Design', 'Print Design', 'Logo Design'],
+        sameAs,
+      },
+    ],
   }
 
   return (
