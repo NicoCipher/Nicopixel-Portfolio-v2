@@ -397,7 +397,7 @@ export default async function HomePage() {
           .why-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--border) !important; }
           .why-card:last-child { border-bottom: none !important; }
           .testimonials-inner { grid-template-columns: 1fr !important; }
-          .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.08); }
+          .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid var(--test-border); }
           .testimonial-item { padding: 32px 20px 32px 24px !important; }
           .testimonial-featured { padding: 36px 20px 36px 24px !important; }
           .projects-subgrid { margin-left: -6px; }
