@@ -262,8 +262,6 @@ export default async function HomePage() {
         .h-stat-divider { width: 1px; height: 32px; background: var(--border); margin: 0 24px; }
         .btn-accent { display: inline-block; padding: 14px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.3s; }
         .btn-accent:hover { background: #a01830; transform: translateY(-2px); box-shadow: 0 8px 24px -6px rgba(196, 30, 58, 0.45); }
-        .btn-primary { display: inline-block; padding: 14px 32px; background: var(--fg); color: var(--bg); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
-        .btn-primary:hover { background: var(--accent); }
         .btn-ghost { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; border-bottom: 1px solid var(--border); padding-bottom: 2px; }
         .btn-ghost:hover { color: var(--fg); border-color: var(--fg); }
         .link-muted { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
@@ -382,8 +380,7 @@ export default async function HomePage() {
           .service-card:not(:first-child) .service-num { left: 0 !important; }
           .service-title { margin-top: 24px !important; }
           .service-card:last-child { border-bottom: none; }
-          .why-inner { grid-template-columns: 1fr; gap: 48px; }
-          .testimonials-grid { grid-template-columns: 1fr 1fr; }
+          .why-grid { grid-template-columns: 1fr; gap: 0; }
         }
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
@@ -408,7 +405,6 @@ export default async function HomePage() {
           .projects-subgrid-col > a { margin-bottom: 6px; }
           .sub-card-img { max-height: 280px; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-          .testimonials-grid { grid-template-columns: 1fr; }
           .bottom-cta-section { padding: 72px 20px; }
         }
       `}</style>
