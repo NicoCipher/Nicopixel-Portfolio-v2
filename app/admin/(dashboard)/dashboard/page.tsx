@@ -12,6 +12,7 @@ async function getDashboardData() {
     { count: publishedPosts },
     { count: draftPosts },
     { count: failedLogins24h },
+    { count: failedEmails },
     { data: recentMessages },
     { data: recentProjects },
   ] = await Promise.all([
@@ -21,15 +22,16 @@ async function getDashboardData() {
     supabase.from('blog_posts').select('*', { count: 'exact', head: true }).eq('published', true),
     supabase.from('blog_posts').select('*', { count: 'exact', head: true }).eq('published', false),
     supabase.from('login_attempts').select('*', { count: 'exact', head: true }).eq('success', false).gte('attempted_at', dayAgo),
+    supabase.from('messages').select('*', { count: 'exact', head: true }).eq('email_sent', false),
     supabase.from('messages').select('*').order('created_at', { ascending: false }).limit(5),
     supabase.from('projects').select('*').order('created_at', { ascending: false }).limit(5),
   ])
 
-  return { totalProjects, publishedProjects, unreadMessages, publishedPosts, draftPosts, failedLogins24h, recentMessages, recentProjects }
+  return { totalProjects, publishedProjects, unreadMessages, publishedPosts, draftPosts, failedLogins24h, failedEmails, recentMessages, recentProjects }
 }
 
 export default async function DashboardPage() {
-  const { totalProjects, publishedProjects, unreadMessages, publishedPosts, draftPosts, failedLogins24h, recentMessages, recentProjects } = await getDashboardData()
+  const { totalProjects, publishedProjects, unreadMessages, publishedPosts, draftPosts, failedLogins24h, failedEmails, recentMessages, recentProjects } = await getDashboardData()
 
   const stats = [
     { label: 'Total Projects', value: totalProjects ?? 0, href: '/admin/projects' },
@@ -59,6 +61,22 @@ export default async function DashboardPage() {
               ⚠ {failedLogins24h} failed login attempt{failedLogins24h !== 1 ? 's' : ''} in the last 24 hours
             </span>
             <span style={{ fontSize: 11, color: '#C41E3A', letterSpacing: '0.08em', textTransform: 'uppercase' }}>View Security →</span>
+          </div>
+        </Link>
+      )}
+
+      {/* Email notification failure banner */}
+      {(failedEmails ?? 0) > 0 && (
+        <Link href="/admin/messages" style={{ textDecoration: 'none' }}>
+          <div style={{
+            background: 'rgba(224,160,48,0.08)', border: '1px solid #5A4520',
+            padding: '16px 20px', marginBottom: 24,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8,
+          }}>
+            <span style={{ fontSize: 13, color: '#E0A030' }}>
+              ⚠ {failedEmails} message{failedEmails !== 1 ? 's' : ''} didn&apos;t notify you by email — check your Resend setup
+            </span>
+            <span style={{ fontSize: 11, color: '#E0A030', letterSpacing: '0.08em', textTransform: 'uppercase' }}>View Messages →</span>
           </div>
         </Link>
       )}

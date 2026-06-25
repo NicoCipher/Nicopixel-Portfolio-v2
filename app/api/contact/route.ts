@@ -66,14 +66,18 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await supabase.from('messages').insert({ name, email, subject, message, ip })
+    const { data: insertedMessage } = await supabase
+      .from('messages')
+      .insert({ name, email, subject, message, ip })
+      .select('id')
+      .single()
 
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const safeSubject = subject ? escapeHtml(subject) : ''
     const safeMessage = escapeHtml(message)
 
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: 'Nicopixel <onboarding@resend.dev>',
       to: [destinationEmail],
       replyTo: email,
@@ -95,6 +99,18 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     })
+
+    if (sendError) {
+      // The message is already safely saved in the database above - this
+      // only means the EMAIL NOTIFICATION failed (commonly: the resend.dev
+      // sandbox domain only delivers to the email that signed up for Resend).
+      // Record this so it's visible in Admin → Messages instead of silently
+      // vanishing into a server log nobody checks.
+      console.error('Resend send failed:', sendError.message)
+      if (insertedMessage?.id) {
+        await supabase.from('messages').update({ email_sent: false }).eq('id', insertedMessage.id)
+      }
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {
