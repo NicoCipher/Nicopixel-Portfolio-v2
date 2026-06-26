@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { BookingEmbed } from '@/components/sections/BookingEmbed'
 import { createClient } from '@/lib/supabase/client'
 
-const FALLBACK_EMAIL = 'nicopixelll@gmail.com'
+const FALLBACK_EMAIL = 'nicocipherr@gmail.com'
 
 function ContactPageInner() {
   const searchParams = useSearchParams()
