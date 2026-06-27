@@ -60,12 +60,20 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
     setUploading(key)
     const ext = file.name.split('.').pop()
     const path = `assets/${key}-${Date.now()}.${ext}`
-    const { error } = await supabase.storage.from('nicopixel').upload(path, file, { upsert: true })
-    if (!error) {
-      const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
-      setValues(v => ({ ...v, [key]: data.publicUrl }))
-      await supabase.from('site_settings').upsert({ key, value: data.publicUrl }, { onConflict: 'key' })
+    const { error: uploadError } = await supabase.storage.from('nicopixel').upload(path, file, { upsert: true })
+    if (uploadError) {
+      alert(`Couldn't upload image: ${uploadError.message}`)
+      setUploading(null)
+      return
     }
+    const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
+    const { error: saveError } = await supabase.from('site_settings').upsert({ key, value: data.publicUrl }, { onConflict: 'key' })
+    if (saveError) {
+      alert(`Image uploaded, but saving it failed: ${saveError.message}. Try again.`)
+      setUploading(null)
+      return
+    }
+    setValues(v => ({ ...v, [key]: data.publicUrl }))
     setUploading(null)
   }
   const [saving, setSaving] = useState(false)

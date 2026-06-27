@@ -33,7 +33,7 @@ export function AboutForm({ about }: { about?: AboutContent | null }) {
     const ext = file.name.split('.').pop()
     const path = `about/profile-${Date.now()}.${ext}`
     const { error } = await supabase.storage.from('nicopixel').upload(path, file, { upsert: true })
-    if (error) return null
+    if (error) { alert(`Couldn't upload image: ${error.message}`); return null }
     const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
     return data.publicUrl
   }

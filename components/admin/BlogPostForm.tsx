@@ -62,10 +62,13 @@ export function BlogPostForm({ post }: { post?: BlogPost }) {
     const ext = file.name.split('.').pop()
     const path = `blog/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
     const { error: upErr } = await supabase.storage.from('nicopixel').upload(path, file, { upsert: true })
-    if (!upErr) {
-      const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
-      setCoverImage(data.publicUrl)
+    if (upErr) {
+      alert(`Couldn't upload image: ${upErr.message}`)
+      setUploading(false)
+      return
     }
+    const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
+    setCoverImage(data.publicUrl)
     setUploading(false)
   }
 

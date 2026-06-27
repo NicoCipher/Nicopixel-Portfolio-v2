@@ -54,7 +54,7 @@ export function ProjectForm({ project }: { project?: Project }) {
     const ext = file.name.split('.').pop()
     const path = `projects/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
     const { error } = await supabase.storage.from('nicopixel').upload(path, file, { upsert: true })
-    if (error) { console.error(error); return null }
+    if (error) { alert(`Couldn't upload image: ${error.message}`); return null }
     const { data } = supabase.storage.from('nicopixel').getPublicUrl(path)
     return data.publicUrl
   }
