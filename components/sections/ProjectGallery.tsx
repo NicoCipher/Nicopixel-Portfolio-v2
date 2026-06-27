@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Masonry from 'react-masonry-css'
 
@@ -7,8 +7,16 @@ const BREAKPOINTS = { default: 3, 900: 2, 600: 2 }
 
 export function ProjectGallery({ images, title }: { images: string[]; title: string }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null)
 
-  const close = useCallback(() => setActiveIndex(null), [])
+  const close = useCallback(() => {
+    setActiveIndex(null)
+    // Return focus to whichever thumbnail opened the modal, rather than
+    // leaving keyboard focus stranded on a now-removed element.
+    lastTriggerRef.current?.focus()
+  }, [])
   const next = useCallback(() => {
     setActiveIndex(i => (i === null ? null : (i + 1) % images.length))
   }, [images.length])
@@ -16,12 +24,38 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
     setActiveIndex(i => (i === null ? null : (i - 1 + images.length) % images.length))
   }, [images.length])
 
+  const openAt = (i: number, e: React.MouseEvent<HTMLButtonElement>) => {
+    lastTriggerRef.current = e.currentTarget
+    setActiveIndex(i)
+  }
+
   useEffect(() => {
     if (activeIndex === null) return
+
+    // Move focus into the modal as soon as it opens, so keyboard users
+    // land on its controls instead of staying on the now-hidden thumbnail.
+    closeBtnRef.current?.focus()
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') close()
       if (e.key === 'ArrowRight') next()
       if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'Tab') {
+        // Simple focus trap: cycle Tab/Shift+Tab within the modal's own
+        // focusable controls instead of letting it escape to the page
+        // content sitting behind the overlay.
+        const focusable = overlayRef.current?.querySelectorAll<HTMLElement>('button')
+        if (!focusable || focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
@@ -40,7 +74,7 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
           <button
             key={i}
             type="button"
-            onClick={() => setActiveIndex(i)}
+            onClick={e => openAt(i, e)}
             className="pg-thumb"
             aria-label={`View ${title} image ${i + 1} of ${images.length} full size`}
           >
@@ -51,8 +85,8 @@ export function ProjectGallery({ images, title }: { images: string[]; title: str
       </Masonry>
 
       {activeIndex !== null && (
-        <div className="pg-overlay" role="dialog" aria-modal="true" aria-label={`${title} image viewer`} onClick={close}>
-          <button type="button" onClick={close} className="pg-close" aria-label="Close">×</button>
+        <div ref={overlayRef} className="pg-overlay" role="dialog" aria-modal="true" aria-label={`${title} image viewer`} onClick={close}>
+          <button ref={closeBtnRef} type="button" onClick={close} className="pg-close" aria-label="Close">×</button>
 
           {images.length > 1 && (
             <>
