@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import type { Project } from '@/types'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
-import { FeaturedProjectsMasonry } from '@/components/sections/FeaturedProjectsMasonry'
+import { FeaturedProjectsGrid } from '@/components/sections/FeaturedProjectsGrid'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -120,7 +120,7 @@ export default async function HomePage() {
             <Link href="/work" className="link-muted">View All →</Link>
           </div>
           <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
-            <FeaturedProjectsMasonry projects={(projects as Project[]).slice(0, 6)} />
+            <FeaturedProjectsGrid projects={(projects as Project[]).slice(0, 6)} />
           </div>
         </section>
       )}
@@ -304,14 +304,6 @@ export default async function HomePage() {
         .section-eyebrow::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--accent); }
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
         .section-title em { font-style: italic; color: var(--accent); }
-        .projects-subgrid { display: flex; margin-left: -4px; width: auto; }
-        .projects-subgrid-col { padding-left: 4px; background-clip: padding-box; }
-        .projects-subgrid-col > a { display: block; margin-bottom: 4px; }
-        .sub-card { border-radius: 3px; }
-        .sub-card-img { display: block; width: 100%; height: auto; max-height: 420px; min-height: 140px; object-fit: cover; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .sub-card-placeholder { aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
-        .sub-card-placeholder span { font-family: var(--font-heading); font-size: 24px; font-style: italic; color: var(--fg-subtle); text-transform: capitalize; }
-        a.sub-card-link:hover .sub-card-img { transform: scale(1.06); }
         /* ── WHY ── */
         .why-section { border-bottom: 1px solid var(--border); overflow: hidden; }
         .why-header { padding: 88px 48px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 48px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
@@ -400,10 +392,6 @@ export default async function HomePage() {
           .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid var(--test-border); }
           .testimonial-item { padding: 32px 20px 32px 24px !important; }
           .testimonial-featured { padding: 36px 20px 36px 24px !important; }
-          .projects-subgrid { margin-left: -6px; }
-          .projects-subgrid-col { padding-left: 6px; }
-          .projects-subgrid-col > a { margin-bottom: 6px; }
-          .sub-card-img { max-height: 280px; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 12px; }
           .bottom-cta-section { padding: 72px 20px; }
         }
