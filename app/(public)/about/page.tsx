@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
+import { CareerMilestones } from '@/components/sections/CareerMilestones'
 
 export const metadata = { title: 'About — Nicopixel' }
 
@@ -9,6 +10,12 @@ export default async function AboutPage() {
   const supabase = await createClient()
   const { data: about } = await supabase.from('about_content').select('*').single()
   const { data: settingsRows } = await supabase.from('site_settings').select('key, value')
+  const { data: milestones } = await supabase
+    .from('career_milestones')
+    .select('*')
+    .eq('active', true)
+    .order('sort_year', { ascending: false })
+    .order('sort_order', { ascending: true })
   const settings: Record<string, string> = {}
   settingsRows?.forEach((r: { key: string; value: string | null }) => { settings[r.key] = r.value ?? '' })
 
@@ -85,6 +92,16 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {milestones && milestones.length > 0 && (
+        <section className="about-milestones">
+          <div className="about-milestones-inner px-page">
+            <p className="about-section-label">My Journey</p>
+            <h2 className="about-milestones-title">Career Milestones</h2>
+            <CareerMilestones milestones={milestones} />
+          </div>
+        </section>
+      )}
+
       {about?.tools && about.tools.length > 0 && (
         <section className="about-tools">
           <div className="about-tools-inner px-page">
@@ -159,6 +176,9 @@ export default async function AboutPage() {
         .about-tools-list { display: flex; flex-wrap: wrap; gap: 10px; }
         .about-tool { padding: 8px 20px; border: 1px solid var(--border); font-size: 12px; letter-spacing: 0.08em; color: var(--fg-muted); transition: border-color 0.2s, color 0.2s; }
         .about-tool:hover { border-color: var(--fg); color: var(--fg); }
+        .about-milestones { border-bottom: 1px solid var(--border); }
+        .about-milestones-inner { padding-top: 72px; padding-bottom: 72px; }
+        .about-milestones-title { font-family: var(--font-heading); font-size: clamp(32px, 4.5vw, 52px); font-weight: 400; line-height: 1.1; margin-bottom: 56px; }
 
         @media (max-width: 900px) {
           .about-hero-inner { grid-template-columns: 1fr; min-height: auto; }
@@ -178,6 +198,8 @@ export default async function AboutPage() {
           .about-discipline { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
           .about-discipline:last-child { border-bottom: none; }
           .about-tools-inner { padding: 48px 24px; }
+          .about-milestones-inner { padding: 52px 24px; }
+          .about-milestones-title { margin-bottom: 40px; }
         }
       `}</style>
     </>

@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import type { Project } from '@/types'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
-import { FeaturedProjectsGrid } from '@/components/sections/FeaturedProjectsGrid'
+import { FeaturedProjectsAccordion } from '@/components/sections/FeaturedProjectsAccordion'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -120,7 +120,7 @@ export default async function HomePage() {
             <Link href="/work" className="link-muted">View All →</Link>
           </div>
           <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
-            <FeaturedProjectsGrid projects={(projects as Project[]).slice(0, 6)} />
+            <FeaturedProjectsAccordion projects={(projects as Project[]).slice(0, 5)} />
           </div>
         </section>
       )}
@@ -159,7 +159,7 @@ export default async function HomePage() {
             </div>
             <div className="testimonials-list">
               {testimonials.map((t: { id: string; quote: string; name: string; role: string | null }, i: number) => (
-                <div key={t.id} className={`testimonial-item scroll-reveal ${i === 0 ? 'testimonial-featured' : ''}`} style={{ animationDelay: `${i * 110}ms` }}>
+                <div key={t.id} className="testimonial-item scroll-reveal" style={{ animationDelay: `${i * 110}ms` }}>
                   <div className="testimonial-quote-wrap">
                     <span className="tq-mark">&ldquo;</span>
                     <p className="tq-text">{t.quote}</p>
@@ -279,11 +279,10 @@ export default async function HomePage() {
         .service-num {
           font-family: var(--font-heading); font-size: 90px; font-weight: 400; font-style: italic;
           color: var(--border); line-height: 1;
-          position: absolute; top: -8px; right: 12px;
+          position: absolute; top: -8px; right: 16px;
           transition: color 0.35s; user-select: none; z-index: 0;
         }
         .service-card:hover .service-num { color: var(--accent); opacity: 0.15; }
-        .service-card:not(:first-child) .service-num { right: auto; left: 28px; }
         .service-title { position: relative; z-index: 1; font-family: var(--font-heading); font-size: 25px; font-weight: 500; color: var(--fg); line-height: 1.2; margin-top: 36px; }
         .service-desc { position: relative; z-index: 1; font-size: 14.5px; line-height: 1.8; color: var(--fg-muted); flex: 1; }
         .service-list { position: relative; z-index: 1; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -350,16 +349,14 @@ export default async function HomePage() {
         .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--test-heading); line-height: 1.1; }
         .testimonials-headline em { font-style: italic; color: var(--test-heading-em); }
         .testimonials-list { display: flex; flex-direction: column; gap: 0; }
-        .testimonial-item { padding: 40px 48px 40px 52px; border-bottom: 1px solid var(--test-border); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; background: var(--test-bg); position: relative; overflow: hidden; }
+        .testimonial-item { padding: 44px 48px 44px 52px; border-bottom: 1px solid var(--test-border); display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; background: var(--test-bg); position: relative; overflow: hidden; }
         .testimonial-item::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--accent); transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: top; }
         .testimonial-item:hover::before { transform: scaleY(1); }
         .testimonial-item:last-child { border-bottom: none; }
         .testimonial-item:hover { background: var(--test-bg-hover); }
-        .testimonial-featured { padding: 48px 48px 48px 52px; }
         .testimonial-quote-wrap { display: flex; flex-direction: column; gap: 4px; position: relative; }
         .tq-mark { font-family: var(--font-heading); font-size: 64px; color: var(--accent); line-height: 0.5; opacity: 0.35; display: block; }
-        .tq-text { font-family: var(--font-heading); font-size: clamp(14px, 1.5vw, 18px); font-style: italic; font-weight: 400; line-height: 1.6; color: var(--test-text); margin-top: -8px; }
-        .testimonial-featured .tq-text { font-size: clamp(16px, 2vw, 22px); color: var(--test-text-featured); }
+        .tq-text { font-family: var(--font-heading); font-size: clamp(16px, 1.8vw, 20px); font-style: italic; font-weight: 400; line-height: 1.6; color: var(--test-text-featured); margin-top: -8px; }
         .tq-author { display: flex; align-items: center; gap: 14px; }
         .tq-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 16px; color: white; flex-shrink: 0; box-shadow: 0 0 0 3px var(--test-bg), 0 0 0 4px var(--test-border); }
         .tq-name { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--test-name); margin-bottom: 2px; }
@@ -369,7 +366,6 @@ export default async function HomePage() {
           .services-grid { grid-template-columns: 1fr; }
           .service-card { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
           .service-num { font-size: 60px !important; top: -4px !important; }
-          .service-card:not(:first-child) .service-num { left: 0 !important; }
           .service-title { margin-top: 24px !important; }
           .service-card:last-child { border-bottom: none; }
           .why-grid { grid-template-columns: 1fr; gap: 0; }
@@ -391,7 +387,6 @@ export default async function HomePage() {
           .testimonials-inner { grid-template-columns: 1fr !important; }
           .testimonials-label { padding: 48px 20px 32px !important; border-right: none !important; border-bottom: 1px solid var(--test-border); }
           .testimonial-item { padding: 32px 20px 32px 24px !important; }
-          .testimonial-featured { padding: 36px 20px 36px 24px !important; }
           .featured-header { flex-direction: column; align-items: flex-start; gap: 12px; }
           .bottom-cta-section { padding: 72px 20px; }
         }
