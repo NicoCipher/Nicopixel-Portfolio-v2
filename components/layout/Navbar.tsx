@@ -19,10 +19,16 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(docHeight > 0 ? Math.min(y / docHeight, 1) : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -45,6 +51,15 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         borderBottom: scrolled || menuOpen ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
+        {/* Reading progress bar — thin crimson line at bottom of navbar */}
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0,
+          height: 2, background: 'var(--accent)',
+          width: `${progress * 100}%`,
+          transition: 'width 0.1s linear',
+          pointerEvents: 'none', zIndex: 200,
+          opacity: progress > 0.02 ? 1 : 0,
+        }} />
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 101 }}>
           {settings?.logo_url
             ? <div style={{ position: 'relative', height: 32, width: 120 }}>
@@ -57,15 +72,9 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         {/* Desktop nav */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 32 }} className="nav-desktop">
           {links.map(l => (
-            <Link key={l.href} href={l.href} style={{
-              fontSize: 11, fontWeight: 500,
-              letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: pathname === l.href ? 'var(--fg)' : 'var(--fg-muted)',
-              textDecoration: 'none',
-              borderBottom: pathname === l.href ? '1px solid var(--accent)' : '1px solid transparent',
-              paddingBottom: 2, transition: 'color 0.2s, border-color 0.2s',
-              whiteSpace: 'nowrap',
-            }}>{l.label}</Link>
+            <Link key={l.href} href={l.href}
+              className={`nav-link ${pathname === l.href ? 'nav-link-active' : ''}`}
+            >{l.label}</Link>
           ))}
           <ThemeToggle />
         </div>
@@ -137,6 +146,26 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
       <style>{`
         .nav-desktop { display: flex !important; }
         .nav-mobile { display: none !important; }
+
+        .nav-link {
+          position: relative;
+          font-size: 11px; font-weight: 500;
+          letter-spacing: 0.12em; text-transform: uppercase;
+          color: var(--fg-muted); text-decoration: none;
+          padding-bottom: 3px; white-space: nowrap;
+          transition: color 0.2s;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute; bottom: 0; left: 0;
+          width: 0; height: 1px;
+          background: var(--accent);
+          transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-link:hover { color: var(--fg); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link-active { color: var(--fg); }
+        .nav-link-active::after { width: 100%; }
 
         .nav-burger {
           position: relative; z-index: 101;

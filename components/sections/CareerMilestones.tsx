@@ -48,9 +48,23 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
           box-shadow: 0 0 0 4px var(--bg);
           z-index: 1;
         }
-        .cm-card { max-width: 420px; }
-        .cm-item-left .cm-card { grid-column: 1; justify-self: end; text-align: right; padding-right: 48px; }
-        .cm-item-right .cm-card { grid-column: 2; justify-self: start; text-align: left; padding-left: 48px; }
+        .cm-card {
+          max-width: 420px;
+          opacity: 0; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cm-item-left .cm-card  { grid-column: 1; justify-self: end; text-align: right; padding-right: 48px; transform: translateX(-28px); }
+        .cm-item-right .cm-card { grid-column: 2; justify-self: start; text-align: left; padding-left: 48px; transform: translateX(28px); }
+
+        @supports (animation-timeline: view()) {
+          .cm-card {
+            animation: cm-reveal linear both;
+            animation-timeline: view();
+            animation-range: entry 10% entry 55%;
+          }
+          @keyframes cm-reveal {
+            to { opacity: 1; transform: translateX(0); }
+          }
+        }
 
         .cm-date {
           display: block;
@@ -76,7 +90,12 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
           .cm-item-left .cm-card, .cm-item-right .cm-card {
             grid-column: 1; justify-self: start; text-align: left;
             padding-left: 0; padding-right: 0; max-width: none;
+            transform: translateY(20px);
           }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .cm-card { opacity: 1 !important; transform: none !important; animation: none !important; }
         }
       `}</style>
     </div>

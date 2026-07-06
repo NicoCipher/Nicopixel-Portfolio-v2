@@ -14,6 +14,7 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
           <div key={faq.id} style={{
             borderBottom: '1px solid var(--border)',
             borderTop: i === 0 ? '1px solid var(--border)' : 'none',
+            transition: 'background 0.25s',
           }}>
             <button
               onClick={() => setOpen(isOpen ? null : faq.id)}
@@ -27,7 +28,10 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
               <span style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'clamp(16px, 1.8vw, 20px)',
-                fontWeight: 400, color: 'var(--fg)', lineHeight: 1.3,
+                fontWeight: 400,
+                color: isOpen ? 'var(--accent)' : 'var(--fg)',
+                lineHeight: 1.3,
+                transition: 'color 0.25s',
               }}>{faq.question}</span>
               <span style={{
                 width: 28, height: 28, flexShrink: 0,
@@ -37,14 +41,15 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
                 color: isOpen ? 'var(--accent)' : 'var(--fg-muted)',
                 borderColor: isOpen ? 'var(--accent)' : 'var(--border)',
                 fontSize: 18, lineHeight: 1,
-                transition: 'color 0.2s, border-color 0.2s, transform 0.3s',
+                transition: 'color 0.25s, border-color 0.25s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
                 transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
               }}>+</span>
             </button>
             <div style={{
               overflow: 'hidden',
-              maxHeight: isOpen ? 400 : 0,
-              transition: 'max-height 0.35s ease',
+              maxHeight: isOpen ? 600 : 0,
+              opacity: isOpen ? 1 : 0,
+              transition: 'max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',
             }}>
               <p style={{
                 fontSize: 15, lineHeight: 1.8,

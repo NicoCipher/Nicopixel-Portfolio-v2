@@ -53,8 +53,7 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
           <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
             {socials.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="footer-link"
-                style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg-muted)', textDecoration: 'none', transition: 'color 0.2s' }}>
+                className="footer-social-link">
                 {s.label}
               </a>
             ))}
@@ -75,6 +74,22 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
         .footer-cta-btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
         .footer-bar { border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
         .footer-link:hover { color: var(--accent) !important; }
+        .footer-social-link {
+          position: relative;
+          font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+          color: var(--fg-muted); text-decoration: none;
+          padding-bottom: 2px;
+          transition: color 0.2s;
+        }
+        .footer-social-link::after {
+          content: '';
+          position: absolute; bottom: 0; left: 0;
+          width: 0; height: 1px;
+          background: var(--accent);
+          transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .footer-social-link:hover { color: var(--fg); }
+        .footer-social-link:hover::after { width: 100%; }
         @media(max-width: 767px) {
           .footer-cta { padding: 52px 20px; }
           .footer-bar { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
