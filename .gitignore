@@ -20,3 +20,4 @@ dist/
 .vercel
 *.log
 npm-debug.log*
+tsconfig.tsbuildinfo

@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
+import { Reveal } from '@/components/ui/Reveal'
 import { CareerMilestones } from '@/components/sections/CareerMilestones'
 
 export const metadata = { title: 'About — Nicopixel' }
@@ -37,35 +38,35 @@ export default async function AboutPage() {
     <>
       <section className="about-hero">
         <div className="about-hero-inner">
-          <div className="about-hero-text">
+          <Reveal className="about-hero-text" y={20}>
             <p className="about-eyebrow">
               <span className="about-eyebrow-line" />About
             </p>
             <h1 className="about-title">{about?.headline || 'Design that\nearns attention.'}</h1>
-          </div>
-          <div className="about-hero-image">
+          </Reveal>
+          <Reveal className="about-hero-image" y={20} delay={120}>
             {about?.profile_image
               ? <Image src={about.profile_image} alt="Nicopixel" fill style={{ objectFit: 'cover', objectPosition: 'top' }} priority />
               : <div className="about-image-placeholder"><span>N</span></div>
             }
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="about-intro">
         <div className="about-intro-inner px-page">
-          <div className="about-quote">
+          <Reveal className="about-quote">
             <span className="about-quote-mark">&ldquo;</span>
             <p>{about?.pull_quote || 'Every brand has a story worth telling well. I make sure it gets told.'}</p>
-          </div>
-          <div className="about-bio">
+          </Reveal>
+          <Reveal className="about-bio" delay={120}>
             <p>{about?.bio || 'Lagos-based graphic designer crafting brand identities, event visuals, and print collateral that make people stop and look twice.'}</p>
             <div className="about-meta">
               <span>{settings.contact_location || 'Lagos, Nigeria'}</span>
               <span className="about-meta-dot">·</span>
               <span>Available for projects</span>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -81,12 +82,12 @@ export default async function AboutPage() {
         <div className="about-disciplines-inner px-page">
           <p className="about-section-label">What I do</p>
           <div className="about-disciplines-grid">
-            {disciplines.map(d => (
-              <div key={d.num} className="about-discipline">
+            {disciplines.map((d, i) => (
+              <Reveal key={d.num} className="about-discipline" delay={i * 100} y={20}>
                 <span className="about-discipline-num">{d.num}</span>
                 <h3 className="about-discipline-title">{d.title}</h3>
                 <p className="about-discipline-desc">{d.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -107,8 +108,10 @@ export default async function AboutPage() {
           <div className="about-tools-inner px-page">
             <p className="about-section-label">Tools</p>
             <div className="about-tools-list">
-              {about.tools.map((tool: string) => (
-                <span key={tool} className="about-tool">{tool}</span>
+              {about.tools.map((tool: string, i: number) => (
+                <Reveal key={tool} className="about-tool" delay={i * 40} y={12} duration={500} transitionExtra="border-color 0.2s, color 0.2s">
+                  {tool}
+                </Reveal>
               ))}
             </div>
           </div>

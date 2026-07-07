@@ -1,3 +1,6 @@
+'use client'
+import { useEffect, useRef } from 'react'
+
 type Milestone = {
   id: string
   date_range: string
@@ -7,6 +10,27 @@ type Milestone = {
 }
 
 export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('cm-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    cardRefs.current.forEach(el => el && observer.observe(el))
+    return () => observer.disconnect()
+  }, [milestones])
+
   if (!milestones || milestones.length === 0) return null
 
   return (
@@ -15,7 +39,7 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
       {milestones.map((m, i) => (
         <div key={m.id} className={`cm-item ${i % 2 === 0 ? 'cm-item-left' : 'cm-item-right'}`}>
           <div className="cm-dot" aria-hidden="true" />
-          <div className="cm-card">
+          <div className="cm-card" ref={el => { cardRefs.current[i] = el }}>
             <span className="cm-date">{m.date_range}</span>
             <h3 className="cm-title">{m.title}</h3>
             {m.subtitle && <span className="cm-subtitle">{m.subtitle}</span>}
@@ -50,21 +74,12 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
         }
         .cm-card {
           max-width: 420px;
-          opacity: 0; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          opacity: 0;
+          transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .cm-card.cm-visible { opacity: 1; transform: translateX(0) !important; }
         .cm-item-left .cm-card  { grid-column: 1; justify-self: end; text-align: right; padding-right: 48px; transform: translateX(-28px); }
         .cm-item-right .cm-card { grid-column: 2; justify-self: start; text-align: left; padding-left: 48px; transform: translateX(28px); }
-
-        @supports (animation-timeline: view()) {
-          .cm-card {
-            animation: cm-reveal linear both;
-            animation-timeline: view();
-            animation-range: entry 10% entry 55%;
-          }
-          @keyframes cm-reveal {
-            to { opacity: 1; transform: translateX(0); }
-          }
-        }
 
         .cm-date {
           display: block;
@@ -92,10 +107,11 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
             padding-left: 0; padding-right: 0; max-width: none;
             transform: translateY(20px);
           }
+          .cm-card.cm-visible { transform: translateY(0) !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .cm-card { opacity: 1 !important; transform: none !important; animation: none !important; }
+          .cm-card { opacity: 1 !important; transform: none !important; }
         }
       `}</style>
     </div>
