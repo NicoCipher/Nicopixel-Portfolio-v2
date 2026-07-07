@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { BookingEmbed } from '@/components/sections/BookingEmbed'
 import { createClient } from '@/lib/supabase/client'
+import { Reveal } from '@/components/ui/Reveal'
 
 const FALLBACK_EMAIL = 'nicocipherr@gmail.com'
 
@@ -61,7 +62,7 @@ function ContactPageInner() {
 
         <div className="contact-grid">
           {/* Left — info */}
-          <div>
+          <Reveal>
             <h1 style={{
               fontFamily: 'var(--font-heading)',
               fontSize: 'clamp(36px, 5vw, 64px)',
@@ -98,10 +99,10 @@ function ContactPageInner() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
 
           {/* Right — form or booking */}
-          <div>
+          <Reveal delay={130}>
             {mode === 'call' ? (
               <div className="contact-booking-wrap contact-card">
                 <BookingEmbed />
@@ -162,7 +163,7 @@ function ContactPageInner() {
                 </button>
               </form>
             )}
-          </div>
+          </Reveal>
         </div>
       </div>
 

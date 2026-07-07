@@ -191,7 +191,7 @@ export default async function HomePage() {
 
       {/* ── BOTTOM CTA ── */}
       <section className="bottom-cta-section">
-        <div className="bottom-cta-inner">
+        <div className="bottom-cta-inner scroll-reveal">
           <p className="bottom-cta-eyebrow">
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
             Ready to start?

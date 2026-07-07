@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import type { ReactNode, CSSProperties } from 'react'
+import type { ReactNode, CSSProperties, ElementType } from 'react'
 
 /**
  * Fades + slides content in once it enters the viewport.
@@ -12,6 +12,7 @@ export function Reveal({
   children,
   className,
   style,
+  as: Tag = 'div',
   delay = 0,
   y = 24,
   duration = 700,
@@ -21,6 +22,7 @@ export function Reveal({
   children: ReactNode
   className?: string
   style?: CSSProperties
+  as?: ElementType
   delay?: number
   y?: number
   duration?: number
@@ -28,7 +30,7 @@ export function Reveal({
   /** Extra CSS transitions (e.g. 'border-color 0.2s, color 0.2s') to preserve hover transitions on the same element that would otherwise be overwritten by this component's inline transition. */
   transitionExtra?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
   const [visible, setVisible] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   )
@@ -53,7 +55,7 @@ export function Reveal({
   }, [threshold])
 
   return (
-    <div
+    <Tag
       ref={ref}
       className={className}
       style={{
@@ -64,6 +66,6 @@ export function Reveal({
       }}
     >
       {children}
-    </div>
+    </Tag>
   )
 }

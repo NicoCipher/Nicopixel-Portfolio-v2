@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { Reveal } from '@/components/ui/Reveal'
 
 export const metadata: Metadata = {
   title: 'Insights',
@@ -18,7 +19,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="blog-header px-page">
+      <Reveal as="section" className="blog-header px-page">
         <p className="blog-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Insights
@@ -29,7 +30,7 @@ export default async function BlogPage() {
         <p className="blog-subtitle">
           Notes on what makes brands work, written from real projects — not theory.
         </p>
-      </section>
+      </Reveal>
 
       {!posts || posts.length === 0 ? (
         <div className="blog-empty">
@@ -40,36 +41,38 @@ export default async function BlogPage() {
           {posts.map((post: {
             id: string; title: string; slug: string; excerpt: string | null;
             cover_image: string | null; category: string; published_at: string
-          }) => (
-            <Link key={post.id} href={`/blog/${post.slug}`} className="blog-card-link">
-              <article className="blog-card">
-                <div className="blog-card-img-wrap">
-                  {post.cover_image
-                    ? <Image src={post.cover_image} alt={post.title} fill style={{ objectFit: 'cover' }} className="blog-card-img" />
-                    : <div className="blog-card-placeholder"><span>N</span></div>
-                  }
-                </div>
-                <div className="blog-card-body">
-                  <div className="blog-card-meta">
-                    <span className="blog-card-cat">{post.category}</span>
-                    <span className="blog-card-dot">·</span>
-                    <span className="blog-card-date">
-                      {new Date(post.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </span>
+          }, i: number) => (
+            <Reveal key={post.id} delay={(i % 6) * 70} y={20} style={{ height: '100%' }}>
+              <Link href={`/blog/${post.slug}`} className="blog-card-link">
+                <article className="blog-card">
+                  <div className="blog-card-img-wrap">
+                    {post.cover_image
+                      ? <Image src={post.cover_image} alt={post.title} fill style={{ objectFit: 'cover' }} className="blog-card-img" />
+                      : <div className="blog-card-placeholder"><span>N</span></div>
+                    }
                   </div>
-                  <h2 className="blog-card-title">{post.title}</h2>
-                  {post.excerpt && <p className="blog-card-excerpt">{post.excerpt}</p>}
-                  <span className="blog-card-cta">Read More <span className="blog-arrow">→</span></span>
-                </div>
-              </article>
-            </Link>
+                  <div className="blog-card-body">
+                    <div className="blog-card-meta">
+                      <span className="blog-card-cat">{post.category}</span>
+                      <span className="blog-card-dot">·</span>
+                      <span className="blog-card-date">
+                        {new Date(post.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <h2 className="blog-card-title">{post.title}</h2>
+                    {post.excerpt && <p className="blog-card-excerpt">{post.excerpt}</p>}
+                    <span className="blog-card-cta">Read More <span className="blog-arrow">→</span></span>
+                  </div>
+                </article>
+              </Link>
+            </Reveal>
           ))}
         </section>
       )}
 
       {/* ── BOTTOM CTA ── */}
       <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+        <Reveal style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}>
             Ready to build your<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>brand identity?</em>
           </h2>
@@ -84,7 +87,7 @@ export default async function BlogPage() {
               See Services
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <style>{`
@@ -101,7 +104,7 @@ export default async function BlogPage() {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 1px;
         }
-        .blog-card-link { display: block; text-decoration: none; }
+        .blog-card-link { display: block; text-decoration: none; height: 100%; }
         .blog-card { background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; height: 100%; display: flex; flex-direction: column; }
         .blog-card-link:hover .blog-card { background: var(--bg-secondary); }
 

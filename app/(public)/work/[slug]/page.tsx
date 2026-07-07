@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ProjectGallery } from '@/components/sections/ProjectGallery'
+import { Reveal } from '@/components/ui/Reveal'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -76,14 +77,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Meta */}
-      <div className="proj-meta">
+      <Reveal as="div" className="proj-meta">
         <Link href="/work" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--fg-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: 24 }}>← Back to Work</Link>
         <span style={{ display: 'block', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12, fontWeight: 600 }}>{project.category}</span>
         <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, lineHeight: 1.1, marginBottom: 24 }}>{project.title}</h1>
         {project.description && (
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 600 }}>{project.description}</p>
         )}
-      </div>
+      </Reveal>
 
       {/* Case Study Breakdown */}
       {project.is_case_study && (project.brief || project.challenge || project.approach || project.outcome) && (
@@ -109,40 +110,40 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
           <div className="case-study-grid">
             {project.brief && (
-              <div className="cs-block">
+              <Reveal as="div" className="cs-block" delay={0}>
                 <span className="cs-block-num">01</span>
                 <h3 className="cs-block-title">The Brief</h3>
                 <p className="cs-block-text">{project.brief}</p>
-              </div>
+              </Reveal>
             )}
             {project.challenge && (
-              <div className="cs-block">
+              <Reveal as="div" className="cs-block" delay={80}>
                 <span className="cs-block-num">02</span>
                 <h3 className="cs-block-title">The Challenge</h3>
                 <p className="cs-block-text">{project.challenge}</p>
-              </div>
+              </Reveal>
             )}
             {project.approach && (
-              <div className="cs-block">
+              <Reveal as="div" className="cs-block" delay={160}>
                 <span className="cs-block-num">03</span>
                 <h3 className="cs-block-title">The Approach</h3>
                 <p className="cs-block-text">{project.approach}</p>
-              </div>
+              </Reveal>
             )}
             {project.outcome && (
-              <div className="cs-block">
+              <Reveal as="div" className="cs-block" delay={240}>
                 <span className="cs-block-num">04</span>
                 <h3 className="cs-block-title">The Outcome</h3>
                 <p className="cs-block-text">{project.outcome}</p>
-              </div>
+              </Reveal>
             )}
           </div>
 
           {project.results && (
-            <div className="cs-results">
+            <Reveal as="div" className="cs-results">
               <span className="cs-results-label">Results</span>
               <p className="cs-results-text">{project.results}</p>
-            </div>
+            </Reveal>
           )}
         </div>
       )}
@@ -159,15 +160,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             More {project.category} work
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, maxWidth: 'var(--content-max)', margin: '0 auto' }}>
-            {related.map((p: typeof project) => (
-              <Link key={p.id} href={`/work/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
-                <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-secondary)', overflow: 'hidden' }}>
-                  {p.cover_image && <Image src={p.cover_image} alt={`${p.title} — design by Nicopixel`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 33vw" />}
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 20 }}>
-                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 400, color: 'white', margin: 0 }}>{p.title}</h4>
+            {related.map((p: typeof project, i: number) => (
+              <Reveal key={p.id} delay={i * 90} y={18}>
+                <Link href={`/work/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
+                  <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-secondary)', overflow: 'hidden' }}>
+                    {p.cover_image && <Image src={p.cover_image} alt={`${p.title} — design by Nicopixel`} fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 33vw" />}
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 20 }}>
+                      <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 400, color: 'white', margin: 0 }}>{p.title}</h4>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -175,7 +178,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {/* ── CTA ── */}
       <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', background: 'var(--bg-secondary)' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+        <Reveal style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}>
             Want work like this<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>for your brand?</em>
           </h2>
@@ -190,7 +193,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               Book a Free Call
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <style>{`

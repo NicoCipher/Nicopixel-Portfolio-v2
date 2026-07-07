@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { Reveal } from '@/components/ui/Reveal'
 
 export const metadata: Metadata = {
   title: 'Case Studies',
@@ -19,7 +20,7 @@ export default async function CaseStudiesPage() {
 
   return (
     <>
-      <section className="cs-header px-page">
+      <Reveal as="section" className="cs-header px-page">
         <p className="cs-eyebrow">
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
           Case Studies
@@ -30,7 +31,7 @@ export default async function CaseStudiesPage() {
         <p className="cs-subtitle">
           Every project starts with a problem. Here is how each one was approached, solved, and delivered — brief to outcome.
         </p>
-      </section>
+      </Reveal>
 
       {!studies || studies.length === 0 ? (
         <div className="cs-empty">
@@ -47,42 +48,44 @@ export default async function CaseStudiesPage() {
             cover_image: string | null; client_name: string | null;
             industry: string | null; brief: string | null; results: string | null
           }, i: number) => (
-            <Link key={study.id} href={`/work/${study.slug}`} className="cs-card-link">
-              <article className="cs-card">
-                <div className="cs-card-img-wrap">
-                  {study.cover_image
-                    ? <Image src={study.cover_image} alt={`${study.title} case study — ${study.category} design by Nicopixel`} fill className="cs-card-img" style={{ objectFit: 'cover' }} />
-                    : <div className="cs-card-placeholder"><span>{study.category}</span></div>
-                  }
-                  <div className="cs-card-overlay" />
-                  <span className="cs-card-num">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="cs-card-body">
-                  {(study.client_name || study.industry) && (
-                    <span className="cs-card-client">{study.client_name}{study.client_name && study.industry ? ' — ' : ''}{study.industry}</span>
-                  )}
-                  <h2 className="cs-card-title">{study.title}</h2>
-                  <span className="cs-card-cat">{study.category}</span>
-                  {study.brief && <p className="cs-card-brief">{study.brief}</p>}
-                  {study.results && (
-                    <div className="cs-card-results">
-                      <span className="cs-card-results-label">Result</span>
-                      <span className="cs-card-results-text">{study.results}</span>
-                    </div>
-                  )}
-                  <span className="cs-card-cta">Read Case Study <span className="cs-arrow">→</span></span>
-                </div>
-              </article>
-            </Link>
+            <Reveal key={study.id} className="cs-card-wrap" delay={Math.min(i, 4) * 80}>
+              <Link href={`/work/${study.slug}`} className="cs-card-link">
+                <article className="cs-card">
+                  <div className="cs-card-img-wrap">
+                    {study.cover_image
+                      ? <Image src={study.cover_image} alt={`${study.title} case study — ${study.category} design by Nicopixel`} fill className="cs-card-img" style={{ objectFit: 'cover' }} />
+                      : <div className="cs-card-placeholder"><span>{study.category}</span></div>
+                    }
+                    <div className="cs-card-overlay" />
+                    <span className="cs-card-num">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div className="cs-card-body">
+                    {(study.client_name || study.industry) && (
+                      <span className="cs-card-client">{study.client_name}{study.client_name && study.industry ? ' — ' : ''}{study.industry}</span>
+                    )}
+                    <h2 className="cs-card-title">{study.title}</h2>
+                    <span className="cs-card-cat">{study.category}</span>
+                    {study.brief && <p className="cs-card-brief">{study.brief}</p>}
+                    {study.results && (
+                      <div className="cs-card-results">
+                        <span className="cs-card-results-label">Result</span>
+                        <span className="cs-card-results-text">{study.results}</span>
+                      </div>
+                    )}
+                    <span className="cs-card-cta">Read Case Study <span className="cs-arrow">→</span></span>
+                  </div>
+                </article>
+              </Link>
+            </Reveal>
           ))}
         </section>
       )}
 
       <section className="cs-cta">
-        <div className="cs-cta-inner">
+        <Reveal as="div" className="cs-cta-inner">
           <h2 className="cs-cta-title">Want results like these?</h2>
           <Link href="/contact" className="cs-cta-btn">Start a Project →</Link>
-        </div>
+        </Reveal>
       </section>
 
       <style>{`
@@ -98,12 +101,12 @@ export default async function CaseStudiesPage() {
 
         .cs-list { display: flex; flex-direction: column; }
         .cs-card-link { display: block; text-decoration: none; border-bottom: 1px solid var(--border); }
-        .cs-card-link:last-child { border-bottom: none; }
+        .cs-card-wrap:last-child .cs-card-link { border-bottom: none; }
         .cs-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 440px; transition: background 0.3s; }
         .cs-card-link:hover .cs-card { background: var(--bg-secondary); }
-        .cs-card-link:nth-child(even) .cs-card { direction: rtl; }
-        .cs-card-link:nth-child(even) .cs-card-img-wrap,
-        .cs-card-link:nth-child(even) .cs-card-body { direction: ltr; }
+        .cs-card-wrap:nth-child(even) .cs-card { direction: rtl; }
+        .cs-card-wrap:nth-child(even) .cs-card-img-wrap,
+        .cs-card-wrap:nth-child(even) .cs-card-body { direction: ltr; }
 
         .cs-card-img-wrap { position: relative; overflow: hidden; background: var(--bg-secondary); }
         .cs-card-img { transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }

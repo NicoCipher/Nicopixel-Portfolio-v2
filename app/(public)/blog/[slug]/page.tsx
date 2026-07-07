@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import ReactMarkdown from 'react-markdown'
+import { Reveal } from '@/components/ui/Reveal'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -67,7 +68,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="post-header">
+      <Reveal as="div" className="post-header">
         <Link href="/blog" className="post-back">← Back to Insights</Link>
         <span className="post-cat">{post.category}</span>
         <h1 className="post-title">{post.title}</h1>
@@ -76,12 +77,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <span className="post-meta-dot">·</span>
           <span>{new Date(post.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
         </div>
-      </div>
+      </Reveal>
 
       {post.cover_image && (
-        <div className="post-cover">
+        <Reveal as="div" className="post-cover" delay={120}>
           <Image src={post.cover_image} alt={post.title} fill style={{ objectFit: 'cover' }} priority />
-        </div>
+        </Reveal>
       )}
 
       <div className="post-content">
@@ -100,30 +101,32 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </ReactMarkdown>
       </div>
 
-      <div className="post-cta">
+      <Reveal as="div" className="post-cta">
         <h2 className="post-cta-title">Want this kind of thinking on your brand?</h2>
         <div className="post-cta-btns">
           <Link href="/contact" className="post-cta-btn">Start a Project →</Link>
           <Link href="/contact?mode=call" className="post-cta-btn-ghost">Book a Free Call</Link>
         </div>
-      </div>
+      </Reveal>
 
       {related && related.length > 0 && (
         <div className="post-related">
           <h2 className="post-related-title">More on {post.category}</h2>
           <div className="post-related-grid">
-            {related.map((r: { id: string; title: string; slug: string; cover_image: string | null; category: string }) => (
-              <Link key={r.id} href={`/blog/${r.slug}`} className="post-related-card-link">
-                <div className="post-related-card">
-                  <div className="post-related-img">
-                    {r.cover_image
-                      ? <Image src={r.cover_image} alt={r.title} fill style={{ objectFit: 'cover' }} />
-                      : <div className="post-related-placeholder"><span>N</span></div>
-                    }
+            {related.map((r: { id: string; title: string; slug: string; cover_image: string | null; category: string }, i: number) => (
+              <Reveal key={r.id} delay={i * 90} y={18}>
+                <Link href={`/blog/${r.slug}`} className="post-related-card-link">
+                  <div className="post-related-card">
+                    <div className="post-related-img">
+                      {r.cover_image
+                        ? <Image src={r.cover_image} alt={r.title} fill style={{ objectFit: 'cover' }} />
+                        : <div className="post-related-placeholder"><span>N</span></div>
+                      }
+                    </div>
+                    <h4 className="post-related-card-title">{r.title}</h4>
                   </div>
-                  <h4 className="post-related-card-title">{r.title}</h4>
-                </div>
-              </Link>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>

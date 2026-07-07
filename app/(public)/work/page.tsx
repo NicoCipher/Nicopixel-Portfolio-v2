@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { WorkGallery } from '@/components/sections/WorkGallery'
+import { Reveal } from '@/components/ui/Reveal'
 
 export const metadata = { title: 'Work — Nicopixel' }
 
@@ -12,7 +13,7 @@ export default async function WorkPage() {
 
   return (
     <>
-      <div className="work-header">
+      <Reveal as="div" className="work-header">
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
           color: 'var(--accent)', marginBottom: 16,
@@ -28,7 +29,7 @@ export default async function WorkPage() {
         }}>
           All Projects
         </h1>
-      </div>
+      </Reveal>
       <WorkGallery projects={projects || []} />
       <style>{`
         .work-header {

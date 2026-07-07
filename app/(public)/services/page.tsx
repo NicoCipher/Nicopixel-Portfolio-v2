@@ -61,7 +61,7 @@ export default async function ServicesPage() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       )}
       {/* ── HEADER ── */}
-      <section className="svc-header px-page">
+      <section className="svc-header px-page scroll-reveal">
         <svg className="reg-mark reg-mark-tr" viewBox="0 0 32 32" aria-hidden="true">
           <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
         </svg>
@@ -163,7 +163,7 @@ export default async function ServicesPage() {
             <circle cx="16" cy="16" r="7" /><line x1="16" y1="0" x2="16" y2="32" /><line x1="0" y1="16" x2="32" y2="16" />
           </svg>
           <div className="svc-faq-inner">
-            <div className="svc-faq-header">
+            <div className="svc-faq-header scroll-reveal">
               <p className="svc-eyebrow">
                 <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
                 FAQ
@@ -181,7 +181,7 @@ export default async function ServicesPage() {
 
       {/* ── CTA ── */}
       <section className="svc-cta">
-        <div className="svc-cta-inner">
+        <div className="svc-cta-inner scroll-reveal">
           <h2 className="svc-cta-title">Ready to build something great?</h2>
           <p className="svc-cta-sub">
             Tell me about your brand and what you need — I&apos;ll get back to you within 24 hours.
