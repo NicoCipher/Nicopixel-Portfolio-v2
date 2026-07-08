@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
 import { FONT_PAIRINGS, DEFAULT_FONT_PAIRING } from '@/lib/fontPairings'
+import { FONT_PAIRING_VARS } from '@/lib/fonts'
 
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '12px 16px',
@@ -215,8 +216,8 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
                   style={{ marginTop: 4, accentColor: '#C41E3A', cursor: 'pointer' }}
                 />
                 <div>
-                  <div style={{ fontFamily: pairing.heading, fontSize: 19, color: '#FAFAF9', marginBottom: 4 }}>{pairing.label}</div>
-                  <p style={{ fontSize: 12, color: '#666', margin: 0, fontFamily: pairing.body }}>{pairing.description}</p>
+                  <div style={{ fontFamily: FONT_PAIRING_VARS[pairing.key]?.heading ?? pairing.heading, fontSize: 19, color: '#FAFAF9', marginBottom: 4 }}>{pairing.label}</div>
+                  <p style={{ fontSize: 12, color: '#666', margin: 0, fontFamily: FONT_PAIRING_VARS[pairing.key]?.body ?? pairing.body }}>{pairing.description}</p>
                 </div>
               </label>
             )

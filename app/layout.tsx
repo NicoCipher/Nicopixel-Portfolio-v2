@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { createClient } from '@/lib/supabase/server'
 import { getFontPairing } from '@/lib/fontPairings'
+import { allFontVariables, FONT_PAIRING_VARS } from '@/lib/fonts'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -77,6 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const siteAssets: Record<string, string> = {}
   rows?.forEach((r: { key: string; value: string | null }) => { if (r.value) siteAssets[r.key] = r.value })
   const fontPairing = getFontPairing(siteAssets.font_pairing)
+  const fontVars = FONT_PAIRING_VARS[fontPairing.key] ?? FONT_PAIRING_VARS.editorial
 
   const sameAs = ['behance', 'instagram', 'tiktok', 'linkedin', 'twitter']
     .filter(key => siteAssets[key] && siteAssets[`${key}_enabled`] !== 'false')
@@ -112,9 +114,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={allFontVariables}>
       <head>
-        <style dangerouslySetInnerHTML={{ __html: `:root { --font-heading: ${fontPairing.heading} !important; --font-body: ${fontPairing.body} !important; }` }} />
+        <style dangerouslySetInnerHTML={{ __html: `:root { --font-heading: ${fontVars.heading} !important; --font-body: ${fontVars.body} !important; }` }} />
         {siteAssets.favicon_url ? (
           <>
             <link rel="icon" type="image/png" href={siteAssets.favicon_url} />
