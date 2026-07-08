@@ -7,6 +7,7 @@ import { FaqAccordion } from '@/components/sections/FaqAccordion'
 export const metadata: Metadata = {
   title: 'Services',
   description: 'Brand identity, events design, and print collateral. See exactly what Nicopixel offers, what is included, and how the process works.',
+  alternates: { canonical: 'https://nicopixel.vercel.app/services' },
 }
 
 type ServiceRow = {

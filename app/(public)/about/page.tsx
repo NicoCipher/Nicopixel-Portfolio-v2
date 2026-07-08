@@ -5,7 +5,13 @@ import { AnimatedStat } from '@/components/ui/AnimatedStat'
 import { Reveal } from '@/components/ui/Reveal'
 import { CareerMilestones } from '@/components/sections/CareerMilestones'
 
-export const metadata = { title: 'About — Nicopixel' }
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description: 'Meet Taiwo Olumide, the graphic designer behind Nicopixel — a Lagos-based studio building brand identity, events design, and print collateral.',
+  alternates: { canonical: 'https://nicopixel.vercel.app/about' },
+}
 
 export default async function AboutPage() {
   const supabase = await createClient()

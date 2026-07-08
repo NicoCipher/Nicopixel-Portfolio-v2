@@ -7,6 +7,7 @@ import { Reveal } from '@/components/ui/Reveal'
 export const metadata: Metadata = {
   title: 'Insights',
   description: 'Thoughts on branding, design, and building a visual identity that works — from a Lagos-based graphic designer.',
+  alternates: { canonical: 'https://nicopixel.vercel.app/blog' },
 }
 
 export default async function BlogPage() {

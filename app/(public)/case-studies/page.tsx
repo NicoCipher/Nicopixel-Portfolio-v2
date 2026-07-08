@@ -7,6 +7,7 @@ import { Reveal } from '@/components/ui/Reveal'
 export const metadata: Metadata = {
   title: 'Case Studies',
   description: 'In-depth breakdowns of brand identity, events, and print projects — the brief, the challenge, the approach, and the outcome.',
+  alternates: { canonical: 'https://nicopixel.vercel.app/case-studies' },
 }
 
 export default async function CaseStudiesPage() {

@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'The terms governing use of the Nicopixel website and design services.',
   robots: { index: false, follow: true },
+  alternates: { canonical: 'https://nicopixel.vercel.app/terms-of-service' },
 }
 
 const LAST_UPDATED = 'June 2026'

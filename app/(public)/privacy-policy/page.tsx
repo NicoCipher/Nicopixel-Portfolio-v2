@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'How Nicopixel collects, uses, and protects your information.',
   robots: { index: false, follow: true },
+  alternates: { canonical: 'https://nicopixel.vercel.app/privacy-policy' },
 }
 
 const LAST_UPDATED = 'June 2026'

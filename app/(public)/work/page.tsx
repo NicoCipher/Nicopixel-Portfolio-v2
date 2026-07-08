@@ -1,8 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { WorkGallery } from '@/components/sections/WorkGallery'
 import { Reveal } from '@/components/ui/Reveal'
+import type { Metadata } from 'next'
 
-export const metadata = { title: 'Work — Nicopixel' }
+export const metadata: Metadata = {
+  title: 'Work',
+  description: 'Selected brand identity, events design, and print collateral projects by Nicopixel — a Lagos-based graphic design studio.',
+  alternates: { canonical: 'https://nicopixel.vercel.app/work' },
+}
 
 export default async function WorkPage() {
   const supabase = await createClient()
