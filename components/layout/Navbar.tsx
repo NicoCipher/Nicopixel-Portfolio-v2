@@ -169,7 +169,8 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
 
         .nav-burger {
           position: relative; z-index: 101;
-          width: 28px; height: 28px;
+          width: 44px; height: 44px;
+          margin: 0 -8px 0 -6px;
           background: none; border: none; cursor: pointer;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           gap: 5px; padding: 0;

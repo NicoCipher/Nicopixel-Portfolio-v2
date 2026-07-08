@@ -110,7 +110,7 @@ function ContactPageInner() {
                 <BookingEmbed />
               </div>
             ) : status === 'success' ? (
-              <div className="contact-card" style={{ textAlign: 'center', padding: '56px 40px' }}>
+              <div className="contact-card" style={{ textAlign: 'center', padding: '56px 40px' }} role="status" aria-live="polite">
                 <p style={{
                   fontFamily: 'var(--font-heading)', fontSize: 28,
                   fontStyle: 'italic', marginBottom: 12, color: 'var(--accent)',
@@ -134,31 +134,33 @@ function ContactPageInner() {
                 />
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">Name</label>
-                    <input className="form-input" placeholder="Your name" value={form.name} maxLength={100}
+                    <label className="form-label" htmlFor="contact-name">Name</label>
+                    <input id="contact-name" className="form-input" placeholder="Your name" value={form.name} maxLength={100}
+                      autoComplete="name"
                       onChange={e => setForm({ ...form, name: e.target.value })} required />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Email</label>
-                    <input className="form-input" type="email" placeholder="your@email.com" value={form.email} maxLength={150}
+                    <label className="form-label" htmlFor="contact-email">Email</label>
+                    <input id="contact-email" className="form-input" type="email" placeholder="your@email.com" value={form.email} maxLength={150}
+                      autoComplete="email"
                       onChange={e => setForm({ ...form, email: e.target.value })} required />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Subject</label>
-                  <input className="form-input" placeholder="Brand identity project" value={form.subject} maxLength={150}
+                  <label className="form-label" htmlFor="contact-subject">Subject</label>
+                  <input id="contact-subject" className="form-input" placeholder="Brand identity project" value={form.subject} maxLength={150}
                     onChange={e => setForm({ ...form, subject: e.target.value })} />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Message</label>
-                  <textarea className="form-input form-textarea"
+                  <label className="form-label" htmlFor="contact-message">Message</label>
+                  <textarea id="contact-message" className="form-input form-textarea"
                     rows={6} placeholder="Tell me about your project..." maxLength={5000}
                     value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
                 </div>
 
-                {error && <p style={{ fontSize: 13, color: 'var(--accent)' }}>{error}</p>}
+                {error && <p role="alert" style={{ fontSize: 13, color: 'var(--accent)' }}>{error}</p>}
 
                 <button type="submit" disabled={status === 'sending'} className="form-submit">
                   {status === 'sending' ? 'Sending...' : 'Send Message →'}
