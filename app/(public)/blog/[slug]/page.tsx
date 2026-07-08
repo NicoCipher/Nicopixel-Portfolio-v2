@@ -52,16 +52,30 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     .eq('published', true).eq('category', post.category)
     .neq('id', post.id).limit(3)
 
+  const postUrl = `${BASE_URL}/blog/${slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    image: post.cover_image,
-    datePublished: post.published_at,
-    dateModified: post.updated_at,
-    author: { '@type': 'Person', name: 'Taiwo Olumide', url: BASE_URL },
-    publisher: { '@type': 'Organization', name: 'Nicopixel' },
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+        headline: post.title,
+        description: post.excerpt,
+        image: post.cover_image,
+        datePublished: post.published_at,
+        dateModified: post.updated_at,
+        author: { '@id': `${BASE_URL}/#founder` },
+        publisher: { '@id': `${BASE_URL}/#business` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Insights', item: `${BASE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+        ],
+      },
+    ],
   }
 
   return (

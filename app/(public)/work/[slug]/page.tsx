@@ -51,15 +51,28 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     .neq('id', project.id).limit(3)
 
   // JSON-LD for this specific project
+  const projectUrl = `${BASE_URL}/work/${slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    name: project.title,
-    description: project.description,
-    image: project.cover_image,
-    url: `${BASE_URL}/work/${slug}`,
-    creator: { '@type': 'Person', name: 'Taiwo Olumide', url: BASE_URL },
-    genre: project.category,
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.description,
+        image: project.cover_image,
+        url: projectUrl,
+        creator: { '@id': `${BASE_URL}/#founder` },
+        genre: project.category,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Work', item: `${BASE_URL}/work` },
+          { '@type': 'ListItem', position: 3, name: project.title, item: projectUrl },
+        ],
+      },
+    ],
   }
 
   return (

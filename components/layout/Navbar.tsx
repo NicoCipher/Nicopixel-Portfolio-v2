@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { trackEvent } from '@/lib/analytics'
 
@@ -20,6 +20,9 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [progress, setProgress] = useState(0)
+  const burgerRef = useRef<HTMLButtonElement>(null)
+  const drawerRef = useRef<HTMLDivElement>(null)
+  const firstDrawerLinkRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,6 +42,55 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  // Modal accessibility for the mobile drawer: without this, keyboard users
+  // can Tab straight through an "open" drawer into the page content sitting
+  // invisibly behind it — a real WCAG 2.4.3 focus-order failure, not just
+  // a nicety. inert (broadly supported in evergreen browsers) removes main/
+  // footer from the tab order and AT tree entirely while the drawer is open.
+  useEffect(() => {
+    const main = document.querySelector('main')
+    const footer = document.querySelector('footer')
+    if (menuOpen) {
+      main?.setAttribute('inert', '')
+      footer?.setAttribute('inert', '')
+      firstDrawerLinkRef.current?.focus()
+    } else {
+      main?.removeAttribute('inert')
+      footer?.removeAttribute('inert')
+    }
+    return () => {
+      main?.removeAttribute('inert')
+      footer?.removeAttribute('inert')
+    }
+  }, [menuOpen])
+
+  // Escape to close + return focus to the trigger, and a Tab-trap so focus
+  // can't leave the drawer while it's open (standard dialog pattern).
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+        burgerRef.current?.focus()
+        return
+      }
+      if (e.key !== 'Tab' || !drawerRef.current) return
+      const focusable = drawerRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
   }, [menuOpen])
 
   return (
@@ -84,6 +136,7 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }} className="nav-mobile">
           <ThemeToggle />
           <button
+            ref={burgerRef}
             onClick={() => setMenuOpen(!menuOpen)}
             className="nav-burger"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -100,14 +153,22 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
       <div
         className={`nav-backdrop ${menuOpen ? 'nav-backdrop-open' : ''}`}
         onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
       />
 
       {/* Mobile menu drawer */}
-      <div className={`nav-drawer ${menuOpen ? 'nav-drawer-open' : ''}`}>
+      <div
+        ref={drawerRef}
+        className={`nav-drawer ${menuOpen ? 'nav-drawer-open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+      >
         <div className="nav-drawer-links">
           {links.map((l, i) => (
             <Link
               key={l.href}
+              ref={i === 0 ? firstDrawerLinkRef : undefined}
               href={l.href}
               className="nav-drawer-link"
               style={{
@@ -118,6 +179,7 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
               <span className="nav-drawer-link-num">{String(i + 1).padStart(2, '0')}</span>
               {l.label}
             </Link>
+
           ))}
         </div>
 
