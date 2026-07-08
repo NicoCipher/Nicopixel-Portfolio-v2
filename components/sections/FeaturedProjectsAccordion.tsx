@@ -74,7 +74,7 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
 
         .fpa-num {
           font-family: var(--font-heading); font-size: 14px; font-style: italic;
-          color: var(--accent); letter-spacing: 0.06em; flex-shrink: 0; width: 32px;
+          color: var(--accent-text); letter-spacing: 0.06em; flex-shrink: 0; width: 32px;
         }
         .fpa-header-title {
           flex: 1;
@@ -82,7 +82,7 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
           font-weight: 400; color: var(--fg); line-height: 1.1;
           transition: color 0.2s;
         }
-        .fpa-row-open .fpa-header-title { color: var(--accent); }
+        .fpa-row-open .fpa-header-title { color: var(--accent-text); }
         .fpa-header-cat {
           font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
           color: var(--fg-subtle); flex-shrink: 0; display: none;
@@ -94,7 +94,7 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
           font-size: 16px; color: var(--fg-muted); line-height: 1;
           transition: border-color 0.2s, color 0.2s;
         }
-        .fpa-row-open .fpa-toggle { border-color: var(--accent); color: var(--accent); }
+        .fpa-row-open .fpa-toggle { border-color: var(--accent); color: var(--accent-text); }
 
         .fpa-panel { overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .fpa-panel-inner { display: grid; grid-template-columns: 280px 1fr; gap: 40px; padding: 0 4px 40px; align-items: start; }
@@ -104,7 +104,7 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
         .fpa-panel-placeholder span { font-family: var(--font-heading); font-size: 22px; font-style: italic; color: var(--fg-subtle); text-transform: capitalize; }
 
         .fpa-panel-content { display: flex; flex-direction: column; gap: 14px; padding-top: 4px; }
-        .fpa-overview-meta { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+        .fpa-overview-meta { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
         .fpa-overview-title { font-family: var(--font-heading); font-size: clamp(22px, 2.8vw, 30px); font-weight: 400; color: var(--fg); line-height: 1.2; }
         .fpa-overview-desc { font-size: 14.5px; line-height: 1.8; color: var(--fg-muted); max-width: 480px; }
         .fpa-overview-link {

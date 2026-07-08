@@ -84,7 +84,7 @@ export function CareerMilestones({ milestones }: { milestones: Milestone[] }) {
         .cm-date {
           display: block;
           font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-          color: var(--accent); font-weight: 600; margin-bottom: 10px;
+          color: var(--accent-text); font-weight: 600; margin-bottom: 10px;
         }
         .cm-title {
           font-family: var(--font-heading); font-size: clamp(19px, 2.2vw, 24px);

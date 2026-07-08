@@ -135,10 +135,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <style>{`
         .post-header { padding: 60px 48px 0; max-width: 760px; margin: 0 auto; }
         .post-back { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; display: inline-block; margin-bottom: 32px; }
-        .post-cat { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+        .post-cat { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 16px; }
         .post-title { font-family: var(--font-heading); font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.1; margin-bottom: 20px; }
         .post-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--fg-subtle); margin-bottom: 40px; }
-        .post-meta-dot { color: var(--accent); }
+        .post-meta-dot { color: var(--accent-text); }
 
         .post-cover { position: relative; width: 100%; aspect-ratio: 16/8; background: var(--bg-secondary); margin-bottom: 56px; }
 
@@ -149,7 +149,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         .post-ul { margin: 0 0 22px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
         .post-li { font-size: 16px; line-height: 1.8; color: var(--fg-muted); }
         .post-strong { color: var(--fg); font-weight: 600; }
-        .post-link { color: var(--accent); text-decoration: underline; }
+        .post-link { color: var(--accent-text); text-decoration: underline; }
 
         .post-cta { max-width: 700px; margin: 64px auto 0; padding: 48px; background: var(--bg-secondary); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
         .post-cta-title { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 32px); font-weight: 400; }
@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         .post-cta-btn { display: inline-block; padding: 13px 32px; background: var(--accent); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
         .post-cta-btn:hover { background: #a01830; }
         .post-cta-btn-ghost { display: inline-block; padding: 13px 24px; border: 1px solid var(--border); color: var(--fg-muted); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-        .post-cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .post-cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent-text); }
 
         .post-related { max-width: 1000px; margin: 64px auto 0; padding: 56px 48px; border-top: 1px solid var(--border); }
         .post-related-title { font-family: var(--font-heading); font-size: 24px; font-weight: 400; margin-bottom: 32px; }

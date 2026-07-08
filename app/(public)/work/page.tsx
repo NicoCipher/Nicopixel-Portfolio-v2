@@ -21,7 +21,7 @@ export default async function WorkPage() {
       <Reveal as="div" className="work-header">
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
-          color: 'var(--accent)', marginBottom: 16,
+          color: 'var(--accent-text)', marginBottom: 16,
           display: 'flex', alignItems: 'center', gap: 12,
         }}>
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />

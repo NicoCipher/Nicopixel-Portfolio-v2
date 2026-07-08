@@ -42,9 +42,9 @@ export default function NotFound() {
         .reg-mark-tl { top: 28px; left: 28px; }
 
         .nf-content { position: relative; z-index: 1; max-width: 560px; }
-        .nf-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; }
+        .nf-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; }
         .nf-title { font-family: var(--font-heading); font-size: clamp(48px, 8vw, 100px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
-        .nf-title em { color: var(--accent); font-style: italic; }
+        .nf-title em { color: var(--accent-text); font-style: italic; }
         .nf-sub { font-size: 16px; line-height: 1.8; color: var(--fg-muted); margin-bottom: 36px; }
         .nf-links { display: flex; gap: 16px; flex-wrap: wrap; }
 

@@ -129,12 +129,12 @@ export default async function AboutPage() {
       {/* ── CTA ── */}
       <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent-text)', display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
             Work together
           </p>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 400, lineHeight: 1.05 }}>
-            Let&apos;s build something<br /><em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>worth noticing.</em>
+            Let&apos;s build something<br /><em style={{ color: 'var(--accent-text)', fontStyle: 'italic' }}>worth noticing.</em>
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 480 }}>
             If you need a graphic designer who takes the brief seriously and delivers work that holds up — let&apos;s talk.
@@ -149,7 +149,7 @@ export default async function AboutPage() {
         .about-hero { border-bottom: 1px solid var(--border); overflow: hidden; }
         .about-hero-inner { display: grid; grid-template-columns: 1.3fr 1fr; min-height: min(680px, 78vh); max-width: var(--content-max); margin: 0 auto; }
         .about-hero-text { padding: 80px 60px 64px 48px; display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--border); }
-        .about-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
+        .about-eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 32px; }
         .about-eyebrow-line { display: inline-block; width: 24px; height: 1px; background: var(--accent); }
         .about-title { font-family: var(--font-heading); font-size: clamp(42px, 6vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; white-space: pre-line; }
         .about-hero-image { position: relative; background: var(--bg-secondary); min-height: 500px; }
@@ -158,12 +158,12 @@ export default async function AboutPage() {
         .about-intro { border-bottom: 1px solid var(--border); }
         .about-intro-inner { display: grid; grid-template-columns: 1fr 1fr; }
         .about-quote { padding: 72px 60px 72px 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
-        .about-quote-mark { font-family: var(--font-heading); font-size: 120px; line-height: 0.6; color: var(--accent); display: block; margin-bottom: 20px; opacity: 0.4; }
+        .about-quote-mark { font-family: var(--font-heading); font-size: 120px; line-height: 0.6; color: var(--accent-text); display: block; margin-bottom: 20px; opacity: 0.4; }
         .about-quote p { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 36px); font-weight: 400; font-style: italic; line-height: 1.3; color: var(--fg); }
         .about-bio { padding: 72px 48px 72px 60px; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
         .about-bio p { font-size: 16px; line-height: 1.9; color: var(--fg-muted); }
         .about-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
-        .about-meta-dot { color: var(--accent); }
+        .about-meta-dot { color: var(--accent-text); }
         .about-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
         .about-stat { padding: 48px 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
         .about-stat:last-child { border-right: none; }
@@ -171,13 +171,13 @@ export default async function AboutPage() {
         .about-stat-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); }
         .about-disciplines { border-bottom: 1px solid var(--border); }
         .about-disciplines-inner { padding-top: 72px; padding-bottom: 72px; }
-        .about-section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
+        .about-section-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
         .about-section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .about-disciplines-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
         .about-discipline { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); }
         .about-discipline:last-child { border-right: none; padding-right: 0; }
         .about-discipline:not(:first-child) { padding-left: 40px; }
-        .about-discipline-num { font-family: var(--font-heading); font-size: 11px; color: var(--accent); letter-spacing: 0.16em; display: block; margin-bottom: 16px; }
+        .about-discipline-num { font-family: var(--font-heading); font-size: 11px; color: var(--accent-text); letter-spacing: 0.16em; display: block; margin-bottom: 16px; }
         .about-discipline-title { font-family: var(--font-heading); font-size: 23px; font-weight: 500; color: var(--fg); margin-bottom: 12px; line-height: 1.2; }
         .about-discipline-desc { font-size: 15px; line-height: 1.85; color: var(--fg-muted); }
         .about-tools { border-bottom: 1px solid var(--border); }

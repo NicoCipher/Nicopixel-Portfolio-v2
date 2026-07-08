@@ -55,7 +55,7 @@ function ContactPageInner() {
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <p style={{
           fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase',
-          color: 'var(--accent)', marginBottom: 16,
+          color: 'var(--accent-text)', marginBottom: 16,
           display: 'flex', alignItems: 'center', gap: 12,
         }}>
           <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
@@ -113,7 +113,7 @@ function ContactPageInner() {
               <div className="contact-card" style={{ textAlign: 'center', padding: '56px 40px' }} role="status" aria-live="polite">
                 <p style={{
                   fontFamily: 'var(--font-heading)', fontSize: 28,
-                  fontStyle: 'italic', marginBottom: 12, color: 'var(--accent)',
+                  fontStyle: 'italic', marginBottom: 12, color: 'var(--accent-text)',
                 }}>Message sent.</p>
                 <p style={{ fontSize: 14, color: 'var(--fg-muted)' }}>
                   I&apos;ll get back to you within 24 hours.
@@ -160,7 +160,7 @@ function ContactPageInner() {
                     value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
                 </div>
 
-                {error && <p role="alert" style={{ fontSize: 13, color: 'var(--accent)' }}>{error}</p>}
+                {error && <p role="alert" style={{ fontSize: 13, color: 'var(--accent-text)' }}>{error}</p>}
 
                 <button type="submit" disabled={status === 'sending'} className="form-submit">
                   {status === 'sending' ? 'Sending...' : 'Send Message →'}
@@ -196,7 +196,7 @@ function ContactPageInner() {
         .contact-info-row { display: flex; align-items: center; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
         .contact-info-row:last-child { border-bottom: none; }
         .contact-info-row:hover { background: var(--bg-secondary); }
-        .contact-info-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent); letter-spacing: 0.1em; flex-shrink: 0; }
+        .contact-info-num { font-family: var(--font-heading); font-size: 13px; color: var(--accent-text); letter-spacing: 0.1em; flex-shrink: 0; }
         .contact-info-label { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 4px; }
         .contact-info-value { font-size: 15px; color: var(--fg); font-weight: 500; }
 

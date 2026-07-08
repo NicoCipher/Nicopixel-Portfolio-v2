@@ -201,7 +201,7 @@ export default async function ServicesPage() {
         }
         .svc-eyebrow {
           font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-          color: var(--accent); margin-bottom: 20px;
+          color: var(--accent-text); margin-bottom: 20px;
           display: flex; align-items: center; gap: 12px;
         }
         .svc-title {
@@ -210,7 +210,7 @@ export default async function ServicesPage() {
           font-weight: 400; line-height: 1.0;
           letter-spacing: -0.02em; margin-bottom: 24px;
         }
-        .svc-title em { color: var(--accent); font-style: italic; }
+        .svc-title em { color: var(--accent-text); font-style: italic; }
         .svc-subtitle {
           font-size: 16px; line-height: 1.8;
           color: var(--fg-muted); max-width: 560px;
@@ -235,7 +235,7 @@ export default async function ServicesPage() {
         .svc-card-num {
           display: block;
           font-family: var(--font-heading); font-size: 12px;
-          color: var(--accent); letter-spacing: 0.2em;
+          color: var(--accent-text); letter-spacing: 0.2em;
           margin-bottom: 16px;
         }
         .svc-card-title {
@@ -271,7 +271,7 @@ export default async function ServicesPage() {
         .svc-proof-placeholder { position: absolute; inset: 0; background: var(--bg-secondary); }
         .svc-proof-label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 4px; }
         .svc-proof-title { display: block; font-size: 14px; font-weight: 600; color: var(--fg); transition: color 0.25s; }
-        .svc-proof:hover .svc-proof-title { color: var(--accent); }
+        .svc-proof:hover .svc-proof-title { color: var(--accent-text); }
 
         /* Registration marks — print-craft signature, consistent with the rest of the site */
         .reg-mark { position: absolute; width: 26px; height: 26px; stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.4; }
@@ -313,7 +313,7 @@ export default async function ServicesPage() {
           font-size: clamp(32px, 4vw, 60px);
           font-weight: 400; margin-top: 12px; line-height: 1.05;
         }
-        .svc-section-title em { font-style: italic; color: var(--accent); }
+        .svc-section-title em { font-style: italic; color: var(--accent-text); }
         .svc-steps {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 0;
@@ -333,7 +333,7 @@ export default async function ServicesPage() {
           line-height: 1; margin-bottom: 16px;
           transition: color 0.3s;
         }
-        .svc-step:hover .svc-step-num { color: var(--accent); }
+        .svc-step:hover .svc-step-num { color: var(--accent-text); }
         .svc-step-title {
           font-family: var(--font-heading); font-size: 19px;
           font-weight: 500; color: var(--fg); margin-bottom: 10px;

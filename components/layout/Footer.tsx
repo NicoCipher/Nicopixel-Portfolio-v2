@@ -73,7 +73,7 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
         .footer-cta-btn-ghost { display: inline-block; padding: 14px 24px; border: 1px solid var(--border); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; transition: border-color 0.2s, color 0.2s; }
         .footer-cta-btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
         .footer-bar { border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .footer-link:hover { color: var(--accent) !important; }
+        .footer-link:hover { color: var(--accent-text) !important; }
         .footer-social-link {
           position: relative;
           font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;

@@ -79,7 +79,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {/* Meta */}
       <Reveal as="div" className="proj-meta">
         <Link href="/work" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--fg-muted)', textDecoration: 'none', display: 'inline-block', marginBottom: 24 }}>← Back to Work</Link>
-        <span style={{ display: 'block', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12, fontWeight: 600 }}>{project.category}</span>
+        <span style={{ display: 'block', fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--accent-text)', marginBottom: 12, fontWeight: 600 }}>{project.category}</span>
         <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 400, lineHeight: 1.1, marginBottom: 24 }}>{project.title}</h1>
         {project.description && (
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--fg-muted)', maxWidth: 600 }}>{project.description}</p>
@@ -180,7 +180,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', background: 'var(--bg-secondary)' }}>
         <Reveal style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}>
-            Want work like this<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>for your brand?</em>
+            Want work like this<br /><em style={{ fontStyle: 'italic', color: 'var(--accent-text)' }}>for your brand?</em>
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)' }}>
             Every project starts with a conversation. Let&apos;s talk about what you need.
@@ -208,7 +208,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .cs-block { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .cs-block:nth-child(2n) { border-right: none; padding-right: 0; padding-left: 40px; }
         .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: none; }
-        .cs-block-num { display: block; font-family: var(--font-heading); font-size: 12px; color: var(--accent); letter-spacing: 0.14em; margin-bottom: 14px; }
+        .cs-block-num { display: block; font-family: var(--font-heading); font-size: 12px; color: var(--accent-text); letter-spacing: 0.14em; margin-bottom: 14px; }
         .cs-block-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin-bottom: 12px; }
         .cs-block-text { font-size: 14px; line-height: 1.85; color: var(--fg-muted); }
         .cs-results { margin-top: 40px; padding: 28px 32px; background: var(--accent); display: flex; flex-direction: column; gap: 8px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }

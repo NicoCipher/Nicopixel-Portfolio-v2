@@ -98,7 +98,7 @@ export default async function HomePage() {
                 {svc.deliverables?.length > 0 && (
                   <ul className="service-list">
                     {svc.deliverables.map((d: string) => (
-                      <li key={d}><span style={{ color: 'var(--accent)', marginRight: 8 }}>—</span>{d}</li>
+                      <li key={d}><span style={{ color: 'var(--accent-text)', marginRight: 8 }}>—</span>{d}</li>
                     ))}
                   </ul>
                 )}
@@ -183,7 +183,7 @@ export default async function HomePage() {
         <div style={{ display: 'flex', animation: 'marquee 18s linear infinite', whiteSpace: 'nowrap' }}>
           {Array(12).fill(['Brand Identity', 'Events Design', 'Print Collateral']).flat().map((item: string, i: number) => (
             <span key={i} style={{ fontFamily: 'var(--font-heading)', fontSize: 13, fontStyle: 'italic', color: 'var(--fg-subtle)', padding: '0 28px', display: 'inline-flex', alignItems: 'center', gap: 28 }}>
-              {item}<span style={{ color: 'var(--accent)', fontSize: 5 }}>●</span>
+              {item}<span style={{ color: 'var(--accent-text)', fontSize: 5 }}>●</span>
             </span>
           ))}
         </div>
@@ -207,9 +207,9 @@ export default async function HomePage() {
       <style>{`
         .bottom-cta-section { padding: 88px 48px; border-top: 1px solid var(--border); text-align: center; }
         .bottom-cta-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 24px; }
-        .bottom-cta-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 12px; }
+        .bottom-cta-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); display: flex; align-items: center; gap: 12px; }
         .bottom-cta-title { font-family: var(--font-heading); font-size: clamp(32px, 5vw, 64px); font-weight: 400; line-height: 1.05; }
-        .bottom-cta-title em { font-style: italic; color: var(--accent); }
+        .bottom-cta-title em { font-style: italic; color: var(--accent-text); }
         .bottom-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-section { min-height: calc(100svh - 64px); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
@@ -250,9 +250,9 @@ export default async function HomePage() {
         .hero-anim-3 { animation-delay: 0.75s; }
         @keyframes hero-line-up { to { transform: translateY(0); } }
 
-        .hero-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+        .hero-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
         .hero-title { font-family: var(--font-heading); font-size: clamp(42px, 7vw, 108px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
-        .hero-title em { color: var(--accent); font-style: italic; }
+        .hero-title em { color: var(--accent-text); font-style: italic; }
         .hero-sub { font-size: clamp(14px, 1.5vw, 16px); line-height: 1.8; color: var(--fg-muted); max-width: 520px; margin-bottom: 40px; }
         .hero-cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 48px; }
         .hero-stats { display: flex; align-items: center; gap: 0; }
@@ -267,7 +267,7 @@ export default async function HomePage() {
         .link-muted { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
         .link-muted:hover { color: var(--fg); }
         .services-section { padding: 88px 48px; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
-        .services-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
+        .services-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .services-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: var(--content-max); margin: 0 auto; }
         .service-card { padding: 44px 40px 40px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); text-decoration: none; color: inherit; }
@@ -282,7 +282,7 @@ export default async function HomePage() {
           position: absolute; top: -8px; right: 16px;
           transition: color 0.35s; user-select: none; z-index: 0;
         }
-        .service-card:hover .service-num { color: var(--accent); opacity: 0.15; }
+        .service-card:hover .service-num { color: var(--accent-text); opacity: 0.15; }
         .service-title { position: relative; z-index: 1; font-family: var(--font-heading); font-size: 25px; font-weight: 500; color: var(--fg); line-height: 1.2; margin-top: 36px; }
         .service-desc { position: relative; z-index: 1; font-size: 14.5px; line-height: 1.8; color: var(--fg-muted); flex: 1; }
         .service-list { position: relative; z-index: 1; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -294,20 +294,20 @@ export default async function HomePage() {
           color: var(--fg-muted); margin-top: 10px;
           transition: color 0.25s;
         }
-        .service-card:hover .service-cta { color: var(--accent); }
+        .service-card:hover .service-cta { color: var(--accent-text); }
         .service-arrow { display: inline-block; transition: transform 0.25s; }
         .service-card:hover .service-arrow { transform: translateX(4px); }
         .featured-section { padding: 88px 48px; border-bottom: 1px solid var(--border); }
         .featured-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
-        .section-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .section-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
         .section-eyebrow::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--accent); }
         .section-title { font-family: var(--font-heading); font-size: clamp(28px, 4vw, 48px); font-weight: 400; }
-        .section-title em { font-style: italic; color: var(--accent); }
+        .section-title em { font-style: italic; color: var(--accent-text); }
         /* ── WHY ── */
         .why-section { border-bottom: 1px solid var(--border); overflow: hidden; }
         .why-header { padding: 88px 48px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 48px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .why-headline { font-family: var(--font-heading); font-size: clamp(36px, 5vw, 72px); font-weight: 400; line-height: 1.0; }
-        .why-headline em { font-style: italic; color: var(--accent); }
+        .why-headline em { font-style: italic; color: var(--accent-text); }
         .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; max-width: var(--content-max); margin: 0 auto; }
         .why-card {
           padding: 48px;
@@ -333,7 +333,7 @@ export default async function HomePage() {
           transition: color 0.3s;
           user-select: none;
         }
-        .why-card:hover .why-card-num { color: var(--accent); opacity: 0.15; }
+        .why-card:hover .why-card-num { color: var(--accent-text); opacity: 0.15; }
         .why-card-body { position: relative; z-index: 1; }
         .why-card-title { font-family: var(--font-heading); font-size: 22px; font-weight: 500; color: var(--fg); margin-bottom: 10px; line-height: 1.3; display: flex; align-items: center; gap: 12px; }
         .why-card-title::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; transition: transform 0.3s; }
@@ -344,7 +344,7 @@ export default async function HomePage() {
         .testimonials-section { background: var(--test-bg); border-bottom: 1px solid var(--border); transition: background 0.3s; }
         .testimonials-inner { display: grid; grid-template-columns: 280px 1fr; gap: 0; max-width: var(--content-max); margin: 0 auto; }
         .testimonials-label { padding: 64px 48px; border-right: 1px solid var(--test-label-border); display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; background: var(--test-bg); }
-        .testimonials-label .section-eyebrow { color: var(--accent); }
+        .testimonials-label .section-eyebrow { color: var(--accent-text); }
         .testimonials-label .section-eyebrow::before { background: var(--accent); }
         .testimonials-headline { font-family: var(--font-heading); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--test-heading); line-height: 1.1; }
         .testimonials-headline em { font-style: italic; color: var(--test-heading-em); }
@@ -355,7 +355,7 @@ export default async function HomePage() {
         .testimonial-item:last-child { border-bottom: none; }
         .testimonial-item:hover { background: var(--test-bg-hover); }
         .testimonial-quote-wrap { display: flex; flex-direction: column; gap: 4px; position: relative; }
-        .tq-mark { font-family: var(--font-heading); font-size: 64px; color: var(--accent); line-height: 0.5; opacity: 0.35; display: block; }
+        .tq-mark { font-family: var(--font-heading); font-size: 64px; color: var(--accent-text); line-height: 0.5; opacity: 0.35; display: block; }
         .tq-text { font-family: var(--font-heading); font-size: clamp(16px, 1.8vw, 20px); font-style: italic; font-weight: 400; line-height: 1.6; color: var(--test-text-featured); margin-top: -8px; }
         .tq-author { display: flex; align-items: center; gap: 14px; }
         .tq-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 16px; color: white; flex-shrink: 0; box-shadow: 0 0 0 3px var(--test-bg), 0 0 0 4px var(--test-border); }

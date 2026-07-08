@@ -239,7 +239,7 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
           color: var(--fg-muted); text-decoration: none;
           transition: color 0.2s;
         }
-        .nav-drawer-social:hover { color: var(--accent); }
+        .nav-drawer-social:hover { color: var(--accent-text); }
         .nav-drawer-location {
           font-size: 11px; color: var(--fg-subtle); letter-spacing: 0.02em;
         }

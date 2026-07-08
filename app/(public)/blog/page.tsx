@@ -75,7 +75,7 @@ export default async function BlogPage() {
       <section style={{ padding: 'clamp(64px, 8vw, 100px) 48px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
         <Reveal style={{ maxWidth: 560, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, lineHeight: 1.1 }}>
-            Ready to build your<br /><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>brand identity?</em>
+            Ready to build your<br /><em style={{ fontStyle: 'italic', color: 'var(--accent-text)' }}>brand identity?</em>
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-muted)' }}>
             Reading about design is one thing. Getting it done is another.
@@ -93,9 +93,9 @@ export default async function BlogPage() {
 
       <style>{`
         .blog-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); }
-        .blog-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .blog-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .blog-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 84px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
-        .blog-title em { color: var(--accent); font-style: italic; }
+        .blog-title em { color: var(--accent-text); font-style: italic; }
         .blog-subtitle { font-size: 16px; line-height: 1.8; color: var(--fg-muted); max-width: 520px; }
 
         .blog-empty { padding: 100px 48px; text-align: center; }
@@ -117,7 +117,7 @@ export default async function BlogPage() {
 
         .blog-card-body { padding: 28px 32px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
         .blog-card-meta { display: flex; align-items: center; gap: 8px; }
-        .blog-card-cat { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+        .blog-card-cat { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
         .blog-card-dot { color: var(--fg-subtle); font-size: 11px; }
         .blog-card-date { font-size: 11px; letter-spacing: 0.04em; color: var(--fg-subtle); }
         .blog-card-title { font-family: var(--font-heading); font-size: 22px; font-weight: 400; line-height: 1.25; color: var(--fg); }

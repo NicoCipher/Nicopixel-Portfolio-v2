@@ -128,7 +128,7 @@ export default function TermsOfServicePage() {
 
       <style>{`
         .legal-page { padding: 80px 48px 100px; max-width: 760px; margin: 0 auto; }
-        .legal-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .legal-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .legal-title { font-family: var(--font-heading); font-size: clamp(36px, 5vw, 64px); font-weight: 400; line-height: 1.05; margin-bottom: 12px; }
         .legal-updated { font-size: 12px; color: var(--fg-subtle); letter-spacing: 0.04em; margin-bottom: 56px; }
         .legal-header { margin-bottom: 0; }
@@ -137,7 +137,7 @@ export default function TermsOfServicePage() {
         .legal-body ul { margin: 0 0 20px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
         .legal-body li { font-size: 15px; line-height: 1.8; color: var(--fg-muted); }
         .legal-body strong { color: var(--fg); font-weight: 600; }
-        .legal-body a { color: var(--accent); text-decoration: underline; }
+        .legal-body a { color: var(--accent-text); text-decoration: underline; }
 
         @media(max-width: 767px) {
           .legal-page { padding: 56px 20px 72px; }

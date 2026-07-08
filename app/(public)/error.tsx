@@ -33,9 +33,9 @@ export default function PublicError({ error, reset }: { error: Error & { digest?
           padding: 48px;
         }
         .err-content { max-width: 560px; }
-        .err-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; }
+        .err-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; }
         .err-title { font-family: var(--font-heading); font-size: clamp(40px, 6vw, 72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
-        .err-title em { color: var(--accent); font-style: italic; }
+        .err-title em { color: var(--accent-text); font-style: italic; }
         .err-sub { font-size: 16px; line-height: 1.8; color: var(--fg-muted); margin-bottom: 36px; }
         .err-links { display: flex; gap: 16px; flex-wrap: wrap; }
 

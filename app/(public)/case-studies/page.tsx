@@ -91,14 +91,14 @@ export default async function CaseStudiesPage() {
 
       <style>{`
         .cs-header { padding-top: 80px; padding-bottom: 64px; border-bottom: 1px solid var(--border); position: relative; }
-        .cs-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .cs-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
         .cs-title { font-family: var(--font-heading); font-size: clamp(40px, 6.5vw, 88px); font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; }
-        .cs-title em { color: var(--accent); font-style: italic; }
+        .cs-title em { color: var(--accent-text); font-style: italic; }
         .cs-subtitle { font-size: 16px; line-height: 1.8; color: var(--fg-muted); max-width: 540px; }
 
         .cs-empty { padding: 100px 48px; text-align: center; }
         .cs-empty p { font-family: var(--font-heading); font-size: 22px; font-style: italic; color: var(--fg-subtle); margin-bottom: 20px; }
-        .cs-empty-link { font-size: 12px; color: var(--accent); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; }
+        .cs-empty-link { font-size: 12px; color: var(--accent-text); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; }
 
         .cs-list { display: flex; flex-direction: column; }
         .cs-card-link { display: block; text-decoration: none; border-bottom: 1px solid var(--border); }
@@ -124,12 +124,12 @@ export default async function CaseStudiesPage() {
         }
 
         .cs-card-body { padding: 56px 56px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
-        .cs-card-client { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+        .cs-card-client { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); font-weight: 600; }
         .cs-card-title { font-family: var(--font-heading); font-size: clamp(26px, 3.2vw, 38px); font-weight: 500; line-height: 1.15; color: var(--fg); margin: 2px 0 2px; }
         .cs-card-cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: 8px; }
         .cs-card-brief { font-size: 15px; line-height: 1.8; color: var(--fg-muted); margin-bottom: 4px; }
         .cs-card-results { display: flex; flex-direction: column; gap: 3px; padding: 14px 18px; background: var(--bg); border-left: 2px solid var(--accent); margin: 6px 0 8px; }
-        .cs-card-results-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+        .cs-card-results-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
         .cs-card-results-text { font-size: 14px; color: var(--fg); font-weight: 500; line-height: 1.5; }
         .cs-card-cta { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; }
         .cs-arrow { transition: transform 0.3s; display: inline-block; }

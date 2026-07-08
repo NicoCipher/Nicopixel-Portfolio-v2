@@ -5,10 +5,16 @@
   --bg-secondary: #F2F1EF;
   --fg: #0A0A0A;
   --fg-muted: #6B6B6B;
-  --fg-subtle: #A8A8A8;
+  --fg-subtle: #6E6E6E;
   --border: #E2E2DF;
   --accent: #C41E3A;
   --accent-hover: #A01830;
+  /* Same as --accent in light mode (already passes 5.6:1) — only diverges
+     in dark mode below, where raw --accent is 3.4:1 against near-black and
+     fails AA for text. Use this specifically when accent color is the
+     actual text color (labels, links, em emphasis) — keep --accent for
+     backgrounds/borders/buttons, which don't have this contrast concern. */
+  --accent-text: var(--accent);
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --content-max: 1240px;
@@ -30,10 +36,11 @@
   --bg-secondary: #111111;
   --fg: #FAFAF9;
   --fg-muted: #999999;
-  --fg-subtle: #555555;
+  --fg-subtle: #7C7C7C;
   --border: #1F1F1F;
   --accent: #C41E3A;
   --accent-hover: #E02444;
+  --accent-text: #E2435E;
   /* Testimonials in dark mode — lighter to create contrast against dark page bg */
   --test-bg: #1A1A1A;
   --test-bg-hover: #222222;
