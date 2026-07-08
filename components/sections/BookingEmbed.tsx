@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { trackEvent } from '@/lib/analytics'
 
 declare global {
   interface Window {
@@ -72,6 +73,11 @@ export function BookingEmbed() {
       },
       hideEventTypeDetails: false,
       layout: 'month_view',
+    })
+
+    window.Cal('on', {
+      action: 'bookingSuccessful',
+      callback: () => trackEvent('booking_completed'),
     })
   }, [loaded, theme])
 

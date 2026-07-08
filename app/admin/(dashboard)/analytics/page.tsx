@@ -15,13 +15,19 @@ async function getAnalytics() {
     { count: monthViews },
     { data: last30Data },
     { data: allData },
+    { data: conversionData },
   ] = await Promise.all([
-    supabase.from('page_views').select('*', { count: 'exact', head: true }),
-    supabase.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', today),
-    supabase.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', last7),
-    supabase.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', last30),
-    supabase.from('page_views').select('path, visitor_id, device_type, created_at').gte('created_at', last30),
-    supabase.from('page_views').select('visitor_id, device_type').gte('created_at', last30),
+    supabase.from('page_views').select('*', { count: 'exact', head: true }).not('path', 'like', '/_event/%'),
+    supabase.from('page_views').select('*', { count: 'exact', head: true }).not('path', 'like', '/_event/%').gte('created_at', today),
+    supabase.from('page_views').select('*', { count: 'exact', head: true }).not('path', 'like', '/_event/%').gte('created_at', last7),
+    supabase.from('page_views').select('*', { count: 'exact', head: true }).not('path', 'like', '/_event/%').gte('created_at', last30),
+    supabase.from('page_views').select('path, visitor_id, device_type, created_at').not('path', 'like', '/_event/%').gte('created_at', last30),
+    supabase.from('page_views').select('visitor_id, device_type').not('path', 'like', '/_event/%').gte('created_at', last30),
+    // Conversion events (contact form submissions, completed bookings) are
+    // logged as synthetic "/_event/<name>" paths in the same table rather
+    // than a separate one, so they need their own filtered query here —
+    // otherwise they'd silently inflate the page-view counts above.
+    supabase.from('page_views').select('path, created_at').like('path', '/_event/%').gte('created_at', last30),
   ])
 
   // Unique visitors (last 30 days)
@@ -64,11 +70,19 @@ async function getAnalytics() {
   })
   const topReferrers = Object.entries(refCounts).sort(([,a],[,b]) => b - a).slice(0, 5)
 
-  return { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers }
+  // Conversions — parse the "/_event/<name>?from=..." synthetic paths
+  const conversionCounts: Record<string, number> = {}
+  conversionData?.forEach((v: { path: string }) => {
+    const name = v.path.replace('/_event/', '').split('?')[0]
+    conversionCounts[name] = (conversionCounts[name] || 0) + 1
+  })
+  const totalConversions = Object.values(conversionCounts).reduce((a, b) => a + b, 0)
+
+  return { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions }
 }
 
 export default async function AnalyticsPage() {
-  const { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers } = await getAnalytics()
+  const { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions } = await getAnalytics()
 
   const dailyEntries = Object.entries(daily)
   const maxDay = Math.max(...Object.values(daily), 1)
@@ -155,7 +169,7 @@ export default async function AnalyticsPage() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
         {/* Top pages */}
         <div style={{ background: '#0A0A0A', border: '1px solid #1F1F1F', padding: 24 }}>
           <h2 style={{ fontSize: 12, fontWeight: 600, color: '#FAFAF9', marginBottom: 20, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
@@ -193,6 +207,31 @@ export default async function AnalyticsPage() {
                 {topReferrers.map(([domain, count], i) => (
                   <div key={domain} style={{ padding: '12px 0', borderBottom: i < topReferrers.length - 1 ? '1px solid #1A1A1A' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: 12, color: '#999' }}>{domain}</span>
+                    <span style={{ fontSize: 12, color: '#FAFAF9', fontWeight: 600 }}>{count}</span>
+                  </div>
+                ))}
+              </div>
+          }
+        </div>
+
+        {/* Conversions */}
+        <div style={{ background: '#0A0A0A', border: '1px solid #C41E3A33', padding: 24 }}>
+          <h2 style={{ fontSize: 12, fontWeight: 600, color: '#FAFAF9', marginBottom: 4, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Conversions (30d)
+          </h2>
+          <p style={{ fontSize: 10, color: '#555', marginBottom: 20 }}>Form submissions + completed bookings</p>
+          <div style={{ fontFamily: 'Georgia, serif', fontSize: 30, fontWeight: 400, color: '#C41E3A', lineHeight: 1, marginBottom: 4 }}>
+            {totalConversions.toLocaleString()}
+          </div>
+          <p style={{ fontSize: 10, color: '#555', marginBottom: 18 }}>
+            {monthViews ? `${((totalConversions / monthViews) * 100).toFixed(1)}% of ${monthViews.toLocaleString()} views` : 'No views yet'}
+          </p>
+          {Object.keys(conversionCounts).length === 0
+            ? <p style={{ fontSize: 13, color: '#444', fontStyle: 'italic' }}>No conversions yet.</p>
+            : <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {Object.entries(conversionCounts).sort(([,a],[,b]) => b - a).map(([name, count], i, arr) => (
+                  <div key={name} style={{ padding: '10px 0', borderBottom: i < arr.length - 1 ? '1px solid #1A1A1A' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: 12, color: '#999' }}>{name === 'contact_form_submitted' ? 'Contact form' : name === 'booking_completed' ? 'Booking completed' : name}</span>
                     <span style={{ fontSize: 12, color: '#FAFAF9', fontWeight: 600 }}>{count}</span>
                   </div>
                 ))}

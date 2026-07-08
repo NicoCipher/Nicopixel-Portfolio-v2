@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { BookingEmbed } from '@/components/sections/BookingEmbed'
 import { createClient } from '@/lib/supabase/client'
 import { Reveal } from '@/components/ui/Reveal'
+import { trackEvent } from '@/lib/analytics'
 
 const FALLBACK_EMAIL = 'nicocipherr@gmail.com'
 
@@ -41,6 +42,7 @@ function ContactPageInner() {
       const data = await res.json()
       if (!res.ok) { setError(data.error || 'Something went wrong.'); setStatus('error'); return }
       setStatus('success')
+      trackEvent('contact_form_submitted')
       setForm({ name: '', email: '', subject: '', message: '', website: '' })
     } catch {
       setError('Network error. Please try again.')
