@@ -70,19 +70,25 @@ async function getAnalytics() {
   })
   const topReferrers = Object.entries(refCounts).sort(([,a],[,b]) => b - a).slice(0, 5)
 
-  // Conversions — parse the "/_event/<name>?from=..." synthetic paths
+  // Conversions — parse the "/_event/<name>?from=..." synthetic paths.
+  // Only actual completions count toward totalConversions; clicks (like the
+  // nav CTA) are top-of-funnel signal, tracked separately so they don't
+  // inflate the conversion number.
+  const CONVERSION_EVENTS = new Set(['contact_form_submitted', 'booking_completed'])
   const conversionCounts: Record<string, number> = {}
+  const clickCounts: Record<string, number> = {}
   conversionData?.forEach((v: { path: string }) => {
     const name = v.path.replace('/_event/', '').split('?')[0]
-    conversionCounts[name] = (conversionCounts[name] || 0) + 1
+    const bucket = CONVERSION_EVENTS.has(name) ? conversionCounts : clickCounts
+    bucket[name] = (bucket[name] || 0) + 1
   })
   const totalConversions = Object.values(conversionCounts).reduce((a, b) => a + b, 0)
 
-  return { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions }
+  return { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions, clickCounts }
 }
 
 export default async function AnalyticsPage() {
-  const { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions } = await getAnalytics()
+  const { totalViews, todayViews, weekViews, monthViews, uniqueVisitors, devices, topPages, daily, topReferrers, conversionCounts, totalConversions, clickCounts } = await getAnalytics()
 
   const dailyEntries = Object.entries(daily)
   const maxDay = Math.max(...Object.values(daily), 1)
@@ -237,6 +243,17 @@ export default async function AnalyticsPage() {
                 ))}
               </div>
           }
+          {Object.keys(clickCounts).length > 0 && (
+            <div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px dashed #1F1F1F' }}>
+              <p style={{ fontSize: 9, color: '#555', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10 }}>CTA click-through (top of funnel)</p>
+              {Object.entries(clickCounts).sort(([,a],[,b]) => b - a).map(([name, count]) => (
+                <div key={name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0' }}>
+                  <span style={{ fontSize: 11, color: '#777' }}>{name === 'nav_cta_clicked' ? 'Nav "Start a Project"' : name}</span>
+                  <span style={{ fontSize: 11, color: '#999' }}>{count}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

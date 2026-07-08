@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { trackEvent } from '@/lib/analytics'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -12,7 +13,6 @@ const links = [
   { href: '/services', label: 'Services' },
   { href: '/blog', label: 'Insights' },
   { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
 ]
 
 export function Navbar({ settings }: { settings?: Record<string, string | null> }) {
@@ -76,6 +76,7 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
               className={`nav-link ${pathname === l.href ? 'nav-link-active' : ''}`}
             >{l.label}</Link>
           ))}
+          <Link href="/contact" className="nav-cta" onClick={() => trackEvent('nav_cta_clicked', pathname)}>Start a Project</Link>
           <ThemeToggle />
         </div>
 
@@ -121,6 +122,7 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         </div>
 
         <div className="nav-drawer-footer" style={{ transitionDelay: menuOpen ? `${links.length * 0.04 + 0.15}s` : '0s' }}>
+          <Link href="/contact" className="nav-drawer-cta" onClick={() => trackEvent('nav_cta_clicked', pathname)}>Start a Project →</Link>
           <div className="nav-drawer-divider" />
           <div className="nav-drawer-socials">
             {[
@@ -166,6 +168,28 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         .nav-link:hover::after { width: 100%; }
         .nav-link-active { color: var(--fg); }
         .nav-link-active::after { width: 100%; }
+
+        .nav-cta {
+          display: inline-flex; align-items: center;
+          padding: 9px 20px;
+          background: var(--accent); color: white;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          text-decoration: none; white-space: nowrap;
+          transition: background 0.2s, transform 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+        .nav-drawer-cta {
+          display: flex; align-items: center; justify-content: center;
+          padding: 16px 24px;
+          background: var(--accent); color: white;
+          font-family: var(--font-body); font-size: 12px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          text-decoration: none;
+          transition: background 0.2s;
+        }
+        .nav-drawer-cta:hover { background: var(--accent-hover); }
 
         .nav-burger {
           position: relative; z-index: 101;
@@ -245,7 +269,8 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         }
 
         @media(max-width: 1100px) {
-          .nav-desktop { gap: 22px !important; }
+          .nav-desktop { gap: 18px !important; }
+          .nav-cta { padding: 8px 14px !important; }
         }
         @media(max-width: 950px) {
           .nav-desktop { display: none !important; }
