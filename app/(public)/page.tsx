@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Project } from '@/types'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
 import { FeaturedProjectsAccordion } from '@/components/sections/FeaturedProjectsAccordion'
@@ -34,7 +35,13 @@ export default async function HomePage() {
     <>
       {/* ── HERO ── */}
       <section className="hero-section">
-        <span className="hero-bg-letter">N</span>
+        {s.logo_url ? (
+          <div className="hero-bg-logo-wrap">
+            <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain', objectPosition: 'bottom right' }} priority={false} />
+          </div>
+        ) : (
+          <span className="hero-bg-letter">N</span>
+        )}
 
         {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
         <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
@@ -53,7 +60,8 @@ export default async function HomePage() {
           <line x1="0" y1="16" x2="32" y2="16" />
         </svg>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 760 }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 'var(--content-max)', margin: '0 auto', width: '100%' }}>
+          <div style={{ maxWidth: 760 }}>
           <p className="hero-eyebrow hero-anim hero-anim-1">
             <span style={{ display: 'inline-block', width: 24, height: 1, background: 'var(--accent)' }} />
             {s.hero_eyebrow || 'Brand · Events · Print · Lagos, Nigeria'}
@@ -81,6 +89,7 @@ export default async function HomePage() {
                 </div>
               </div>
             ))}
+          </div>
           </div>
         </div>
       </section>
@@ -222,6 +231,19 @@ export default async function HomePage() {
           animation: hero-letter-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
         @keyframes hero-letter-in { to { opacity: 1; transform: scale(1); } }
+
+        .hero-bg-logo-wrap {
+          position: absolute; bottom: -40px; right: -20px;
+          width: clamp(220px, 30vw, 440px); height: clamp(220px, 30vw, 440px);
+          user-select: none; pointer-events: none;
+          opacity: 0; transform: scale(1.08);
+          animation: hero-logo-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+        /* Lower target opacity than the old letter — that glyph was subtle
+           because of its faint border-tint color, not low opacity. A real
+           (likely full-color) logo needs actual transparency to read as a
+           background mark instead of a second, competing logo on the page. */
+        @keyframes hero-logo-in { to { opacity: 0.1; transform: scale(1); } }
 
         /* Registration marks — print-craft signature, align the page like a printer aligning plates */
         .reg-mark {
@@ -373,6 +395,7 @@ export default async function HomePage() {
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
           .hero-bg-letter { opacity: 0.3; }
+          .hero-bg-logo-wrap { opacity: 0.08; }
           .reg-mark { width: 20px; height: 20px; }
           .reg-mark-tl, .reg-mark-tr { top: 16px; }
           .reg-mark-tl { left: 16px; }
