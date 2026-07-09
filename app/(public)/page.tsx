@@ -35,13 +35,35 @@ export default async function HomePage() {
     <>
       {/* ── HERO ── */}
       <section className="hero-section">
-        {s.logo_url ? (
-          <div className="hero-bg-logo-wrap">
-            <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain', objectPosition: 'bottom right' }} priority={false} />
-          </div>
-        ) : (
-          <span className="hero-bg-letter">N</span>
-        )}
+        <div className="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 400" className="hv-svg">
+            <g className="hv-layer hv-layer-a">
+              <circle cx="200" cy="200" r="110" />
+              <line x1="200" y1="10" x2="200" y2="390" />
+              <line x1="10" y1="200" x2="390" y2="200" />
+            </g>
+            <g className="hv-layer hv-layer-b">
+              <circle cx="200" cy="200" r="110" />
+              <line x1="200" y1="10" x2="200" y2="390" />
+              <line x1="10" y1="200" x2="390" y2="200" />
+            </g>
+            <g className="hv-layer hv-layer-c">
+              <circle cx="200" cy="200" r="110" />
+              <line x1="200" y1="10" x2="200" y2="390" />
+              <line x1="10" y1="200" x2="390" y2="200" />
+            </g>
+
+            <g className="hv-corner hv-corner-tl"><circle cx="40" cy="40" r="14" /><line x1="40" y1="26" x2="40" y2="54" /><line x1="26" y1="40" x2="54" y2="40" /></g>
+            <g className="hv-corner hv-corner-tr"><circle cx="360" cy="40" r="14" /><line x1="360" y1="26" x2="360" y2="54" /><line x1="346" y1="40" x2="374" y2="40" /></g>
+            <g className="hv-corner hv-corner-bl"><circle cx="40" cy="360" r="14" /><line x1="40" y1="346" x2="40" y2="374" /><line x1="26" y1="360" x2="54" y2="360" /></g>
+            <g className="hv-corner hv-corner-br"><circle cx="360" cy="360" r="14" /><line x1="360" y1="346" x2="360" y2="374" /><line x1="346" y1="360" x2="374" y2="360" /></g>
+          </svg>
+          {s.logo_url && (
+            <div className="hero-visual-logo">
+              <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain' }} />
+            </div>
+          )}
+        </div>
 
         {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
         <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
@@ -222,29 +244,65 @@ export default async function HomePage() {
         .bottom-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-section { min-height: calc(100svh - 64px); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .hero-bg-letter {
-          position: absolute; bottom: -60px; right: -20px;
-          font-family: var(--font-heading); font-style: italic; font-weight: 700;
-          font-size: clamp(200px, 35vw, 500px); color: var(--border); line-height: 1;
-          user-select: none; pointer-events: none;
-          opacity: 0; transform: scale(1.08);
-          animation: hero-letter-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        .hero-visual {
+          position: absolute; top: 50%; right: 4%;
+          width: clamp(280px, 32vw, 440px); height: clamp(280px, 32vw, 440px);
+          transform: translateY(-50%);
+          opacity: 0;
+          animation: hv-fade-in 1s ease 0.3s forwards;
         }
-        @keyframes hero-letter-in { to { opacity: 1; transform: scale(1); } }
+        @keyframes hv-fade-in { to { opacity: 1; } }
 
-        .hero-bg-logo-wrap {
-          position: absolute; bottom: -40px; right: -20px;
-          width: clamp(220px, 30vw, 440px); height: clamp(220px, 30vw, 440px);
-          user-select: none; pointer-events: none;
-          opacity: 0; transform: scale(1.08);
-          animation: hero-logo-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        .hv-svg { width: 100%; height: 100%; overflow: visible; }
+        .hv-layer { fill: none; stroke-width: 1.25; }
+        .hv-layer-a { stroke: var(--accent); animation: hv-drift-a 7s ease-in-out infinite; }
+        .hv-layer-b { stroke: var(--fg-subtle); animation: hv-drift-b 7s ease-in-out infinite; }
+        .hv-layer-c { stroke: var(--fg); opacity: 0.7; animation: hv-drift-c 7s ease-in-out infinite; }
+
+        @keyframes hv-drift-a {
+          0%, 100% { transform: translate(0, 0); }
+          25% { transform: translate(6px, -4px); }
+          50% { transform: translate(-3px, 5px); }
+          75% { transform: translate(4px, 3px); }
         }
-        /* Lower target opacity than the old letter — that glyph was subtle
-           because of its faint border-tint color, not low opacity. A real
-           (likely full-color) logo needs actual transparency to read as a
-           background mark instead of a second, competing logo on the page. */
-        @keyframes hero-logo-in { to { opacity: 0.1; transform: scale(1); } }
+        @keyframes hv-drift-b {
+          0%, 100% { transform: translate(0, 0); }
+          25% { transform: translate(-5px, 4px); }
+          50% { transform: translate(4px, -3px); }
+          75% { transform: translate(-4px, -4px); }
+        }
+        @keyframes hv-drift-c {
+          0%, 100% { transform: translate(0, 0); }
+          25% { transform: translate(2px, 3px); }
+          50% { transform: translate(-4px, -2px); }
+          75% { transform: translate(3px, -3px); }
+        }
 
+        .hv-corner { fill: none; stroke: var(--border); stroke-width: 1; opacity: 0; transform-origin: center; }
+        .hv-corner-tl { animation: hv-corner-life 4s ease-in-out infinite 0.5s; }
+        .hv-corner-tr { animation: hv-corner-life 4s ease-in-out infinite 0.65s; }
+        .hv-corner-bl { animation: hv-corner-life 4s ease-in-out infinite 0.8s; }
+        .hv-corner-br { animation: hv-corner-life 4s ease-in-out infinite 0.95s; }
+        @keyframes hv-corner-life {
+          0% { opacity: 0; }
+          15%, 50% { opacity: 0.5; }
+          75% { opacity: 0.9; }
+          100% { opacity: 0.5; }
+        }
+
+        .hero-visual-logo {
+          position: absolute; top: 50%; left: 50%;
+          width: 22%; height: 22%;
+          transform: translate(-50%, -50%);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-visual { animation: none; opacity: 1; }
+          .hv-layer, .hv-corner { animation: none !important; }
+          .hv-layer-a, .hv-layer-b { opacity: 0.5; }
+          .hv-layer-c { opacity: 0.7; }
+          .hv-corner { opacity: 0.5; }
+        }
         /* Registration marks — print-craft signature, align the page like a printer aligning plates */
         .reg-mark {
           position: absolute; width: 28px; height: 28px;
@@ -384,6 +442,9 @@ export default async function HomePage() {
         .tq-name { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--test-name); margin-bottom: 2px; }
         .tq-name::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
         .tq-role { display: block; font-size: 11px; color: var(--test-role); letter-spacing: 0.06em; margin-left: 13px; }
+        @media(max-width: 1200px) {
+          .hero-visual { width: clamp(220px, 26vw, 300px); height: clamp(220px, 26vw, 300px); right: 2%; }
+        }
         @media(max-width: 900px) {
           .services-grid { grid-template-columns: 1fr; }
           .service-card { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
@@ -391,11 +452,10 @@ export default async function HomePage() {
           .service-title { margin-top: 24px !important; }
           .service-card:last-child { border-bottom: none; }
           .why-grid { grid-template-columns: 1fr; gap: 0; }
+          .hero-visual { display: none; }
         }
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
-          .hero-bg-letter { opacity: 0.3; }
-          .hero-bg-logo-wrap { opacity: 0.08; }
           .reg-mark { width: 20px; height: 20px; }
           .reg-mark-tl, .reg-mark-tr { top: 16px; }
           .reg-mark-tl { left: 16px; }
