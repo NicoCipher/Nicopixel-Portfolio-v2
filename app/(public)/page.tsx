@@ -36,33 +36,41 @@ export default async function HomePage() {
       {/* ── HERO ── */}
       <section className="hero-section">
         <div className="hero-visual" aria-hidden="true">
-          <svg viewBox="0 0 400 400" className="hv-svg">
-            <g className="hv-layer hv-layer-a">
-              <circle cx="200" cy="200" r="110" />
-              <line x1="200" y1="10" x2="200" y2="390" />
-              <line x1="10" y1="200" x2="390" y2="200" />
-            </g>
-            <g className="hv-layer hv-layer-b">
-              <circle cx="200" cy="200" r="110" />
-              <line x1="200" y1="10" x2="200" y2="390" />
-              <line x1="10" y1="200" x2="390" y2="200" />
-            </g>
-            <g className="hv-layer hv-layer-c">
-              <circle cx="200" cy="200" r="110" />
-              <line x1="200" y1="10" x2="200" y2="390" />
-              <line x1="10" y1="200" x2="390" y2="200" />
-            </g>
-
-            <g className="hv-corner hv-corner-tl"><circle cx="40" cy="40" r="14" /><line x1="40" y1="26" x2="40" y2="54" /><line x1="26" y1="40" x2="54" y2="40" /></g>
-            <g className="hv-corner hv-corner-tr"><circle cx="360" cy="40" r="14" /><line x1="360" y1="26" x2="360" y2="54" /><line x1="346" y1="40" x2="374" y2="40" /></g>
-            <g className="hv-corner hv-corner-bl"><circle cx="40" cy="360" r="14" /><line x1="40" y1="346" x2="40" y2="374" /><line x1="26" y1="360" x2="54" y2="360" /></g>
-            <g className="hv-corner hv-corner-br"><circle cx="360" cy="360" r="14" /><line x1="360" y1="346" x2="360" y2="374" /><line x1="346" y1="360" x2="374" y2="360" /></g>
-          </svg>
-          {s.logo_url && (
-            <div className="hero-visual-logo">
-              <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain' }} />
+          <div className="dc-stage">
+            <div className="dc-object">
+              {s.logo_url
+                ? <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain' }} />
+                : (
+                  <svg viewBox="0 0 200 200" className="dc-fallback-mark">
+                    <circle cx="100" cy="100" r="52" />
+                    <line x1="100" y1="8" x2="100" y2="192" />
+                    <line x1="8" y1="100" x2="192" y2="100" />
+                  </svg>
+                )
+              }
+              <div className="dc-selection">
+                <span className="dc-handle dc-handle-tl" />
+                <span className="dc-handle dc-handle-tr" />
+                <span className="dc-handle dc-handle-bl" />
+                <span className="dc-handle dc-handle-br" />
+                <span className="dc-rotate-stem" />
+                <span className="dc-rotate-handle" />
+              </div>
             </div>
-          )}
+
+            <div className="dc-click-ripple" />
+
+            <div className="dc-undo-toast">
+              <span className="dc-undo-key">⌘</span>
+              <span className="dc-undo-key">Z</span>
+            </div>
+
+            <div className="dc-cursor">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 2L4 19.5L8.5 15.5L11.5 22L14.5 20.5L11.5 14L17.5 14L4 2Z" fill="white" stroke="#0A0A0A" strokeWidth="1.2" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
@@ -253,55 +261,124 @@ export default async function HomePage() {
         }
         @keyframes hv-fade-in { to { opacity: 1; } }
 
-        .hv-svg { width: 100%; height: 100%; overflow: visible; }
-        .hv-layer { fill: none; stroke-width: 1.25; }
-        .hv-layer-a { stroke: var(--accent); animation: hv-drift-a 7s ease-in-out infinite; }
-        .hv-layer-b { stroke: var(--fg-subtle); animation: hv-drift-b 7s ease-in-out infinite; }
-        .hv-layer-c { stroke: var(--fg); opacity: 0.7; animation: hv-drift-c 7s ease-in-out infinite; }
+        .dc-stage { position: relative; width: 100%; height: 100%; }
 
-        @keyframes hv-drift-a {
-          0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(6px, -4px); }
-          50% { transform: translate(-3px, 5px); }
-          75% { transform: translate(4px, 3px); }
-        }
-        @keyframes hv-drift-b {
-          0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(-5px, 4px); }
-          50% { transform: translate(4px, -3px); }
-          75% { transform: translate(-4px, -4px); }
-        }
-        @keyframes hv-drift-c {
-          0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(2px, 3px); }
-          50% { transform: translate(-4px, -2px); }
-          75% { transform: translate(3px, -3px); }
-        }
-
-        .hv-corner { fill: none; stroke: var(--border); stroke-width: 1; opacity: 0; transform-origin: center; }
-        .hv-corner-tl { animation: hv-corner-life 4s ease-in-out infinite 0.5s; }
-        .hv-corner-tr { animation: hv-corner-life 4s ease-in-out infinite 0.65s; }
-        .hv-corner-bl { animation: hv-corner-life 4s ease-in-out infinite 0.8s; }
-        .hv-corner-br { animation: hv-corner-life 4s ease-in-out infinite 0.95s; }
-        @keyframes hv-corner-life {
-          0% { opacity: 0; }
-          15%, 50% { opacity: 0.5; }
-          75% { opacity: 0.9; }
-          100% { opacity: 0.5; }
-        }
-
-        .hero-visual-logo {
+        /* The object being played with — logo (or fallback mark), plus its
+           own selection UI nested inside so the box/handles rotate and
+           scale together with it automatically, no separate sync needed. */
+        .dc-object {
           position: absolute; top: 50%; left: 50%;
-          width: 22%; height: 22%;
-          transform: translate(-50%, -50%);
+          width: 34%; height: 34%;
+          transform-origin: center;
+          animation: dc-object-transform 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .dc-fallback-mark { width: 100%; height: 100%; fill: none; stroke: var(--fg-subtle); stroke-width: 1.5; }
+
+        @keyframes dc-object-transform {
+          0%, 12%  { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+          34%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1); }
+          40%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1); }
+          60%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1.22); }
+          68%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1.22); }
+          74%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+          100%     { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+        }
+
+        /* Figma/Sketch-style selection outline + handles */
+        .dc-selection {
+          position: absolute; inset: -14%;
+          border: 1.5px dashed var(--fg);
+          opacity: 0;
+          animation: dc-selection-life 9s ease infinite;
+          pointer-events: none;
+        }
+        @keyframes dc-selection-life {
+          0%, 9%    { opacity: 0; }
+          12%, 76%  { opacity: 0.85; }
+          80%, 100% { opacity: 0; }
+        }
+        .dc-handle {
+          position: absolute; width: 8px; height: 8px;
+          background: var(--bg); border: 1.5px solid var(--fg);
+        }
+        .dc-handle-tl { top: -4px; left: -4px; }
+        .dc-handle-tr { top: -4px; right: -4px; }
+        .dc-handle-bl { bottom: -4px; left: -4px; }
+        .dc-handle-br { bottom: -4px; right: -4px; }
+        .dc-rotate-stem { position: absolute; top: -28px; left: 50%; width: 1.5px; height: 14px; background: var(--fg); opacity: 0.7; }
+        .dc-rotate-handle {
+          position: absolute; top: -34px; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: var(--accent); transform: translateX(-50%);
+        }
+
+        /* Click ripple where the cursor first lands */
+        .dc-click-ripple {
+          position: absolute; top: 50%; left: 50%;
+          width: 10px; height: 10px; margin: -5px 0 0 -5px;
+          border-radius: 50%; border: 1.5px solid var(--accent);
+          opacity: 0; transform: scale(0.4);
+          animation: dc-ripple 9s ease infinite;
+        }
+        @keyframes dc-ripple {
+          0%, 9.5% { opacity: 0; transform: scale(0.4); }
+          11%      { opacity: 0.9; transform: scale(1); }
+          14%      { opacity: 0; transform: scale(1.8); }
+          100%     { opacity: 0; }
+        }
+
+        /* Undo toast */
+        .dc-undo-toast {
+          position: absolute; top: 8%; right: 6%;
+          display: flex; gap: 4px; align-items: center;
+          padding: 6px 10px;
+          background: var(--fg); color: var(--bg);
+          font-family: var(--font-body); font-size: 11px; font-weight: 600;
+          border-radius: 4px;
+          opacity: 0; transform: translateY(4px) scale(0.94);
+          animation: dc-undo-life 9s ease infinite;
+        }
+        @keyframes dc-undo-life {
+          0%, 68%  { opacity: 0; transform: translateY(4px) scale(0.94); }
+          70%, 73% { opacity: 1; transform: translateY(0) scale(1); }
+          77%      { opacity: 0; transform: translateY(-4px) scale(0.94); }
+          100%     { opacity: 0; }
+        }
+
+        /* The cursor — moves through the whole choreography */
+        .dc-cursor {
+          position: absolute; width: 22px; height: 22px;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+          animation: dc-cursor-move 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+        .dc-cursor svg { width: 100%; height: 100%; }
+
+        @keyframes dc-cursor-move {
+          0%   { top: 82%; left: 6%; }
+          8%   { top: 54%; left: 44%; }
+          12%  { top: 54%; left: 44%; }
+          16%  { top: 10%; left: 50%; }
+          34%  { top: 8%;  left: 34%; }
+          40%  { top: 8%;  left: 34%; }
+          45%  { top: 68%; left: 68%; }
+          60%  { top: 82%; left: 82%; }
+          68%  { top: 82%; left: 82%; }
+          70%  { top: 8%;  left: 80%; }
+          74%  { top: 8%;  left: 80%; }
+          80%  { top: 40%; left: 60%; }
+          92%  { top: 82%; left: 6%; }
+          100% { top: 82%; left: 6%; }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .hero-visual { animation: none; opacity: 1; }
-          .hv-layer, .hv-corner { animation: none !important; }
-          .hv-layer-a, .hv-layer-b { opacity: 0.5; }
-          .hv-layer-c { opacity: 0.7; }
-          .hv-corner { opacity: 0.5; }
+          .dc-object, .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
+          .dc-click-ripple, .dc-undo-toast, .dc-cursor {
+            animation: none !important;
+          }
+          .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
+          .dc-click-ripple, .dc-undo-toast, .dc-cursor {
+            opacity: 0 !important;
+          }
         }
         /* Registration marks — print-craft signature, align the page like a printer aligning plates */
         .reg-mark {
