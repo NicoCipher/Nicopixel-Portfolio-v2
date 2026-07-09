@@ -11,7 +11,7 @@ const CATEGORIES = [
   { key: 'print', label: 'Print' },
 ]
 
-const BREAKPOINTS = { default: 3, 1024: 2, 480: 1 }
+const BREAKPOINTS = { default: 4, 1600: 3, 1024: 2, 480: 1 }
 
 export function WorkGallery({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<'all' | Category>('all')

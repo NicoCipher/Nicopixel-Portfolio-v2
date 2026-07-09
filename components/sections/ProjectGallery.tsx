@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Masonry from 'react-masonry-css'
 
-const BREAKPOINTS = { default: 3, 900: 2, 600: 2 }
+const BREAKPOINTS = { default: 4, 1800: 3, 900: 2, 600: 2 }
 
 export function ProjectGallery({ images, title }: { images: string[]; title: string }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)

@@ -17,7 +17,7 @@
   --accent-text: var(--accent);
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
-  --content-max: 1240px;
+  --content-max: 1400px;
   /* Testimonials — inverted section, always has own dark theme in light mode */
   --test-bg: #0A0A0A;
   --test-bg-hover: #111111;
