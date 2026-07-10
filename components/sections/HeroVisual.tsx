@@ -1,3 +1,5 @@
+'use client'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 /**
@@ -26,8 +28,26 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
   // All variants currently render Happy Accident until 1–6 are built.
   void variant
 
+  // 13 separately-animated elements loop infinitely — real CPU/GPU/battery
+  // cost with zero visual payoff once this scrolls out of view (e.g. as
+  // soon as someone scrolls down to Services). Pause everything via a
+  // single class toggle instead of letting it run in the background.
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(true)
+
+  useEffect(() => {
+    const el = stageRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => setInView(entry.isIntersecting)),
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="hero-visual" aria-hidden="true">
+    <div className={`hero-visual ${inView ? '' : 'hv-paused'}`} aria-hidden="true" ref={stageRef}>
       <div className="dc-stage">
         <div className="dc-object">
           {logoUrl
@@ -83,6 +103,16 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
           animation: hv-fade-in 1s ease 0.3s forwards;
         }
         @keyframes hv-fade-in { to { opacity: 1; } }
+
+        /* Pause every animation on the stage in one shot when scrolled out
+           of view (see the IntersectionObserver above) instead of letting
+           13 infinite animations run invisibly in the background. */
+        .hv-paused .dc-object, .hv-paused .dc-selection, .hv-paused .dc-handle,
+        .hv-paused .dc-rotate-stem, .hv-paused .dc-rotate-handle,
+        .hv-paused .dc-click-ripple, .hv-paused .dc-think-toast, .hv-paused .dc-dot,
+        .hv-paused .dc-undo-toast, .hv-paused .dc-cursor {
+          animation-play-state: paused !important;
+        }
 
         .dc-stage { position: relative; width: 100%; height: 100%; }
 
