@@ -253,22 +253,25 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
         .dc-cursor svg { width: 100%; height: 100%; }
 
         @keyframes dc-cursor-move {
-          0%   { top: 90%; left: 4%; }
-          9%   { top: 50%; left: 47%; }
-          11%  { top: 50%; left: 47%; }
-          15%  { top: 6%;  left: 50%; }
-          27%  { top: 20%; left: 66%; }
-          35%  { top: 20%; left: 66%; }
-          39%  { top: 20%; left: 66%; }
-          43%  { top: 55%; left: 42%; }
-          47%  { top: 66%; left: 32%; }
-          59%  { top: 74%; left: 26%; }
-          67%  { top: 74%; left: 26%; }
-          71%  { top: 74%; left: 26%; }
-          75%  { top: 50%; left: 50%; }
-          82%  { top: 50%; left: 50%; }
-          90%  { top: 78%; left: 20%; }
-          100% { top: 90%; left: 4%; }
+          0%   { top: 90%;   left: 4%; }
+          9%   { top: 50%;   left: 47%; }
+          11%  { top: 50%;   left: 47%; }
+          15%  { top: 15.7%; left: 50%; }
+          19%  { top: 16.8%; left: 58.9%; }
+          23%  { top: 20.3%; left: 67.2%; }
+          27%  { top: 25.7%; left: 74.3%; }
+          35%  { top: 25.7%; left: 74.3%; }
+          39%  { top: 25.7%; left: 74.3%; }
+          43%  { top: 74.8%; left: 25.2%; }
+          50%  { top: 76.4%; left: 30.3%; }
+          55%  { top: 77.2%; left: 35.3%; }
+          59%  { top: 77%;   left: 40.2%; }
+          67%  { top: 77%;   left: 40.2%; }
+          71%  { top: 77%;   left: 40.2%; }
+          75%  { top: 50%;   left: 50%; }
+          82%  { top: 50%;   left: 50%; }
+          90%  { top: 78%;   left: 20%; }
+          100% { top: 90%;   left: 4%; }
         }
 
         @media (prefers-reduced-motion: reduce) {
