@@ -19,8 +19,9 @@ import Image from 'next/image'
  *   5. Designer's Speedrun — draw, duplicate, align, group, center, save
  *   6. Smart Guides        — alignment guides flash and snap like Figma
  */
-export function HeroVisual({ logoUrl }: { logoUrl?: string | null }) {
-  const variant = new Date().getDay() // 0 (Sun) – 6 (Sat)
+export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | null; variantOverride?: string | null }) {
+  const dayVariant = new Date().getDay() // 0 (Sun) – 6 (Sat), used when override is 'auto' or unset
+  const variant = variantOverride && variantOverride !== 'auto' ? parseInt(variantOverride, 10) : dayVariant
 
   // All variants currently render Happy Accident until 1–6 are built.
   void variant

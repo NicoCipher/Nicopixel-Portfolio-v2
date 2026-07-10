@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
 import { FONT_PAIRINGS, DEFAULT_FONT_PAIRING } from '@/lib/fontPairings'
 import { FONT_PAIRING_VARS } from '@/lib/fonts'
+import { HERO_VISUAL_VARIANTS, DEFAULT_HERO_VISUAL_VARIANT } from '@/lib/heroVisualVariants'
 
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '12px 16px',
@@ -218,6 +219,71 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
                 <div>
                   <div style={{ fontFamily: FONT_PAIRING_VARS[pairing.key]?.heading ?? pairing.heading, fontSize: 19, color: '#FAFAF9', marginBottom: 4 }}>{pairing.label}</div>
                   <p style={{ fontSize: 12, color: '#666', margin: 0, fontFamily: FONT_PAIRING_VARS[pairing.key]?.body ?? pairing.body }}>{pairing.description}</p>
+                </div>
+              </label>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Homepage hero animation — rotates daily through named concepts;
+          only "Happy Accident" is built so far, the rest are shown as a
+          visible roadmap but disabled until they're implemented. */}
+      <div>
+        <p style={sectionTitle}>Homepage Hero Animation</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {(() => {
+            const current = values.hero_visual_variant || DEFAULT_HERO_VISUAL_VARIANT
+            const isAutoActive = current === 'auto'
+            return (
+              <label style={{
+                display: 'flex', alignItems: 'flex-start', gap: 14,
+                padding: '16px 18px', cursor: 'pointer',
+                background: isAutoActive ? '#1A0A0C' : '#0A0A0A',
+                border: `1px solid ${isAutoActive ? '#C41E3A' : '#1F1F1F'}`,
+                transition: 'border-color 0.2s, background 0.2s',
+              }}>
+                <input
+                  type="radio"
+                  name="hero_visual_variant"
+                  checked={isAutoActive}
+                  onChange={() => setValues(v => ({ ...v, hero_visual_variant: 'auto' }))}
+                  style={{ marginTop: 4, accentColor: '#C41E3A', cursor: 'pointer' }}
+                />
+                <div>
+                  <div style={{ fontSize: 14, color: '#FAFAF9', marginBottom: 4, fontWeight: 600 }}>Auto — rotates daily</div>
+                  <p style={{ fontSize: 12, color: '#666', margin: 0 }}>Picks a variant by day of the week. Recommended once more than one is built.</p>
+                </div>
+              </label>
+            )
+          })()}
+          {HERO_VISUAL_VARIANTS.map(variant => {
+            const current = values.hero_visual_variant || DEFAULT_HERO_VISUAL_VARIANT
+            const isActive = current === variant.key
+            return (
+              <label key={variant.key} style={{
+                display: 'flex', alignItems: 'flex-start', gap: 14,
+                padding: '16px 18px',
+                cursor: variant.built ? 'pointer' : 'not-allowed',
+                background: isActive ? '#1A0A0C' : '#0A0A0A',
+                border: `1px solid ${isActive ? '#C41E3A' : '#1F1F1F'}`,
+                opacity: variant.built ? 1 : 0.45,
+                transition: 'border-color 0.2s, background 0.2s',
+              }}>
+                <input
+                  type="radio"
+                  name="hero_visual_variant"
+                  checked={isActive}
+                  disabled={!variant.built}
+                  onChange={() => setValues(v => ({ ...v, hero_visual_variant: variant.key }))}
+                  style={{ marginTop: 4, accentColor: '#C41E3A', cursor: variant.built ? 'pointer' : 'not-allowed' }}
+                />
+                <div>
+                  <div style={{ fontSize: 14, color: '#FAFAF9', marginBottom: 4, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {variant.label}
+                    {!variant.built && <span style={{ fontSize: 10, fontWeight: 500, color: '#666', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Coming soon</span>}
+                  </div>
+                  <p style={{ fontSize: 12, color: '#666', margin: 0 }}>{variant.description}</p>
                 </div>
               </label>
             )

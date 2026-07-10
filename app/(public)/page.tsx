@@ -35,7 +35,7 @@ export default async function HomePage() {
     <>
       {/* ── HERO ── */}
       <section className="hero-section">
-        <HeroVisual logoUrl={s.logo_url} />
+        <HeroVisual logoUrl={s.logo_url} variantOverride={s.hero_visual_variant} />
 
         {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
         <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
