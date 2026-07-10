@@ -1,9 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import Image from 'next/image'
 import type { Project } from '@/types'
 import { AnimatedStat } from '@/components/ui/AnimatedStat'
 import { FeaturedProjectsAccordion } from '@/components/sections/FeaturedProjectsAccordion'
+import { HeroVisual } from '@/components/sections/HeroVisual'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -35,43 +35,7 @@ export default async function HomePage() {
     <>
       {/* ── HERO ── */}
       <section className="hero-section">
-        <div className="hero-visual" aria-hidden="true">
-          <div className="dc-stage">
-            <div className="dc-object">
-              {s.logo_url
-                ? <Image src={s.logo_url} alt="" fill style={{ objectFit: 'contain' }} />
-                : (
-                  <svg viewBox="0 0 200 200" className="dc-fallback-mark">
-                    <circle cx="100" cy="100" r="52" />
-                    <line x1="100" y1="8" x2="100" y2="192" />
-                    <line x1="8" y1="100" x2="192" y2="100" />
-                  </svg>
-                )
-              }
-              <div className="dc-selection">
-                <span className="dc-handle dc-handle-tl" />
-                <span className="dc-handle dc-handle-tr" />
-                <span className="dc-handle dc-handle-bl" />
-                <span className="dc-handle dc-handle-br" />
-                <span className="dc-rotate-stem" />
-                <span className="dc-rotate-handle" />
-              </div>
-            </div>
-
-            <div className="dc-click-ripple" />
-
-            <div className="dc-undo-toast">
-              <span className="dc-undo-key">⌘</span>
-              <span className="dc-undo-key">Z</span>
-            </div>
-
-            <div className="dc-cursor">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M4 2L4 19.5L8.5 15.5L11.5 22L14.5 20.5L11.5 14L17.5 14L4 2Z" fill="white" stroke="#0A0A0A" strokeWidth="1.2" strokeLinejoin="round" />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <HeroVisual logoUrl={s.logo_url} />
 
         {/* Registration marks — a print designer's actual craft, used here as the page-load signature */}
         <svg className="reg-mark reg-mark-tl" viewBox="0 0 32 32" aria-hidden="true">
@@ -252,134 +216,6 @@ export default async function HomePage() {
         .bottom-cta-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-section { min-height: calc(100svh - 64px); display: flex; flex-direction: column; justify-content: flex-end; padding: 80px 48px 64px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-        .hero-visual {
-          position: absolute; top: 50%; right: 4%;
-          width: clamp(280px, 32vw, 440px); height: clamp(280px, 32vw, 440px);
-          transform: translateY(-50%);
-          opacity: 0;
-          animation: hv-fade-in 1s ease 0.3s forwards;
-        }
-        @keyframes hv-fade-in { to { opacity: 1; } }
-
-        .dc-stage { position: relative; width: 100%; height: 100%; }
-
-        /* The object being played with — logo (or fallback mark), plus its
-           own selection UI nested inside so the box/handles rotate and
-           scale together with it automatically, no separate sync needed. */
-        .dc-object {
-          position: absolute; top: 50%; left: 50%;
-          width: 34%; height: 34%;
-          transform-origin: center;
-          animation: dc-object-transform 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        .dc-fallback-mark { width: 100%; height: 100%; fill: none; stroke: var(--fg-subtle); stroke-width: 1.5; }
-
-        @keyframes dc-object-transform {
-          0%, 12%  { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-          34%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1); }
-          40%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1); }
-          60%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1.22); }
-          68%      { transform: translate(-50%, -50%) rotate(-12deg) scale(1.22); }
-          74%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
-          100%     { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        }
-
-        /* Figma/Sketch-style selection outline + handles */
-        .dc-selection {
-          position: absolute; inset: -14%;
-          border: 1.5px dashed var(--fg);
-          opacity: 0;
-          animation: dc-selection-life 9s ease infinite;
-          pointer-events: none;
-        }
-        @keyframes dc-selection-life {
-          0%, 9%    { opacity: 0; }
-          12%, 76%  { opacity: 0.85; }
-          80%, 100% { opacity: 0; }
-        }
-        .dc-handle {
-          position: absolute; width: 8px; height: 8px;
-          background: var(--bg); border: 1.5px solid var(--fg);
-        }
-        .dc-handle-tl { top: -4px; left: -4px; }
-        .dc-handle-tr { top: -4px; right: -4px; }
-        .dc-handle-bl { bottom: -4px; left: -4px; }
-        .dc-handle-br { bottom: -4px; right: -4px; }
-        .dc-rotate-stem { position: absolute; top: -28px; left: 50%; width: 1.5px; height: 14px; background: var(--fg); opacity: 0.7; }
-        .dc-rotate-handle {
-          position: absolute; top: -34px; left: 50%; width: 9px; height: 9px;
-          border-radius: 50%; background: var(--accent); transform: translateX(-50%);
-        }
-
-        /* Click ripple where the cursor first lands */
-        .dc-click-ripple {
-          position: absolute; top: 50%; left: 50%;
-          width: 10px; height: 10px; margin: -5px 0 0 -5px;
-          border-radius: 50%; border: 1.5px solid var(--accent);
-          opacity: 0; transform: scale(0.4);
-          animation: dc-ripple 9s ease infinite;
-        }
-        @keyframes dc-ripple {
-          0%, 9.5% { opacity: 0; transform: scale(0.4); }
-          11%      { opacity: 0.9; transform: scale(1); }
-          14%      { opacity: 0; transform: scale(1.8); }
-          100%     { opacity: 0; }
-        }
-
-        /* Undo toast */
-        .dc-undo-toast {
-          position: absolute; top: 8%; right: 6%;
-          display: flex; gap: 4px; align-items: center;
-          padding: 6px 10px;
-          background: var(--fg); color: var(--bg);
-          font-family: var(--font-body); font-size: 11px; font-weight: 600;
-          border-radius: 4px;
-          opacity: 0; transform: translateY(4px) scale(0.94);
-          animation: dc-undo-life 9s ease infinite;
-        }
-        @keyframes dc-undo-life {
-          0%, 68%  { opacity: 0; transform: translateY(4px) scale(0.94); }
-          70%, 73% { opacity: 1; transform: translateY(0) scale(1); }
-          77%      { opacity: 0; transform: translateY(-4px) scale(0.94); }
-          100%     { opacity: 0; }
-        }
-
-        /* The cursor — moves through the whole choreography */
-        .dc-cursor {
-          position: absolute; width: 22px; height: 22px;
-          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-          animation: dc-cursor-move 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-        .dc-cursor svg { width: 100%; height: 100%; }
-
-        @keyframes dc-cursor-move {
-          0%   { top: 82%; left: 6%; }
-          8%   { top: 54%; left: 44%; }
-          12%  { top: 54%; left: 44%; }
-          16%  { top: 10%; left: 50%; }
-          34%  { top: 8%;  left: 34%; }
-          40%  { top: 8%;  left: 34%; }
-          45%  { top: 68%; left: 68%; }
-          60%  { top: 82%; left: 82%; }
-          68%  { top: 82%; left: 82%; }
-          70%  { top: 8%;  left: 80%; }
-          74%  { top: 8%;  left: 80%; }
-          80%  { top: 40%; left: 60%; }
-          92%  { top: 82%; left: 6%; }
-          100% { top: 82%; left: 6%; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hero-visual { animation: none; opacity: 1; }
-          .dc-object, .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
-          .dc-click-ripple, .dc-undo-toast, .dc-cursor {
-            animation: none !important;
-          }
-          .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
-          .dc-click-ripple, .dc-undo-toast, .dc-cursor {
-            opacity: 0 !important;
-          }
-        }
         /* Registration marks — print-craft signature, align the page like a printer aligning plates */
         .reg-mark {
           position: absolute; width: 28px; height: 28px;
@@ -519,9 +355,6 @@ export default async function HomePage() {
         .tq-name { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--test-name); margin-bottom: 2px; }
         .tq-name::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
         .tq-role { display: block; font-size: 11px; color: var(--test-role); letter-spacing: 0.06em; margin-left: 13px; }
-        @media(max-width: 1200px) {
-          .hero-visual { width: clamp(220px, 26vw, 300px); height: clamp(220px, 26vw, 300px); right: 2%; }
-        }
         @media(max-width: 900px) {
           .services-grid { grid-template-columns: 1fr; }
           .service-card { padding: 32px 0 !important; border-right: none !important; border-bottom: 1px solid var(--border); }
@@ -529,7 +362,6 @@ export default async function HomePage() {
           .service-title { margin-top: 24px !important; }
           .service-card:last-child { border-bottom: none; }
           .why-grid { grid-template-columns: 1fr; gap: 0; }
-          .hero-visual { display: none; }
         }
         @media(max-width: 767px) {
           .hero-section { padding: 0 20px 48px; min-height: calc(100svh - 64px); }
