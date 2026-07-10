@@ -87,6 +87,9 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
           <span className="dc-undo-key">⌘</span><span className="dc-undo-key">Z</span>
         </div>
 
+        <div className="dc-readout dc-readout-1">45°</div>
+        <div className="dc-readout dc-readout-2">82%</div>
+
         <div className="dc-cursor">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M4 2L4 19.5L8.5 15.5L11.5 22L14.5 20.5L11.5 14L17.5 14L4 2Z" fill="white" stroke="#0A0A0A" strokeWidth="1.2" strokeLinejoin="round" />
@@ -110,7 +113,7 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
         .hv-paused .dc-object, .hv-paused .dc-selection, .hv-paused .dc-handle,
         .hv-paused .dc-rotate-stem, .hv-paused .dc-rotate-handle,
         .hv-paused .dc-click-ripple, .hv-paused .dc-think-toast, .hv-paused .dc-dot,
-        .hv-paused .dc-undo-toast, .hv-paused .dc-cursor {
+        .hv-paused .dc-undo-toast, .hv-paused .dc-readout, .hv-paused .dc-cursor {
           animation-play-state: paused !important;
         }
 
@@ -124,7 +127,7 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
           position: absolute; top: 50%; left: 50%;
           width: 40%; height: 40%;
           transform-origin: center;
-          animation: dc-object-transform 13s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          animation: dc-object-transform 13s linear infinite;
         }
         .dc-fallback-mark { width: 100%; height: 100%; fill: none; stroke: var(--fg-subtle); stroke-width: 1.5; }
 
@@ -135,11 +138,11 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
           27%      { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
           35%      { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
           39%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
-          43%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+          43%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: linear; }
           59%      { transform: translate(-50%, -50%) rotate(-25deg) scale(0.82); }
           67%      { transform: translate(-50%, -50%) rotate(-25deg) scale(0.82); }
           71%      { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
-          100%     { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+          100%     { transform: translate(-50%, -50%) rotate(0deg) scale(1); animation-timing-function: linear; }
         }
 
         /* ── Selection outline + handles (Figma/Sketch style) ── */
@@ -161,12 +164,27 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
         }
         .dc-handle-tl { top: -5.5px; left: -5.5px; }
         .dc-handle-tr { top: -5.5px; right: -5.5px; }
-        .dc-handle-bl { bottom: -5.5px; left: -5.5px; }
+        .dc-handle-bl { bottom: -5.5px; left: -5.5px; animation: dc-handle-bl-glow 13s linear infinite; }
         .dc-handle-br { bottom: -5.5px; right: -5.5px; }
         .dc-rotate-stem { position: absolute; top: -34px; left: 50%; width: 2px; height: 17px; background: var(--fg); opacity: 0.7; }
         .dc-rotate-handle {
           position: absolute; top: -42px; left: 50%; width: 12px; height: 12px;
           border-radius: 50%; background: var(--accent); transform: translateX(-50%);
+          animation: dc-rotate-handle-glow 13s linear infinite;
+        }
+        /* Active-handle glow — makes it unambiguous which handle the
+           cursor is currently holding at each stage of the drag. */
+        @keyframes dc-rotate-handle-glow {
+          0%, 13%  { box-shadow: none; }
+          16%, 38% { box-shadow: 0 0 0 5px rgba(196, 30, 58, 0.35); }
+          41%      { box-shadow: none; }
+          100%     { box-shadow: none; }
+        }
+        @keyframes dc-handle-bl-glow {
+          0%, 41%  { box-shadow: none; }
+          44%, 70% { box-shadow: 0 0 0 5px rgba(196, 30, 58, 0.35); }
+          73%      { box-shadow: none; }
+          100%     { box-shadow: none; }
         }
 
         /* ── Click ripples: initial select (~10%), final confirm (~80%) ── */
@@ -244,11 +262,37 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
           100%     { opacity: 0; }
         }
 
+        /* ── Live value readouts — what actually changed, like Figma's
+           live dimension/rotation feedback while dragging ── */
+        .dc-readout {
+          position: absolute;
+          padding: 4px 8px;
+          background: var(--accent); color: white;
+          font-family: var(--font-body); font-size: 11px; font-weight: 700;
+          border-radius: 3px;
+          opacity: 0; transform: scale(0.85);
+          pointer-events: none;
+        }
+        .dc-readout-1 { top: 22%; left: 78%; animation: dc-readout-1-life 13s linear infinite; }
+        .dc-readout-2 { top: 80%; left: 44%; animation: dc-readout-2-life 13s linear infinite; }
+        @keyframes dc-readout-1-life {
+          0%, 26%  { opacity: 0; transform: scale(0.85); }
+          28%, 38% { opacity: 1; transform: scale(1); }
+          40%      { opacity: 0; transform: scale(0.85); }
+          100%     { opacity: 0; }
+        }
+        @keyframes dc-readout-2-life {
+          0%, 58%  { opacity: 0; transform: scale(0.85); }
+          60%, 70% { opacity: 1; transform: scale(1); }
+          72%      { opacity: 0; transform: scale(0.85); }
+          100%     { opacity: 0; }
+        }
+
         /* ── The cursor — the throughline connecting every beat ── */
         .dc-cursor {
           position: absolute; width: 30px; height: 30px;
           filter: drop-shadow(0 2px 5px rgba(0,0,0,0.45));
-          animation: dc-cursor-move 13s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+          animation: dc-cursor-move 13s linear infinite;
         }
         .dc-cursor svg { width: 100%; height: 100%; }
 
@@ -277,11 +321,11 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
         @media (prefers-reduced-motion: reduce) {
           .hero-visual { animation: none; opacity: 1; }
           .dc-object, .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
-          .dc-click-ripple, .dc-think-toast, .dc-dot, .dc-undo-toast, .dc-cursor {
+          .dc-click-ripple, .dc-think-toast, .dc-dot, .dc-undo-toast, .dc-readout, .dc-cursor {
             animation: none !important;
           }
           .dc-selection, .dc-handle, .dc-rotate-stem, .dc-rotate-handle,
-          .dc-click-ripple, .dc-think-toast, .dc-undo-toast, .dc-cursor {
+          .dc-click-ripple, .dc-think-toast, .dc-undo-toast, .dc-readout, .dc-cursor {
             opacity: 0 !important;
           }
         }
