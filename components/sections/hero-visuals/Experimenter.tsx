@@ -48,9 +48,9 @@ export function Experimenter({ logoUrl }: { logoUrl?: string | null }) {
           0%, 11%  { transform: translate(-50%, -50%) rotate(0deg) skewY(0deg) scale(1); filter: hue-rotate(0deg) saturate(1); }
           24%      { transform: translate(-50%, -50%) rotate(35deg) skewY(-18deg) scale(1.3); filter: hue-rotate(160deg) saturate(3.5); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
           30%      { transform: translate(-50%, -50%) rotate(35deg) skewY(-18deg) scale(1.3); filter: hue-rotate(160deg) saturate(3.5); animation-timing-function: linear; }
-          33%      { transform: translate(-50%, -50%) rotate(20deg) skewY(-10deg) scale(1.15); filter: hue-rotate(90deg) saturate(2.2); }
-          36%      { transform: translate(-50%, -50%) rotate(8deg) skewY(-3deg) scale(1.05); filter: hue-rotate(30deg) saturate(1.4); }
-          39%      { transform: translate(-50%, -50%) rotate(0deg) skewY(0deg) scale(1); filter: hue-rotate(0deg) saturate(1); }
+          36%      { transform: translate(-50%, -50%) rotate(20deg) skewY(-10deg) scale(1.15); filter: hue-rotate(90deg) saturate(2.2); }
+          42%      { transform: translate(-50%, -50%) rotate(8deg) skewY(-3deg) scale(1.05); filter: hue-rotate(30deg) saturate(1.4); }
+          48%      { transform: translate(-50%, -50%) rotate(0deg) skewY(0deg) scale(1); filter: hue-rotate(0deg) saturate(1); }
           100%     { transform: translate(-50%, -50%) rotate(0deg) skewY(0deg) scale(1); filter: hue-rotate(0deg) saturate(1); }
         }
 
@@ -65,8 +65,8 @@ export function Experimenter({ logoUrl }: { logoUrl?: string | null }) {
           0%, 9%    { opacity: 0; border-color: var(--fg); }
           12%, 29%  { opacity: 0.85; border-color: var(--fg); }
           30%       { opacity: 0.85; border-color: var(--accent); }
-          39%       { opacity: 0.85; border-color: var(--fg); }
-          45%, 100% { opacity: 0; }
+          48%       { opacity: 0.85; border-color: var(--fg); }
+          54%, 100% { opacity: 0; }
         }
 
         .ex-undo-toast {
@@ -81,9 +81,9 @@ export function Experimenter({ logoUrl }: { logoUrl?: string | null }) {
         .ex-undo-toast-1 { animation: ex-undo-1-life 9s linear infinite; }
         .ex-undo-toast-2 { animation: ex-undo-2-life 9s linear infinite; }
         .ex-undo-toast-3 { animation: ex-undo-3-life 9s linear infinite; }
-        @keyframes ex-undo-1-life { 0%, 29% { opacity: 0; } 31%, 32.5% { opacity: 1; transform: translateY(0) scale(1); } 34% { opacity: 0; } 100% { opacity: 0; } }
-        @keyframes ex-undo-2-life { 0%, 32% { opacity: 0; } 34%, 35.5% { opacity: 1; transform: translateY(0) scale(1); } 37% { opacity: 0; } 100% { opacity: 0; } }
-        @keyframes ex-undo-3-life { 0%, 35% { opacity: 0; } 37%, 39%   { opacity: 1; transform: translateY(0) scale(1); } 41% { opacity: 0; } 100% { opacity: 0; } }
+        @keyframes ex-undo-1-life { 0%, 30% { opacity: 0; } 32%, 35% { opacity: 1; transform: translateY(0) scale(1); } 37% { opacity: 0; } 100% { opacity: 0; } }
+        @keyframes ex-undo-2-life { 0%, 37% { opacity: 0; } 39%, 42% { opacity: 1; transform: translateY(0) scale(1); } 44% { opacity: 0; } 100% { opacity: 0; } }
+        @keyframes ex-undo-3-life { 0%, 44% { opacity: 0; } 46%, 49% { opacity: 1; transform: translateY(0) scale(1); } 51% { opacity: 0; } 100% { opacity: 0; } }
 
         .ex-cursor {
           position: absolute; width: 28px; height: 28px;
@@ -96,9 +96,9 @@ export function Experimenter({ logoUrl }: { logoUrl?: string | null }) {
           8%   { top: 50%; left: 47%; opacity: 1; }
           11%  { top: 50%; left: 47%; opacity: 1; }
           24%  { top: 30%; left: 70%; opacity: 1; }
-          39%  { top: 30%; left: 70%; opacity: 1; }
-          46%  { top: 50%; left: 50%; opacity: 1; }
-          52%  { top: 50%; left: 50%; opacity: 0; }
+          48%  { top: 30%; left: 70%; opacity: 1; }
+          54%  { top: 50%; left: 50%; opacity: 1; }
+          60%  { top: 50%; left: 50%; opacity: 0; }
           100% { top: 92%; left: 6%;  opacity: 0; }
         }
       `}</style>

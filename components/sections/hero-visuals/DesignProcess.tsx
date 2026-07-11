@@ -87,6 +87,25 @@ export function DesignProcess({ logoUrl }: { logoUrl?: string | null }) {
         }
       </div>
 
+      {/* Stage labels — the six stages look visually similar at a glance
+          (sketch vs. grid vs. vector isn't self-evident from line art
+          alone); naming each one directly is what actually communicates
+          "this is a process," not just "some shapes changing." */}
+      <div className="dp-stage-label dp-stage-label-1 hv-chrome">Sketch</div>
+      <div className="dp-stage-label dp-stage-label-2 hv-chrome">Grid</div>
+      <div className="dp-stage-label dp-stage-label-3 hv-chrome">Vector</div>
+      <div className="dp-stage-label dp-stage-label-4 hv-chrome">Spacing</div>
+      <div className="dp-stage-label dp-stage-label-5 hv-chrome">Color</div>
+      <div className="dp-stage-label dp-stage-label-6 hv-chrome">Logo</div>
+
+      {/* Progress dots — reinforce that this is one sequence with six
+          steps, not six unrelated cuts */}
+      <div className="dp-progress hv-chrome">
+        {[1, 2, 3, 4, 5, 6].map(n => (
+          <span key={n} className={`dp-progress-dot dp-progress-dot-${n}`} />
+        ))}
+      </div>
+
       <style>{`
         .dp-layer {
           position: absolute; inset: 22%;
@@ -105,6 +124,37 @@ export function DesignProcess({ logoUrl }: { logoUrl?: string | null }) {
         @keyframes dp-l4 { 0%, 37% { opacity: 0; } 39%, 47% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 0; } }
         @keyframes dp-l5 { 0%, 49% { opacity: 0; } 51%, 59% { opacity: 1; } 62% { opacity: 0; } 100% { opacity: 0; } }
         @keyframes dp-l6 { 0%, 61% { opacity: 0; } 64%, 90% { opacity: 1; } 94% { opacity: 0; } 100% { opacity: 0; } }
+
+        /* Stage labels — identical timing to their matching dp-layer-N so
+           the name and the visual always appear/disappear together */
+        .dp-stage-label {
+          position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
+          font-family: var(--font-body); font-size: 12px; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+          opacity: 0;
+        }
+        .dp-stage-label-1 { animation: dp-l1 11s linear infinite; }
+        .dp-stage-label-2 { animation: dp-l2 11s linear infinite; }
+        .dp-stage-label-3 { animation: dp-l3 11s linear infinite; }
+        .dp-stage-label-4 { animation: dp-l4 11s linear infinite; }
+        .dp-stage-label-5 { animation: dp-l5 11s linear infinite; }
+        .dp-stage-label-6 { animation: dp-l6 11s linear infinite; color: var(--fg); }
+
+        /* Progress dots — reinforce "one sequence, six steps" */
+        .dp-progress { position: absolute; top: 8%; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+        .dp-progress-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: none; }
+        .dp-progress-dot-1 { animation: dp-dot-1 11s linear infinite; }
+        .dp-progress-dot-2 { animation: dp-dot-2 11s linear infinite; }
+        .dp-progress-dot-3 { animation: dp-dot-3 11s linear infinite; }
+        .dp-progress-dot-4 { animation: dp-dot-4 11s linear infinite; }
+        .dp-progress-dot-5 { animation: dp-dot-5 11s linear infinite; }
+        .dp-progress-dot-6 { animation: dp-dot-6 11s linear infinite; }
+        @keyframes dp-dot-1 { 0%, 1% { background: var(--border); } 3%, 13% { background: var(--accent); } 15%, 100% { background: var(--border); } }
+        @keyframes dp-dot-2 { 0%, 14% { background: var(--border); } 16%, 25% { background: var(--accent); } 27%, 100% { background: var(--border); } }
+        @keyframes dp-dot-3 { 0%, 26% { background: var(--border); } 28%, 37% { background: var(--accent); } 39%, 100% { background: var(--border); } }
+        @keyframes dp-dot-4 { 0%, 38% { background: var(--border); } 40%, 49% { background: var(--accent); } 51%, 100% { background: var(--border); } }
+        @keyframes dp-dot-5 { 0%, 50% { background: var(--border); } 52%, 61% { background: var(--accent); } 63%, 100% { background: var(--border); } }
+        @keyframes dp-dot-6 { 0%, 62% { background: var(--border); } 65%, 92% { background: var(--accent); } 95%, 100% { background: var(--border); } }
 
         .dp-layer svg { width: 100%; height: 100%; fill: none; }
 

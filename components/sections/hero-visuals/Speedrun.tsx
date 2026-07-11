@@ -40,6 +40,16 @@ export function Speedrun({ logoUrl }: { logoUrl?: string | null }) {
         Saved
       </div>
 
+      {/* Action labels — this is the fastest-paced variant with 6 named
+          steps happening in ~6 seconds; without a label naming each one,
+          it reads as "some shapes moving fast" rather than a legible
+          sequence of specific actions. */}
+      <div className="sr-action-label sr-action-label-1 hv-chrome">Draw</div>
+      <div className="sr-action-label sr-action-label-2 hv-chrome">Duplicate</div>
+      <div className="sr-action-label sr-action-label-3 hv-chrome">Align</div>
+      <div className="sr-action-label sr-action-label-4 hv-chrome">Group</div>
+      <div className="sr-action-label sr-action-label-5 hv-chrome">Center</div>
+
       <style>{`
         .sr-group {
           position: absolute; inset: 30%;
@@ -120,6 +130,24 @@ export function Speedrun({ logoUrl }: { logoUrl?: string | null }) {
           87%      { opacity: 0; transform: translateY(-4px) scale(0.94); }
           100%     { opacity: 0; }
         }
+
+        /* Action labels — one clean window each, no two visible at once */
+        .sr-action-label {
+          position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+          font-family: var(--font-body); font-size: 12px; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+          opacity: 0;
+        }
+        .sr-action-label-1 { animation: sr-label-1 10s linear infinite; }
+        .sr-action-label-2 { animation: sr-label-2 10s linear infinite; }
+        .sr-action-label-3 { animation: sr-label-3 10s linear infinite; }
+        .sr-action-label-4 { animation: sr-label-4 10s linear infinite; }
+        .sr-action-label-5 { animation: sr-label-5 10s linear infinite; }
+        @keyframes sr-label-1 { 0%, 1%   { opacity: 0; } 3%, 12%  { opacity: 1; } 14%, 100% { opacity: 0; } }
+        @keyframes sr-label-2 { 0%, 15%  { opacity: 0; } 17%, 25% { opacity: 1; } 27%, 100% { opacity: 0; } }
+        @keyframes sr-label-3 { 0%, 28%  { opacity: 0; } 30%, 43% { opacity: 1; } 45%, 100% { opacity: 0; } }
+        @keyframes sr-label-4 { 0%, 46%  { opacity: 0; } 48%, 56% { opacity: 1; } 58%, 100% { opacity: 0; } }
+        @keyframes sr-label-5 { 0%, 59%  { opacity: 0; } 61%, 64% { opacity: 1; } 66%, 100% { opacity: 0; } }
       `}</style>
     </div>
   )

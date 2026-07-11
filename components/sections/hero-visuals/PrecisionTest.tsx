@@ -24,6 +24,7 @@ export function PrecisionTest({ logoUrl }: { logoUrl?: string | null }) {
         </div>
         <div className="pt-ruler pt-ruler-h hv-chrome" />
         <div className="pt-ruler pt-ruler-v hv-chrome" />
+        <div className="pt-nudge-before hv-chrome" />
         <div className="pt-nudge-dot hv-chrome" />
       </div>
 
@@ -63,10 +64,28 @@ export function PrecisionTest({ logoUrl }: { logoUrl?: string | null }) {
           100%     { opacity: 0; }
         }
 
-        /* The "edge" being nudged by a pixel */
+        /* The "edge" being nudged — a faint marker stays at the original
+           spot so the moved dot reads as a clear before/after, not just
+           an ambiguous single dot drifting. Movement is exaggerated for
+           visibility; the +1px readout is what states the real, precise
+           value — motion needs to be seen to register, the label carries
+           the literal precision. */
+        .pt-nudge-before {
+          position: absolute; top: 78%; left: 78%;
+          width: 6px; height: 6px; margin: -3px 0 0 -3px;
+          border-radius: 50%; border: 1px dashed var(--fg-subtle);
+          opacity: 0;
+          animation: pt-nudge-before-life 10s linear infinite;
+        }
+        @keyframes pt-nudge-before-life {
+          0%, 25%  { opacity: 0; }
+          28%, 45% { opacity: 0.6; }
+          48%      { opacity: 0; }
+          100%     { opacity: 0; }
+        }
         .pt-nudge-dot {
           position: absolute; top: 78%; left: 78%;
-          width: 3px; height: 3px; margin: -1.5px 0 0 -1.5px;
+          width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
           border-radius: 50%; background: var(--accent);
           opacity: 0;
           animation: pt-nudge-life 10s linear infinite;
@@ -74,9 +93,9 @@ export function PrecisionTest({ logoUrl }: { logoUrl?: string | null }) {
         @keyframes pt-nudge-life {
           0%, 22%  { opacity: 0; transform: translate(0, 0); }
           26%, 30% { opacity: 1; transform: translate(0, 0); }
-          33%      { opacity: 1; transform: translate(1.2px, -1.2px); }
-          38%, 42% { opacity: 1; transform: translate(1.2px, -1.2px); }
-          46%      { opacity: 0; transform: translate(1.2px, -1.2px); }
+          33%      { opacity: 1; transform: translate(7px, -7px); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+          38%, 42% { opacity: 1; transform: translate(7px, -7px); animation-timing-function: linear; }
+          46%      { opacity: 0; transform: translate(7px, -7px); }
           100%     { opacity: 0; }
         }
 

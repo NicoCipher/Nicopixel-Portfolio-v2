@@ -27,6 +27,8 @@ export function SmartGuides({ logoUrl }: { logoUrl?: string | null }) {
 
       <div className="sg-click-ripple hv-chrome" />
 
+      <div className="sg-centered-label hv-chrome">Centered</div>
+
       <div className="sg-cursor hv-chrome">
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M4 2L4 19.5L8.5 15.5L11.5 22L14.5 20.5L11.5 14L17.5 14L4 2Z" fill="white" stroke="#0A0A0A" strokeWidth="1.2" strokeLinejoin="round" />
@@ -86,6 +88,20 @@ export function SmartGuides({ logoUrl }: { logoUrl?: string | null }) {
           0%, 8.5% { opacity: 0; transform: scale(0.4); }
           10%      { opacity: 0.9; transform: scale(1); }
           13%      { opacity: 0; transform: scale(1.8); }
+          100%     { opacity: 0; }
+        }
+
+        .sg-centered-label {
+          position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%);
+          font-family: var(--font-body); font-size: 12px; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+          opacity: 0;
+          animation: sg-centered-life 10s linear infinite;
+        }
+        @keyframes sg-centered-life {
+          0%, 51%  { opacity: 0; transform: translateX(-50%) translateY(4px); }
+          54%, 84% { opacity: 1; transform: translateX(-50%) translateY(0); }
+          88%      { opacity: 0; transform: translateX(-50%) translateY(-4px); }
           100%     { opacity: 0; }
         }
 

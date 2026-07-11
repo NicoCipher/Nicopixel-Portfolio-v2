@@ -48,6 +48,8 @@ export function PixelBuilder({ logoUrl }: { logoUrl?: string | null }) {
         </svg>
       </div>
 
+      <div className="pb-cleanup-label hv-chrome">Cleaning up</div>
+
       <div className="pb-final">
         {logoUrl
           ? <Image src={logoUrl} alt="" fill style={{ objectFit: 'contain' }} />
@@ -84,13 +86,26 @@ export function PixelBuilder({ logoUrl }: { logoUrl?: string | null }) {
         @keyframes pb-pop-4 { 0%, 18% { opacity: 0; transform: scale(0); } 21%, 62% { opacity: 1; transform: scale(1); } 68%, 100% { opacity: 0; transform: scale(0.6); } }
         @keyframes pb-pop-5 { 0%, 22% { opacity: 0; transform: scale(0); } 26%, 62% { opacity: 1; transform: scale(1); } 68%, 100% { opacity: 0; transform: scale(0.6); } }
 
-        /* Strays pop in mixed with the later waves, held briefly, then
-           swept away distinctly earlier than the real pixels */
+        /* Strays pop in mixed with the later waves, held, then swept away
+           slowly enough to actually read as a deliberate cleanup pass */
         @keyframes pb-pop-stray {
           0%, 24%  { opacity: 0; transform: scale(0); }
-          28%, 42% { opacity: 1; transform: scale(1); }
-          48%      { opacity: 0; transform: scale(0.5); }
+          28%, 40% { opacity: 1; transform: scale(1); }
+          56%      { opacity: 0; transform: scale(0.5); }
           100%     { opacity: 0; }
+        }
+
+        .pb-cleanup-label {
+          position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
+          font-family: var(--font-body); font-size: 12px; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+          opacity: 0;
+          animation: pb-cleanup-label-life 11s linear infinite;
+        }
+        @keyframes pb-cleanup-label-life {
+          0%, 41%  { opacity: 0; }
+          43%, 55% { opacity: 1; }
+          58%, 100% { opacity: 0; }
         }
 
         .pb-brush-cursor {
@@ -100,12 +115,14 @@ export function PixelBuilder({ logoUrl }: { logoUrl?: string | null }) {
           animation: pb-brush-move 11s linear infinite;
         }
         .pb-brush-cursor svg { width: 100%; height: 100%; }
+        /* Two visible sweep passes, not one instant diagonal flick */
         @keyframes pb-brush-move {
-          0%, 41%  { top: 20%; left: 20%; opacity: 0; }
-          43%      { top: 24%; left: 24%; opacity: 1; }
-          46%      { top: 24%; left: 76%; opacity: 1; }
-          48%      { top: 76%; left: 76%; opacity: 1; }
-          50%, 100% { top: 76%; left: 20%; opacity: 0; }
+          0%, 40%   { top: 22%; left: 18%; opacity: 0; }
+          42%       { top: 22%; left: 18%; opacity: 1; }
+          47%       { top: 22%; left: 82%; opacity: 1; }
+          49%       { top: 82%; left: 82%; opacity: 1; }
+          54%       { top: 82%; left: 18%; opacity: 1; }
+          57%, 100% { top: 82%; left: 18%; opacity: 0; }
         }
 
         .pb-final {
