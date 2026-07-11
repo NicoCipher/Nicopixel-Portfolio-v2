@@ -181,13 +181,27 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── MARQUEE ── */}
+      {/* ── MARQUEE ──
+          Two explicit, identical groups instead of one flat repeated
+          array. The old version relied on Array(12).fill([...]).flat()
+          (36 individual spans of varying text width — "Brand Identity"
+          vs "Print Collateral" render at different widths) happening to
+          split into two pixel-identical halves at exactly the 50% mark.
+          Any subpixel rounding across that many items breaks that
+          assumption, which shows up as a visible cut once per loop. Two
+          structurally-identical sibling groups make the seam exact by
+          construction: -50% of (groupWidth + groupWidth) is always
+          precisely groupWidth, with no reliance on rounding at all. */}
       <div style={{ borderTop: '1px solid var(--border)', overflow: 'hidden', padding: '14px 0' }}>
-        <div style={{ display: 'flex', animation: 'marquee 18s linear infinite', whiteSpace: 'nowrap' }}>
-          {Array(12).fill(['Brand Identity', 'Events Design', 'Print Collateral']).flat().map((item: string, i: number) => (
-            <span key={i} style={{ fontFamily: 'var(--font-heading)', fontSize: 13, fontStyle: 'italic', color: 'var(--fg-subtle)', padding: '0 28px', display: 'inline-flex', alignItems: 'center', gap: 28 }}>
-              {item}<span style={{ color: 'var(--accent-text)', fontSize: 5 }}>●</span>
-            </span>
+        <div style={{ display: 'flex', width: 'max-content', animation: 'marquee 18s linear infinite' }}>
+          {[0, 1].map(groupIndex => (
+            <div key={groupIndex} style={{ display: 'flex', flexShrink: 0 }} aria-hidden={groupIndex === 1}>
+              {Array(6).fill(['Brand Identity', 'Events Design', 'Print Collateral']).flat().map((item: string, i: number) => (
+                <span key={i} style={{ fontFamily: 'var(--font-heading)', fontSize: 13, fontStyle: 'italic', color: 'var(--fg-subtle)', padding: '0 28px', display: 'inline-flex', alignItems: 'center', gap: 28, whiteSpace: 'nowrap' }}>
+                  {item}<span style={{ color: 'var(--accent-text)', fontSize: 5 }}>●</span>
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>

@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nicopixel Portfolio
+
+The production website for **Nicopixel** — a Lagos-based graphic design studio specializing in brand identity, events design, and print collateral. Built as a full-stack Next.js application with a custom admin panel, not a static template.
+
+**Live site:** [nicopixel.vercel.app](https://nicopixel.vercel.app)
+
+## Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org) (App Router, React Server Components)
+- **Database & Auth:** [Supabase](https://supabase.com) (Postgres, Storage, session-based admin auth)
+- **Styling:** Native CSS with CSS custom properties (design tokens), [Tailwind v4](https://tailwindcss.com) utilities where useful
+- **Fonts:** Self-hosted via [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) — no third-party font requests
+- **Email:** [Resend](https://resend.com) for contact form delivery
+- **Analytics:** Custom first-party page view + conversion tracking, plus [Vercel Analytics](https://vercel.com/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights)
+- **Deployment:** [Vercel](https://vercel.com)
+
+## Features
+
+- Fully admin-manageable content: projects, case studies, blog posts, services, testimonials, career milestones, site settings, and theming — no code changes needed for day-to-day updates
+- Custom analytics dashboard (page views, referrers, conversions) built on a first-party tracking pipeline, no third-party analytics dependency for core metrics
+- 5 selectable font pairings and 7 rotating animated hero visuals, both admin-configurable
+- Light/dark theme with a full, separately-tuned color token set for each
+- Contact form with server-side validation, rate limiting, and spam protection
+- Cal.com booking integration for discovery calls
+- SEO: per-page metadata, JSON-LD structured data (Organization/Person entity graph, BreadcrumbList, BlogPosting/CreativeWork), dynamic sitemap and robots.txt
+- Accessibility: WCAG AA color contrast, full keyboard navigation with a proper modal focus trap on the mobile nav, skip-to-content link, semantic landmarks
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- A [Supabase](https://supabase.com) project (Postgres database + Storage bucket)
+- A [Resend](https://resend.com) account for transactional email
+
+### Environment variables
+
+Create a `.env.local` in the project root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+RESEND_API_KEY=your-resend-api-key
+CONTACT_EMAIL=fallback-destination-email@example.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install and run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000). The admin panel is at `/admin`.
 
-## Learn More
+### Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  (public)/          Public-facing routes (home, about, work, services, blog, contact, ...)
+  admin/              Admin dashboard — content management, settings, analytics
+  api/                Route handlers (contact form, tracking, admin actions)
+components/
+  sections/           Page-specific sections, including hero-visuals/ (the 7 animated hero variants)
+  admin/               Admin panel UI
+  layout/              Navbar, Footer
+  ui/                   Shared primitives (Reveal, AnimatedStat, ThemeToggle, ...)
+lib/                  Supabase clients, font/theme config, shared utilities
+scripts/              SQL migrations, run manually via the Supabase SQL editor
+```
 
-## Deploy on Vercel
+## Notes for Contributors
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Deployed on Vercel's default `.vercel.app` domain. Note: Vercel automatically applies `X-Robots-Tag: noindex` to `.vercel.app` domains — this is overridden in `vercel.json`. If migrating to a custom domain, that override is no longer necessary but is harmless to leave in place.
+- Admin routes are excluded from search indexing via `robots.ts` and are session-authenticated; see `middleware.ts`.
+- Database schema changes live in `scripts/` as numbered SQL migrations, applied manually — there is no automated migration runner.

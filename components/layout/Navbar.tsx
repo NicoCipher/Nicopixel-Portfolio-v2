@@ -25,14 +25,22 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
   const firstDrawerLinkRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
+    let rafId: number | null = null
     const onScroll = () => {
-      const y = window.scrollY
-      setScrolled(y > 40)
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(docHeight > 0 ? Math.min(y / docHeight, 1) : 0)
+      if (rafId !== null) return // already have an update queued for this frame
+      rafId = requestAnimationFrame(() => {
+        const y = window.scrollY
+        setScrolled(y > 40)
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight
+        setProgress(docHeight > 0 ? Math.min(y / docHeight, 1) : 0)
+        rafId = null
+      })
     }
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   // Close menu on route change
@@ -103,12 +111,19 @@ export function Navbar({ settings }: { settings?: Record<string, string | null> 
         borderBottom: scrolled || menuOpen ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'background 0.3s, border-color 0.3s',
       }}>
-        {/* Reading progress bar — thin crimson line at bottom of navbar */}
+        {/* Reading progress bar — thin crimson line at bottom of navbar.
+            transform:scaleX instead of width: width is layout-triggering
+            and not GPU-accelerated, which combined with the previously
+            unthrottled scroll handler caused visible stutter on desktop
+            (mouse-wheel scroll fires far more scroll events than mobile
+            touch scrolling does). No CSS transition here deliberately —
+            the RAF-throttled updates above already land at the display's
+            refresh rate, so an added transition would only lag the bar
+            behind the actual scroll position instead of helping. */}
         <div style={{
           position: 'absolute', bottom: 0, left: 0,
-          height: 2, background: 'var(--accent)',
-          width: `${progress * 100}%`,
-          transition: 'width 0.1s linear',
+          height: 2, width: '100%', background: 'var(--accent)',
+          transform: `scaleX(${progress})`, transformOrigin: 'left',
           pointerEvents: 'none', zIndex: 200,
           opacity: progress > 0.02 ? 1 : 0,
         }} />
