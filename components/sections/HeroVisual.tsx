@@ -1,33 +1,19 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { HappyAccident } from './hero-visuals/HappyAccident'
-import { DesignProcess } from './hero-visuals/DesignProcess'
-import { PixelBuilder } from './hero-visuals/PixelBuilder'
-import { PrecisionTest } from './hero-visuals/PrecisionTest'
-import { Experimenter } from './hero-visuals/Experimenter'
-import { Speedrun } from './hero-visuals/Speedrun'
-import { SmartGuides } from './hero-visuals/SmartGuides'
 
 /**
  * The animated composition that fills the right side of the homepage hero.
- * Rotates through 7 "a designer is at work" concepts, one per day of the
- * week, or a manual override from Admin -> Settings -> Homepage Hero
- * Animation. See lib/heroVisualVariants.ts for the variant list.
+ * "Happy Accident": cursor tries an idea, hesitates, undoes it, tries
+ * another, lands back on the correct version.
  *
- * Every variant shares this wrapper for sizing, the IntersectionObserver
- * pause (animations stop when scrolled out of view — real CPU/GPU/battery
- * cost otherwise, for zero visual payoff), and reduced-motion handling, so
- * each variant file only needs to define its own animation content.
- *
- * Convention each variant follows: wrap any decorative/transient element
- * (cursor, toasts, guides, handles — anything that isn't the persistent
- * logo/mark itself) in className="hv-chrome" so the shared reduced-motion
- * rule below can hide it generically without every variant redefining it.
+ * Handles sizing, the IntersectionObserver pause (animations stop when
+ * scrolled out of view — real CPU/GPU/battery cost otherwise, for zero
+ * visual payoff), and reduced-motion handling generically, via an
+ * .hv-chrome convention on any decorative/transient element (cursor,
+ * toasts, handles — anything that isn't the persistent logo/mark itself).
  */
-export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | null; variantOverride?: string | null }) {
-  const dayVariant = new Date().getDay() // 0 (Sun) – 6 (Sat), used when override is 'auto' or unset
-  const variant = variantOverride && variantOverride !== 'auto' ? parseInt(variantOverride, 10) : dayVariant
-
+export function HeroVisual({ logoUrl }: { logoUrl?: string | null }) {
   const stageRef = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(true)
 
@@ -42,20 +28,9 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
     return () => observer.disconnect()
   }, [])
 
-  let Variant = HappyAccident
-  switch (variant) {
-    case 1: Variant = DesignProcess; break
-    case 2: Variant = PixelBuilder; break
-    case 3: Variant = PrecisionTest; break
-    case 4: Variant = Experimenter; break
-    case 5: Variant = Speedrun; break
-    case 6: Variant = SmartGuides; break
-    default: Variant = HappyAccident
-  }
-
   return (
     <div className={`hero-visual ${inView ? '' : 'hv-paused'}`} aria-hidden="true" ref={stageRef}>
-      <Variant logoUrl={logoUrl} />
+      <HappyAccident logoUrl={logoUrl} />
 
       <style>{`
         .hero-visual {
@@ -71,7 +46,7 @@ export function HeroVisual({ logoUrl, variantOverride }: { logoUrl?: string | nu
 
         /* Pause every animation on the stage in one shot when scrolled out
            of view, instead of letting a dozen+ infinite animations run
-           invisibly in the background. Generic — covers every variant. */
+           invisibly in the background. */
         .hv-paused .hv-stage * { animation-play-state: paused !important; }
 
         @media (prefers-reduced-motion: reduce) {

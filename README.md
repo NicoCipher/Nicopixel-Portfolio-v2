@@ -18,7 +18,7 @@ The production website for **Nicopixel** — a Lagos-based graphic design studio
 
 - Fully admin-manageable content: projects, case studies, blog posts, services, testimonials, career milestones, site settings, and theming — no code changes needed for day-to-day updates
 - Custom analytics dashboard (page views, referrers, conversions) built on a first-party tracking pipeline, no third-party analytics dependency for core metrics
-- 5 selectable font pairings and 7 rotating animated hero visuals, both admin-configurable
+- 5 admin-selectable font pairings; an animated "Happy Accident" hero visual (cursor tries an idea, undoes it, lands on the right one)
 - Light/dark theme with a full, separately-tuned color token set for each
 - Contact form with server-side validation, rate limiting, and spam protection
 - Cal.com booking integration for discovery calls
@@ -77,7 +77,7 @@ lib/                  Supabase clients, font/theme config, shared utilities
 scripts/              SQL migrations, run manually via the Supabase SQL editor
 ```
 
-## Notes for Contributors
+## Notes
 
 - Deployed on Vercel's default `.vercel.app` domain. Note: Vercel automatically applies `X-Robots-Tag: noindex` to `.vercel.app` domains — this is overridden in `vercel.json`. If migrating to a custom domain, that override is no longer necessary but is harmless to leave in place.
 - Admin routes are excluded from search indexing via `robots.ts` and are session-authenticated; see `middleware.ts`.
