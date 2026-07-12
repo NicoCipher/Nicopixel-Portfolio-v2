@@ -19,38 +19,53 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
               aria-expanded={isOpen}
             >
               <span className="fpa-num">{String(i + 1).padStart(2, '0')}</span>
+              <span className="fpa-header-thumb">
+                {project.cover_image
+                  ? <Image src={project.cover_image} alt="" fill style={{ objectFit: 'cover' }} sizes="56px" />
+                  : <span className="fpa-header-thumb-placeholder" />
+                }
+              </span>
               <span className="fpa-header-title">{project.title}</span>
               <span className="fpa-header-cat">{project.category}</span>
               <span className="fpa-toggle">{isOpen ? '−' : '+'}</span>
             </button>
 
-            <div className="fpa-panel" style={{ maxHeight: isOpen ? 600 : 0 }}>
-              <div className="fpa-panel-inner">
-                <div className="fpa-panel-img">
-                  {project.cover_image
-                    ? (
-                      <Image
-                        src={project.cover_image}
-                        alt={`${project.title} — ${project.category} design by Nicopixel`}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        sizes="(max-width: 767px) 100vw, 480px"
-                      />
-                    )
-                    : <div className="fpa-panel-placeholder"><span>{project.category}</span></div>
-                  }
-                </div>
-                <div className="fpa-panel-content">
-                  <span className="fpa-overview-meta">
-                    {project.category} · {new Date(project.created_at).getFullYear()}
-                  </span>
-                  <h3 className="fpa-overview-title">{project.title}</h3>
-                  {project.description && (
-                    <p className="fpa-overview-desc">{project.description}</p>
-                  )}
-                  <Link href={`/work/${project.slug}`} className="fpa-overview-link">
-                    View Case Study <span className="fpa-arrow">→</span>
-                  </Link>
+            {/* aria-hidden + inert: without this, a closed panel's full
+                description and "View Case Study" link stay reachable by
+                keyboard Tab and get announced by screen readers even
+                though sighted users can't see them — content that's only
+                visually clipped via max-height isn't removed from the
+                accessibility tree on its own. */}
+            <div className="fpa-panel" style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }} aria-hidden={!isOpen}>
+              <div className="fpa-panel-clip">
+                <div className="fpa-panel-inner">
+                  <div className="fpa-panel-img">
+                    {project.cover_image
+                      ? (
+                        <Image
+                          src={project.cover_image}
+                          alt={`${project.title} — ${project.category} design by Nicopixel`}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          sizes="(max-width: 767px) 100vw, 480px"
+                          priority={i === 0}
+                        />
+                      )
+                      : <div className="fpa-panel-placeholder"><span>{project.category}</span></div>
+                    }
+                  </div>
+                  <div className="fpa-panel-content">
+                    <span className="fpa-overview-meta">
+                      {project.category} · {new Date(project.created_at).getFullYear()}
+                    </span>
+                    <h3 className="fpa-overview-title">{project.title}</h3>
+                    {project.description && (
+                      <p className="fpa-overview-desc">{project.description}</p>
+                    )}
+                    <Link href={`/work/${project.slug}`} className="fpa-overview-link" tabIndex={isOpen ? 0 : -1}>
+                      View Case Study <span className="fpa-arrow">→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -76,6 +91,12 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
           font-family: var(--font-heading); font-size: 14px; font-style: italic;
           color: var(--accent-text); letter-spacing: 0.06em; flex-shrink: 0; width: 32px;
         }
+        .fpa-header-thumb {
+          position: relative; flex-shrink: 0;
+          width: 52px; height: 52px; overflow: hidden;
+          background: var(--bg-secondary);
+        }
+        .fpa-header-thumb-placeholder { position: absolute; inset: 0; background: var(--bg-secondary); }
         .fpa-header-title {
           flex: 1;
           font-family: var(--font-heading); font-size: clamp(20px, 2.6vw, 32px);
@@ -96,7 +117,12 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
         }
         .fpa-row-open .fpa-toggle { border-color: var(--accent); color: var(--accent-text); }
 
-        .fpa-panel { overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* CSS Grid template-rows collapse instead of a hardcoded
+           max-height: a fixed pixel cap can clip a longer description on
+           a narrow screen where the image+text stack vertically; 0fr/1fr
+           handles any content height correctly with no guessing. */
+        .fpa-panel { display: grid; transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fpa-panel-clip { overflow: hidden; min-height: 0; }
         .fpa-panel-inner { display: grid; grid-template-columns: 280px 1fr; gap: 40px; padding: 0 4px 40px; align-items: start; }
 
         .fpa-panel-img { position: relative; aspect-ratio: 4/3; background: var(--bg-secondary); overflow: hidden; }
@@ -121,6 +147,7 @@ export function FeaturedProjectsAccordion({ projects }: { projects: Project[] })
         @media(max-width: 639px) {
           .fpa-header { padding: 20px 0; gap: 14px; }
           .fpa-num { width: 24px; font-size: 12px; }
+          .fpa-header-thumb { width: 40px; height: 40px; }
           .fpa-panel-inner { grid-template-columns: 1fr; padding: 0 0 28px; gap: 20px; }
           .fpa-panel-img { aspect-ratio: 16/10; }
         }
