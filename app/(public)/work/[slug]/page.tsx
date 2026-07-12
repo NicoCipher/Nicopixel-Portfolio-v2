@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       url: `${BASE_URL}/work/${slug}`,
-      images: project.cover_image ? [{ url: project.cover_image, width: 1200, height: 630 }] : [],
+      images: [{ url: project.cover_image || `${BASE_URL}/og-image.png`, width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description },
     alternates: { canonical: `${BASE_URL}/work/${slug}` },
@@ -49,6 +49,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     .from('projects').select('id, title, slug, cover_image, category')
     .eq('published', true).eq('category', project.category)
     .neq('id', project.id).limit(3)
+
+  // Next project — same ordering as the Work listing itself, so it reads
+  // as "keep going in order" rather than an arbitrary pick. Wraps around
+  // to the first project if the current one is last.
+  const { data: nextCandidates } = await supabase
+    .from('projects').select('title, slug, cover_image')
+    .eq('published', true).neq('id', project.id).gt('sort_order', project.sort_order)
+    .order('sort_order', { ascending: true }).limit(1)
+  let nextProject = nextCandidates?.[0]
+  if (!nextProject) {
+    const { data: firstProject } = await supabase
+      .from('projects').select('title, slug, cover_image')
+      .eq('published', true).neq('id', project.id)
+      .order('sort_order', { ascending: true }).limit(1)
+    nextProject = firstProject?.[0]
+  }
 
   // JSON-LD for this specific project
   const projectUrl = `${BASE_URL}/work/${slug}`
@@ -166,6 +182,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       )}
 
+      {/* Next Project — a prominent "keep going" banner, separate from
+          Related below: this is sequential (same order as the Work
+          listing, wraps to the first project at the end), Related is
+          curated by category. Different jobs, both worth having. */}
+      {nextProject && (
+        <Reveal as="div">
+          <Link href={`/work/${nextProject.slug}`} className="proj-next-link">
+            <div className="proj-next-banner">
+              {nextProject.cover_image && (
+                <Image src={nextProject.cover_image} alt="" fill style={{ objectFit: 'cover' }} sizes="100vw" />
+              )}
+              <div className="proj-next-overlay">
+                <span className="proj-next-label">Next Project</span>
+                <h2 className="proj-next-title">{nextProject.title} <span className="proj-next-arrow">→</span></h2>
+              </div>
+            </div>
+          </Link>
+        </Reveal>
+      )}
+
       {/* Related */}
       {related && related.length > 0 && (
         <div className="proj-related">
@@ -229,8 +265,34 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .cs-results-text { font-family: var(--font-heading); font-size: 18px; font-style: italic; color: white; line-height: 1.5; }
 
         .proj-gallery { padding: 48px 48px; border-bottom: 1px solid var(--border); max-width: var(--content-max); margin: 0 auto; }
+        .proj-next-link { display: block; text-decoration: none; }
+        .proj-next-banner {
+          position: relative; width: 100%; aspect-ratio: 21/9;
+          background: var(--bg-secondary); overflow: hidden;
+        }
+        .proj-next-banner img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .proj-next-link:hover .proj-next-banner img { transform: scale(1.05); }
+        .proj-next-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+          display: flex; flex-direction: column; justify-content: flex-end;
+          padding: clamp(28px, 5vw, 56px);
+        }
+        .proj-next-label {
+          font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+          color: var(--accent-text); font-weight: 600; margin-bottom: 10px;
+        }
+        .proj-next-title {
+          font-family: var(--font-heading); font-size: clamp(28px, 4.5vw, 56px);
+          font-weight: 400; color: white; margin: 0;
+          display: flex; align-items: center; gap: 16px;
+        }
+        .proj-next-arrow { transition: transform 0.3s ease; display: inline-block; }
+        .proj-next-link:hover .proj-next-arrow { transform: translateX(8px); }
+
         .proj-related { padding: 60px 48px; }
         @media(max-width: 767px) {
+          .proj-next-banner { aspect-ratio: 4/5; }
           .proj-meta { padding: 40px 20px; }
           .case-study-section { padding: 40px 20px 48px; }
           .case-study-meta-row { gap: 28px; margin-bottom: 36px; }

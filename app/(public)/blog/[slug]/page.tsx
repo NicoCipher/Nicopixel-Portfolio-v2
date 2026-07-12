@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title, description,
       type: 'article',
       url: `${BASE_URL}/blog/${slug}`,
-      images: post.cover_image ? [{ url: post.cover_image, width: 1200, height: 630 }] : [],
+      images: [{ url: post.cover_image || `${BASE_URL}/og-image.png`, width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title, description },
     alternates: { canonical: `${BASE_URL}/blog/${slug}` },
