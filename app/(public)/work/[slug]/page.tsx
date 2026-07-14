@@ -91,6 +91,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     ],
   }
 
+  // Each case study block gets its own photo where possible (cycling
+  // through the project gallery), falling back to the cover image so
+  // every block still gets the numeral-on-photo treatment even for
+  // projects with a sparse gallery.
+  const blockImages = [0, 1, 2, 3].map(i => project.images?.[i] || project.cover_image || null)
+
   return (
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -140,28 +146,48 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="case-study-grid">
             {project.brief && (
               <Reveal as="div" className="cs-block" delay={0}>
-                <span className="cs-block-num">01</span>
+                {blockImages[0] && (
+                  <div className="cs-block-img">
+                    <Image src={blockImages[0]} alt="" fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 50vw" />
+                    <span className="cs-block-num">01</span>
+                  </div>
+                )}
                 <h3 className="cs-block-title">The Brief</h3>
                 <p className="cs-block-text">{project.brief}</p>
               </Reveal>
             )}
             {project.challenge && (
               <Reveal as="div" className="cs-block" delay={80}>
-                <span className="cs-block-num">02</span>
+                {blockImages[1] && (
+                  <div className="cs-block-img">
+                    <Image src={blockImages[1]} alt="" fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 50vw" />
+                    <span className="cs-block-num">02</span>
+                  </div>
+                )}
                 <h3 className="cs-block-title">The Challenge</h3>
                 <p className="cs-block-text">{project.challenge}</p>
               </Reveal>
             )}
             {project.approach && (
               <Reveal as="div" className="cs-block" delay={160}>
-                <span className="cs-block-num">03</span>
+                {blockImages[2] && (
+                  <div className="cs-block-img">
+                    <Image src={blockImages[2]} alt="" fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 50vw" />
+                    <span className="cs-block-num">03</span>
+                  </div>
+                )}
                 <h3 className="cs-block-title">The Approach</h3>
                 <p className="cs-block-text">{project.approach}</p>
               </Reveal>
             )}
             {project.outcome && (
               <Reveal as="div" className="cs-block" delay={240}>
-                <span className="cs-block-num">04</span>
+                {blockImages[3] && (
+                  <div className="cs-block-img">
+                    <Image src={blockImages[3]} alt="" fill style={{ objectFit: 'cover' }} sizes="(max-width: 767px) 100vw, 50vw" />
+                    <span className="cs-block-num">04</span>
+                  </div>
+                )}
                 <h3 className="cs-block-title">The Outcome</h3>
                 <p className="cs-block-text">{project.outcome}</p>
               </Reveal>
@@ -254,12 +280,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .cs-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-subtle); }
         .cs-meta-value { font-size: 15px; font-weight: 600; color: var(--fg); font-family: var(--font-heading); }
         .case-study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--border); max-width: var(--content-max); margin-left: auto; margin-right: auto; }
-        .cs-block { padding: 40px 40px 40px 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .cs-block:nth-child(2n) { border-right: none; padding-right: 0; padding-left: 40px; }
+        .cs-block { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .cs-block:nth-child(2n) { border-right: none; }
         .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: none; }
-        .cs-block-num { display: block; font-family: var(--font-heading); font-size: 12px; color: var(--accent-text); letter-spacing: 0.14em; margin-bottom: 14px; }
-        .cs-block-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin-bottom: 12px; }
-        .cs-block-text { font-size: 14px; line-height: 1.85; color: var(--fg-muted); }
+        .cs-block-img { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: var(--bg-secondary); }
+        .cs-block-img::after {
+          content: ''; position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+          pointer-events: none;
+        }
+        .cs-block-num {
+          position: absolute; z-index: 1; bottom: 12px; right: 22px;
+          font-family: var(--font-heading); font-style: italic; font-weight: 400;
+          font-size: clamp(36px, 4.5vw, 56px); line-height: 1; color: white;
+        }
+        .cs-block-title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--fg); margin: 24px 40px 12px; }
+        .cs-block-text { font-size: 14px; line-height: 1.85; color: var(--fg-muted); padding: 0 40px 40px; }
         .cs-results { margin-top: 40px; padding: 28px 32px; background: var(--accent); display: flex; flex-direction: column; gap: 8px; max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .cs-results-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
         .cs-results-text { font-family: var(--font-heading); font-size: 18px; font-style: italic; color: white; line-height: 1.5; }
@@ -297,9 +333,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           .case-study-section { padding: 40px 20px 48px; }
           .case-study-meta-row { gap: 28px; margin-bottom: 36px; }
           .case-study-grid { grid-template-columns: 1fr; }
-          .cs-block { border-right: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+          .cs-block { border-right: none !important; }
           .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: 1px solid var(--border); }
           .cs-block:last-child { border-bottom: none !important; }
+          .cs-block-title, .cs-block-text { margin-left: 20px; margin-right: 20px; padding-left: 0; padding-right: 0; }
           .cs-results { padding: 22px 24px; }
           .proj-gallery { padding: 24px 20px; }
           .proj-gallery-grid { grid-template-columns: 1fr 1fr; }
