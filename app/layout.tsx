@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { createClient } from '@/lib/supabase/server'
 import { getFontPairing } from '@/lib/fontPairings'
 import { allFontVariables, FONT_PAIRING_VARS } from '@/lib/fonts'
+import { safeJsonLd } from '@/lib/safeJsonLd'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -134,7 +135,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <meta name="theme-color" content="#0A0A0A" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       </head>
       <body>

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import ReactMarkdown from 'react-markdown'
 import { Reveal } from '@/components/ui/Reveal'
+import { safeJsonLd } from '@/lib/safeJsonLd'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -80,7 +81,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
 
       <Reveal as="div" className="post-header">
         <Link href="/blog" className="post-back">← Back to Insights</Link>

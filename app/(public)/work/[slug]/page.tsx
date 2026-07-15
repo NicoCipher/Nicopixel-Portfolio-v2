@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ProjectGallery } from '@/components/sections/ProjectGallery'
 import { Reveal } from '@/components/ui/Reveal'
+import { safeJsonLd } from '@/lib/safeJsonLd'
 
 const BASE_URL = 'https://nicopixel.vercel.app'
 
@@ -91,15 +92,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     ],
   }
 
-  // Each case study block gets its own photo where possible (cycling
-  // through the project gallery), falling back to the cover image so
-  // every block still gets the numeral-on-photo treatment even for
-  // projects with a sparse gallery.
-  const blockImages = [0, 1, 2, 3].map(i => project.images?.[i] || project.cover_image || null)
+  // Each case study block gets its own photo where possible. Previously
+  // this fell back to cover_image for every missing gallery slot, which
+  // meant a project with 0-1 gallery images showed the *same* photo under
+  // all 4 numerals — reads as a bug, not a design choice. Now it only
+  // assigns a photo where a genuinely distinct image is available; blocks
+  // beyond that gracefully stay text-only instead of repeating.
+  const uniqueImages = Array.from(new Set([project.cover_image, ...(project.images || [])].filter(Boolean))) as string[]
+  const blockImages = [0, 1, 2, 3].map(i => uniqueImages[i] || null)
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
 
       {/* Hero image */}
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/8', background: 'var(--bg-secondary)', overflow: 'hidden' }}>

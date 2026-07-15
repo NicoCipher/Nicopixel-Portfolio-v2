@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/sections/FaqAccordion'
+import { safeJsonLd } from '@/lib/safeJsonLd'
 
 export const metadata: Metadata = {
   title: 'Services',
@@ -59,7 +60,7 @@ export default async function ServicesPage() {
   return (
     <>
       {jsonLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       )}
       {/* ── HEADER ── */}
       <section className="svc-header px-page scroll-reveal">
