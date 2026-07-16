@@ -43,7 +43,7 @@ export function Footer({ settings }: { settings?: Record<string, string | null> 
       {/* Bottom bar */}
       <div className="footer-bar">
         <Link href="/" style={{ fontFamily: 'var(--font-heading)', fontSize: 14, color: 'var(--fg-muted)', textDecoration: 'none' }}>
-          © {year} Nicopixel
+          © <span suppressHydrationWarning>{year}</span> Nicopixel
         </Link>
         <div className="footer-bar-right">
           <div className="footer-legal-links">
