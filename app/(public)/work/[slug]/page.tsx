@@ -286,7 +286,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .case-study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--border); max-width: var(--content-max); margin-left: auto; margin-right: auto; }
         .cs-block { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .cs-block:nth-child(2n) { border-right: none; }
-        .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: none; }
+        .cs-block:nth-last-child(-n+2) { border-bottom: none; }
         .cs-block-img { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: var(--bg-secondary); }
         .cs-block-img::after {
           content: ''; position: absolute; inset: 0;
@@ -337,8 +337,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           .case-study-section { padding: 40px 20px 48px; }
           .case-study-meta-row { gap: 28px; margin-bottom: 36px; }
           .case-study-grid { grid-template-columns: 1fr; }
-          .cs-block { border-right: none !important; }
-          .cs-block:nth-child(3), .cs-block:nth-child(4) { border-bottom: 1px solid var(--border); }
+          .cs-block { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
           .cs-block:last-child { border-bottom: none !important; }
           .cs-block-title, .cs-block-text { margin-left: 20px; margin-right: 20px; padding-left: 0; padding-right: 0; }
           .cs-results { padding: 22px 24px; }
