@@ -79,7 +79,7 @@ export default async function HomePage() {
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                 {i > 0 && <div className="h-stat-divider" />}
                 <div className="h-stat">
-                  <AnimatedStat value={stat.num} label={stat.label} />
+                  <AnimatedStat value={stat.num} label={stat.label} startDelay={2100} />
                 </div>
               </div>
             ))}

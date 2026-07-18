@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-export function AnimatedStat({ value, label, numClass = 'h-stat-num', labelClass = 'h-stat-label' }: { value: string; label: string; numClass?: string; labelClass?: string }) {
+export function AnimatedStat({ value, label, numClass = 'h-stat-num', labelClass = 'h-stat-label', startDelay = 0 }: { value: string; label: string; numClass?: string; labelClass?: string; startDelay?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
   const [display, setDisplay] = useState('0')
   const hasAnimated = useRef(false)
@@ -20,23 +20,41 @@ export function AnimatedStat({ value, label, numClass = 'h-stat-num', labelClass
       return () => clearTimeout(t)
     }
 
+    let startTimeout: ReturnType<typeof setTimeout> | null = null
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
+          // IntersectionObserver only tracks geometric position, not
+          // opacity — it fires as soon as the element is in the viewport
+          // bounds, even if a separate fade-in animation is still keeping
+          // it invisible. Without startDelay, the count-up would run (and
+          // finish) entirely while opacity:0, so by the time the fade
+          // reveals the number, it's already sitting at its final value
+          // with no visible counting motion.
           if (entry.isIntersecting && !hasAnimated.current) {
             hasAnimated.current = true
-            const duration = 1200
-            const start = performance.now()
 
-            const tick = (now: number) => {
-              const elapsed = now - start
-              const progress = Math.min(elapsed / duration, 1)
-              const eased = 1 - Math.pow(1 - progress, 3)
-              const current = Math.round(eased * targetNum)
-              setDisplay(`${prefix}${current}${suffix}`)
-              if (progress < 1) requestAnimationFrame(tick)
+            const runCountUp = () => {
+              const duration = 1200
+              const start = performance.now()
+
+              const tick = (now: number) => {
+                const elapsed = now - start
+                const progress = Math.min(elapsed / duration, 1)
+                const eased = 1 - Math.pow(1 - progress, 3)
+                const current = Math.round(eased * targetNum)
+                setDisplay(`${prefix}${current}${suffix}`)
+                if (progress < 1) requestAnimationFrame(tick)
+              }
+              requestAnimationFrame(tick)
             }
-            requestAnimationFrame(tick)
+
+            if (startDelay > 0) {
+              startTimeout = setTimeout(runCountUp, startDelay)
+            } else {
+              runCountUp()
+            }
           }
         })
       },
@@ -44,8 +62,11 @@ export function AnimatedStat({ value, label, numClass = 'h-stat-num', labelClass
     )
 
     observer.observe(el)
-    return () => observer.disconnect()
-  }, [value])
+    return () => {
+      observer.disconnect()
+      if (startTimeout) clearTimeout(startTimeout)
+    }
+  }, [value, startDelay])
 
   return (
     <>
